@@ -67,7 +67,7 @@ body.site-ready .hero-title-wrap{opacity:1;transform:translate3d(0,0,0);transiti
 .principles small{font:12px var(--mono);color:var(--muted);justify-self:start}
 .about h2{margin-bottom:0}
 .contact{min-height:100svh;background:#11110f;color:var(--paper);padding:55px 4vw 38px;display:flex;flex-direction:column;justify-content:space-between}
-.contact-main{padding:10vh 0 15vh}.contact-main .eyebrow{color:#77746d}.email{display:inline-block;font:500 clamp(48px,9.5vw,150px)/.85 var(--serif);letter-spacing:-.065em;border-bottom:2px solid rgba(242,240,234,.4);padding-bottom:12px;transition:letter-spacing .5s,border-color .5s}.email:hover{letter-spacing:-.045em;border-color:var(--paper)}.email sup{font:20px var(--mono);vertical-align:top;margin-left:10px}
+.contact-main{padding:10vh 0 15vh}.contact-main .eyebrow{color:#77746d}.email{display:inline-block;font:500 clamp(48px,9.5vw,150px)/.85 var(--serif);letter-spacing:-.065em;border-bottom:2px solid rgba(242,240,234,.4);padding-bottom:12px;transition:letter-spacing .5s,border-color .5s}.email sup{font:20px var(--mono);vertical-align:top;margin-left:10px}
 .contact-footer{display:grid;grid-template-columns:1fr 1fr 1fr;font:10px var(--mono);text-transform:uppercase;letter-spacing:.1em;opacity:.5}.contact-footer span:nth-child(2){text-align:center}.contact-footer span:nth-child(3){text-align:right}
 @media(max-width:800px){
   .site-header{height:65px;padding:0 5vw}.site-header nav{gap:14px}.status{display:none}
@@ -647,70 +647,102 @@ body.experimental-mode:before{content:"EXPERIMENTAL MODE";position:fixed;z-index
   .contact-cta:hover,.email:hover{transform:none}
 }
 
-
 /* =========================================================
-   CONTINUOUS PRO V2 — controlled single-viewport scenes
+   MOBILE REFINEMENT — WIM & CO.
+   Touch-first layout: no desktop paging, no hover assumptions,
+   safe-area spacing, stable typography and comfortable reading.
    ========================================================= */
-html.continuous-mode{scroll-snap-type:none!important;scroll-behavior:auto!important}
-html.continuous-mode main{position:relative}
-html.continuous-mode main > section{
-  position:sticky;top:0;height:100svh;min-height:100svh;margin:0;
-  scroll-snap-align:none!important;scroll-snap-stop:normal!important;
-  overflow:hidden;isolation:isolate;will-change:transform,opacity;
-  transition:none!important;
-}
-html.continuous-mode main > section .intro-copy,
-html.continuous-mode main > section .about-layout,
-html.continuous-mode main > section .statement-word,
-html.continuous-mode main > section .contact-main{
-  opacity:1!important;transform:none!important;
-}
-html.continuous-mode main > section:nth-of-type(1){z-index:10}
-html.continuous-mode main > section:nth-of-type(2){z-index:20}
-html.continuous-mode main > section:nth-of-type(3){z-index:30}
-html.continuous-mode main > section:nth-of-type(4){z-index:40}
-html.continuous-mode main > section:nth-of-type(5){z-index:50}
-html.continuous-mode .marquee{
-  position:relative;z-index:60;pointer-events:none;
-}
-/* Keep the opening logo crisp: no dark theme leakage while the hero is active. */
-html.continuous-mode .hero{color:var(--ink);background:var(--paper)}
-html.continuous-mode .hero-title-wrap{opacity:1!important;transform:none!important}
-html.continuous-mode .hero h1{opacity:1!important;visibility:visible}
-@media(max-width:800px){
-  html.continuous-mode main > section{position:relative;height:auto;min-height:100svh;overflow:visible}
+@media (max-width:800px){
+  html{scroll-snap-type:none!important;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+  body{overflow-x:hidden;overscroll-behavior-x:none;}
+  main{overflow-x:clip;}
+
+  .site-header{height:64px;padding:0 max(20px,env(safe-area-inset-left)) 0 max(20px,env(safe-area-inset-right));}
+  .logo{font-size:16px;}
+  .menu-toggle{padding:12px 0;min-height:44px;gap:9px;}
+  .menu-toggle i{width:25px;height:25px;}
+
+  .hero{min-height:100svh;height:auto;padding:92px 20px calc(72px + env(safe-area-inset-bottom));justify-content:center;}
+  .hero-meta{top:82px;left:20px;right:20px;line-height:1.4;}
+  .hero-meta span:last-child{max-width:45%;text-align:right;}
+  .hero-title-wrap{width:100%;}
+  .hero-title-wrap h1{font-size:clamp(68px,21.5vw,108px);line-height:.79;letter-spacing:-.075em;}
+  .hero-title-wrap h1 span{margin-left:9vw;}
+  .hero-bottom{bottom:calc(22px + env(safe-area-inset-bottom));left:20px;right:20px;gap:20px;font-size:10px;line-height:1.35;}
+  .hero-bottom span:last-child{max-width:46%;text-align:right;}
+  .hero-ghost{font-size:105vw;top:19vh;left:-4vw;}
+  .hero-grid{opacity:.08;}
+
+  .scroll-cue{transform:translateY(0) scale(.9);transform-origin:center;}
+  .scroll-cue.is-hidden{opacity:0;pointer-events:none;}
+
+  main > .marquee{height:58px;min-height:58px;max-height:58px;}
+  .marquee-track{font-size:18px;animation-duration:22s;}
+  .marquee-track span{padding-right:26px;}
+  .marquee i{font-size:13px;margin:0 10px;}
+
+  main > .intro{min-height:88svh;padding:20vw 7vw 17vw;display:flex;align-items:center;}
+  .intro-copy{width:100%;}
+  .intro-copy h2,.about-layout h2{font-size:clamp(52px,13.4vw,76px);line-height:.9;letter-spacing:-.06em;}
+  .intro .body-copy{font-size:15px;line-height:1.5;max-width:34em;margin-top:28px;}
+  .section-number{top:25px;right:7vw;font-size:9px;}
+
+  main > .statement{min-height:88svh;padding:30px 6vw;display:flex;flex-direction:column;justify-content:center;}
+  .statement-top{font-size:9px;}
+  .statement-word{font-size:clamp(58px,17vw,94px);line-height:.84;}
+  .statement-word:first-of-type{top:31%;left:6%;}
+  .statement-word.right{right:6%;top:53%;}
+
+  .about{min-height:auto!important;padding:18vw 7vw 14vw;display:block;}
+  .about-layout{display:block;}
+  .about-layout>.eyebrow{margin-bottom:30px;}
+  .about .body-copy{font-size:15px;line-height:1.5;margin-top:25px;max-width:34em;}
+  .principles{margin-top:42px;}
+  .principles div,.principle-row{grid-template-columns:13% 1fr!important;padding:18px 0;row-gap:7px;}
+  .principles b{grid-column:2;font-size:clamp(24px,8vw,34px);line-height:1;}
+  .principles small{grid-column:2;font-size:10px;line-height:1.45;opacity:.65;}
+  .principles div>span:first-child{grid-column:1;grid-row:1 / span 2;font-size:9px;}
+  .principle-row::before{left:-4vw;right:-4vw;}
+  .available{margin-top:32px!important;font-size:9px;}
+
+  .contact{min-height:92svh;padding:30px 20px calc(30px + env(safe-area-inset-bottom));}
+  .contact-main{padding:11vh 0 13vh;}
+  .contact-top{font-size:9px;}
+  .contact-main .eyebrow{font-size:9px;}
+  .email{font-size:clamp(39px,11.5vw,62px);line-height:.9;letter-spacing:-.055em;padding-bottom:9px;border-bottom-width:1px;word-break:break-word;}
+  .email sup{font-size:12px;margin-left:5px;}
+  .contact-footer{font-size:8px;line-height:1.35;gap:7px;}
+
+  .section-counter{display:none!important;}
+  .scroll-progress{height:1px;}
+
+  /* Ambient light is a desktop pointer effect. Don't waste paint on touch. */
+  .ambient-light{display:none!important;}
+
+  /* Remove desktop-only transform effects from touch layouts. */
+  .grow-section>*{transform:none!important;will-change:auto;}
+  .hero-title-wrap,.hero-orb{will-change:auto;}
+  .magnetic{transform:none!important;}
+
+  /* Safer reveal motion on small screens. */
+  .intro-copy h2 .word,.about-layout h2 .word{transform:translate3d(0,16px,0);filter:blur(2px);}
+
+  /* Larger tap targets without changing the visual layout. */
+  .menu-link{min-height:54px;}
+  .contact-cta{padding:4px 0;}
 }
 
-/* Ambient cursor light — sits above the cinematic scenes so the light is actually visible. */
-html.continuous-mode .ambient-light{
-  z-index:120;
-  opacity:0;
-  background:radial-gradient(circle 260px at var(--light-x,50%) var(--light-y,50%),rgba(255,255,255,.14),rgba(255,255,255,.055) 30%,transparent 72%);
-  mix-blend-mode:screen;
-  pointer-events:none;
-  will-change:background-position,opacity;
-}
-html.continuous-mode body.dark .ambient-light{opacity:1;}
-html.continuous-mode body.menu-open .ambient-light{opacity:0;}
-html.continuous-mode .marquee{z-index:80;}
-
-/* Keep the hero pristine at the top; the light only belongs to dark scenes. */
-html.continuous-mode body:not(.dark) .ambient-light{opacity:0;}
-
-/* The marquee is a deliberate transition object: it crosses the hero/intro boundary
-   without becoming another full page. */
-html.continuous-mode .marquee{
-  position:relative;
-  height:10vh;
-  min-height:64px;
-  max-height:110px;
-  display:flex;
-  align-items:center;
-  overflow:hidden;
+@media (max-width:380px){
+  .hero-title-wrap h1{font-size:20.5vw;}
+  .hero-bottom{font-size:9px;}
+  .intro-copy h2,.about-layout h2{font-size:12.8vw;}
+  .principles div,.principle-row{padding:16px 0;}
+  .contact-main{padding-top:9vh;}
 }
 
-/* Avoid accidental horizontal clipping during the continuous hand-off. */
-html.continuous-mode main > section{
-  backface-visibility:hidden;
-  transform-origin:center center;
+@media (orientation:landscape) and (max-width:800px){
+  .hero{min-height:100svh;padding-top:76px;padding-bottom:55px;}
+  .hero-meta{top:70px;}
+  .hero-title-wrap h1{font-size:15vw;}
+  .hero-bottom{bottom:15px;}
 }

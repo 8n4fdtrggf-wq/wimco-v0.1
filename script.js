@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const hero = document.querySelector(".hero");
   const heroTitle = document.querySelector(".hero-title-wrap");
   const scrollCue = document.querySelector(".scroll-cue");
-  const continuousMode = !reduced && window.innerWidth > 800;
 
   document.body.classList.add("is-loading");
   if (loader) {
@@ -33,11 +32,16 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add("site-ready");
   }
 
-  // Cinematic section paging: one wheel gesture moves to the next full section.
+  // Cinematic section paging: one deliberate wheel gesture moves one scene.
+  // The old fixed timeout was unreliable on trackpads because the browser's
+  // smooth-scroll duration varies. We now unlock when the target is reached,
+  // with a short safety timeout, and require a new wheel gesture before paging again.
   const snapSections = Array.from(document.querySelectorAll("main > section"));
   let snapIndex = 0;
   let snapLocked = false;
-  let snapTimer = null;
+  let wheelGestureActive = false;
+  let snapSafetyTimer = null;
+  let wheelEndTimer = null;
 
   function syncSnapIndex(){
     const y = window.scrollY;
@@ -49,20 +53,50 @@ document.addEventListener("DOMContentLoaded", () => {
     snapIndex = closest;
   }
 
+  function unlockSnap(){
+    snapLocked = false;
+    clearTimeout(snapSafetyTimer);
+    snapSafetyTimer = null;
+    syncSnapIndex();
+  }
+
   function goToSection(index){
     index = Math.max(0, Math.min(snapSections.length - 1, index));
     snapIndex = index;
     snapLocked = true;
-    window.scrollTo({top:snapSections[index].offsetTop, behavior: reduced ? "auto" : "smooth"});
-    clearTimeout(snapTimer);
-    snapTimer = setTimeout(()=>{snapLocked=false; syncSnapIndex()}, reduced ? 50 : 850);
+    const targetY = snapSections[index].offsetTop;
+    window.scrollTo({top:targetY, behavior: reduced ? "auto" : "smooth"});
+
+    clearTimeout(snapSafetyTimer);
+    snapSafetyTimer = setTimeout(unlockSnap, reduced ? 80 : 1250);
+
+    if(reduced) {
+      unlockSnap();
+      return;
+    }
+
+    // Watch the actual scroll position instead of guessing the animation duration.
+    let settleFrames = 0;
+    const watch = () => {
+      if(!snapLocked) return;
+      const distance = Math.abs(window.scrollY - targetY);
+      if(distance < 3) {
+        settleFrames++;
+        if(settleFrames >= 3) { unlockSnap(); return; }
+      } else {
+        settleFrames = 0;
+      }
+      requestAnimationFrame(watch);
+    };
+    requestAnimationFrame(watch);
   }
 
   window.addEventListener("wheel", e=>{
-    if(reduced || window.innerWidth <= 800 || document.body.classList.contains("menu-open") || continuousMode) return;
-    if(Math.abs(e.deltaY) < 8) return;
-    // About is intentionally a little taller than one viewport so the three
-    // principles can be read without being skipped by the section pager.
+    if(reduced || window.innerWidth <= 800 || document.body.classList.contains("menu-open")) return;
+    if(Math.abs(e.deltaY) < 10) return;
+
+    // About is intentionally a little taller than one viewport so its three
+    // principles can be read naturally. Do not hijack the middle of it.
     const about = document.querySelector("#about");
     if(about){
       const y = window.scrollY;
@@ -71,8 +105,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const insideAbout = y > top + 8 && y < bottom - 8;
       if(insideAbout) return;
     }
+
     e.preventDefault();
-    if(snapLocked) return;
+    clearTimeout(wheelEndTimer);
+    wheelEndTimer = setTimeout(()=>{wheelGestureActive=false}, 170);
+
+    // A burst of trackpad/wheel events is one gesture. Only the first event
+    // gets to choose a new section.
+    if(snapLocked || wheelGestureActive) return;
+    wheelGestureActive = true;
+
     syncSnapIndex();
     goToSection(snapIndex + (e.deltaY > 0 ? 1 : -1));
   }, {passive:false});
@@ -109,114 +151,20 @@ document.addEventListener("DOMContentLoaded", () => {
   // Menu overlay.
   function closeMenu(){menuToggle?.setAttribute("aria-expanded","false");menu?.setAttribute("aria-hidden","true");menu?.classList.remove("is-open");document.body.classList.remove("menu-open")}
   menuToggle?.addEventListener("click",()=>{const open=menuToggle.getAttribute("aria-expanded")==="true";if(open)closeMenu();else{menuToggle.setAttribute("aria-expanded","true");menu.setAttribute("aria-hidden","false");menu.classList.add("is-open");document.body.classList.add("menu-open")}});
-  menu?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{closeMenu();setTimeout(()=>{const target=document.querySelector(a.getAttribute("href")); if(target){ if(continuousMode){ target.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"}); } else { goToSection(snapSections.indexOf(target)); } }},20)}));
+  menu?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{closeMenu();setTimeout(()=>{const target=document.querySelector(a.getAttribute("href")); if(target){goToSection(snapSections.indexOf(target))}},20)}));
   document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMenu()});
 
-  // Theme + reveal handling. IntersectionObserver is unreliable with sticky scenes
-  // because several sections can occupy the viewport at once.
-  const revealTargets = document.querySelectorAll(".intro-copy,.about-layout,.statement-word,.contact-main");
-  const st=document.createElement("style");
-  st.textContent=".in-view{opacity:1!important;transform:none!important}";
-  document.head.appendChild(st);
+  const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)document.body.classList.toggle("dark",entry.target.dataset.theme==="dark")}),{threshold:.3});
+  sections.forEach(s=>observer.observe(s));
 
-  if(continuousMode){
-    revealTargets.forEach(el=>el.classList.add("in-view"));
-  }else{
-    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
-      if(entry.isIntersecting) document.body.classList.toggle("dark",entry.target.dataset.theme==="dark");
-    }),{threshold:.3});
-    sections.forEach(s=>observer.observe(s));
-
-    const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
-      if(entry.isIntersecting){entry.target.classList.add("in-view");revealObserver.unobserve(entry.target)}
-    }),{threshold:.12});
-    revealTargets.forEach(el=>{
-      el.style.opacity="0";
-      el.style.transform="translateY(28px)";
-      el.style.transition="opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)";
-      revealObserver.observe(el);
-    });
-  }
+  const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("in-view");revealObserver.unobserve(entry.target)}}),{threshold:.12});
+  document.querySelectorAll(".intro-copy,.about-layout,.statement-word,.contact-main").forEach(el=>{el.style.opacity="0";el.style.transform="translateY(28px)";el.style.transition="opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)";revealObserver.observe(el)});
+  const st=document.createElement("style");st.textContent=".in-view{opacity:1!important;transform:none!important}";document.head.appendChild(st);
 
   let ticking=false;
-  function updateHero(){
-    const y=window.scrollY,h=hero?.offsetHeight||innerHeight;
-    const p=Math.min(1,Math.max(0,y/(h*.9)));
-    if(scrollCue) scrollCue.classList.toggle("is-hidden",y>35);
-    if(heroTitle && !continuousMode){
-      heroTitle.style.transform=`translate3d(var(--px,0px),calc(var(--py,0px) - ${p*8}px),0) scale(${1+p*.025})`;
-      heroTitle.style.opacity=String(1-p*.6);
-    }
-  }
+  function updateHero(){const y=window.scrollY,h=hero?.offsetHeight||innerHeight,p=Math.min(1,Math.max(0,y/(h*.9)));if(scrollCue)scrollCue.classList.toggle("is-hidden",y>35);if(heroTitle){heroTitle.style.transform=`translate3d(var(--px,0px),calc(var(--py,0px) - ${p*8}px),0) scale(${1+p*.025})`;heroTitle.style.opacity=String(1-p*.6)}}
   function requestUpdate(){if(!ticking){requestAnimationFrame(()=>{updateHero();ticking=false});ticking=true}}
-  window.addEventListener("scroll",requestUpdate,{passive:true});
-  window.addEventListener("resize",requestUpdate,{passive:true});
-  updateHero();
-
-  // Continuous cinematic mode. Each scene remains a full viewport, but the
-  // transition is driven by its actual document position — never by the
-  // sticky element's getBoundingClientRect(). This prevents every sticky
-  // scene from thinking it is simultaneously active.
-  if(continuousMode){
-    document.documentElement.classList.add("continuous-mode");
-    const cinematicSections=Array.from(document.querySelectorAll("main > section"));
-    let lastActive=-1;
-    function clamp(v,a=0,b=1){return Math.max(a,Math.min(b,v))}
-    function updateContinuous(){
-      const y=window.scrollY;
-      const vh=Math.max(1,window.innerHeight);
-      let active=0;
-      for(let i=0;i<cinematicSections.length;i++){
-        if(y >= cinematicSections[i].offsetTop - 2) active=i;
-      }
-      const current=cinematicSections[active];
-      const next=cinematicSections[active+1];
-      const start=current?.offsetTop||0;
-      const nextStart=next ? next.offsetTop : start+vh;
-      // Keep each scene calm for most of its lifetime. The hand-off only
-      // happens near the end, so typography never competes with the next scene.
-      const transitionDistance=Math.min(vh*.52, Math.max(260, (nextStart-start)*.42));
-      const transitionStart=Math.max(start, nextStart-transitionDistance);
-      const t=clamp((y-transitionStart)/Math.max(1,transitionDistance));
-
-      cinematicSections.forEach((section,i)=>{
-        section.classList.toggle("cinematic-active",i===active);
-        section.style.pointerEvents=i===active?"auto":"none";
-        if(i<active){
-          section.style.opacity="0";
-          section.style.transform="translate3d(0,-2.5%,0) scale(.988)";
-        }else if(i===active){
-          const fade=.12*t;
-          section.style.opacity=String(1-fade);
-          section.style.transform=`translate3d(0,${-1.8*t}%,0) scale(${1-.008*t})`;
-        }else if(i===active+1){
-          const enter=clamp((y-transitionStart)/(Math.max(1,transitionDistance)));
-          section.style.opacity=String(enter);
-          section.style.transform=`translate3d(0,${(1-enter)*2.2}%,0) scale(${.992+.008*enter})`;
-        }else{
-          section.style.opacity="0";
-          section.style.transform="translate3d(0,3.5%,0) scale(.988)";
-        }
-      });
-
-      const activeTheme=cinematicSections[active]?.dataset.theme;
-      document.body.classList.toggle("dark",activeTheme==="dark");
-      if(lastActive!==active){
-        lastActive=active;
-        cinematicSections.forEach((s,i)=>s.classList.toggle("cinematic-current",i===active));
-      }
-    }
-    let cinematicTick=false;
-    function requestContinuous(){
-      if(cinematicTick)return;
-      cinematicTick=true;
-      requestAnimationFrame(()=>{updateContinuous();cinematicTick=false});
-    }
-    window.addEventListener("scroll",requestContinuous,{passive:true});
-    window.addEventListener("resize",requestContinuous,{passive:true});
-    updateContinuous();
-  }
-
+  window.addEventListener("scroll",requestUpdate,{passive:true});window.addEventListener("resize",requestUpdate,{passive:true});updateHero();
   /* =======================================================
      WIM & CO. — premium interaction layer
      ======================================================= */
@@ -337,7 +285,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateSectionDepth(){
     if(reduced) return;
     allSections.forEach(section=>{
-      if(continuousMode)return;
       const rect=section.getBoundingClientRect();
       const center=(rect.top + rect.height/2) / innerHeight;
       const distance=Math.max(-1,Math.min(1,center-.5));
@@ -439,23 +386,10 @@ document.addEventListener("DOMContentLoaded", () => {
   updateMicroParallax();
 
   // Tiny hover intent on section labels: cursor becomes a pointer-like marker.
-  document.querySelectorAll(".principle-row, .contact-cta").forEach(el=>{
+  // Contact stays intentionally calm: no cursor enlargement or magnetic hover.
+  document.querySelectorAll(".principle-row").forEach(el=>{
     el.addEventListener("mouseenter",()=>cursor?.classList.add("big"));
     el.addEventListener("mouseleave",()=>cursor?.classList.remove("big"));
   });
-
-
-  // Final interaction polish: contact CTA subtly follows the cursor.
-  const contactCta=document.querySelector(".contact-cta");
-  if(contactCta && !reduced){
-    contactCta.addEventListener("mousemove",e=>{
-      if(innerWidth<801)return;
-      const r=contactCta.getBoundingClientRect();
-      const x=(e.clientX-(r.left+r.width/2))*.018;
-      const y=(e.clientY-(r.top+r.height/2))*.012;
-      contactCta.style.transform=`translate3d(${x}px,${y}px,0)`;
-    });
-    contactCta.addEventListener("mouseleave",()=>{contactCta.style.transform=""});
-  }
 
 });
