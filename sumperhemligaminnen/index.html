@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title>Superhemliga minnen</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="style.css">
+
+  <script>
+    /* ─────────────────────────────────────────────────────────
+       Fyll i dina två värden från Supabase (Settings → API).
+       Anon-nyckeln är publik och säker att ha i frontend-kod.
+       Service-role-nyckeln får ALDRIG ligga här.
+       ───────────────────────────────────────────────────────── */
+    window.SHM_CONFIG = {
+      SUPABASE_URL: "https://YOUR-PROJECT.supabase.co",
+      SUPABASE_ANON_KEY: "YOUR-ANON-KEY"
+    };
+  </script>
+</head>
+<body class="shm is-loading">
+
+  <div class="shm-noise" aria-hidden="true"></div>
+
+  <!-- ── LOGIN ────────────────────────────────────────────── -->
+  <div class="shm-login" id="login" hidden>
+    <form class="shm-login-form" id="login-form" autocomplete="on">
+      <h1 class="shm-login-title">Superhemliga minnen</h1>
+      <p class="shm-login-hint">Endast för oss två.</p>
+
+      <label class="shm-field">
+        <span>E-post</span>
+        <input type="email" id="login-email" autocomplete="username" required>
+      </label>
+
+      <label class="shm-field">
+        <span>Lösenord</span>
+        <input type="password" id="login-password" autocomplete="current-password" required>
+      </label>
+
+      <p class="shm-login-error" id="login-error" role="alert"></p>
+
+      <button type="submit" class="shm-btn" id="login-submit">Logga in</button>
+    </form>
+  </div>
+
+  <!-- ── APP ──────────────────────────────────────────────── -->
+  <div class="shm-app" id="app" hidden>
+
+    <header class="shm-header">
+      <a class="shm-logo" href="/" aria-label="WIM & CO – startsida">WIM <i>&</i> CO</a>
+      <div class="shm-header-right">
+        <nav class="shm-views" aria-label="Vy">
+          <button type="button" data-view="journal" class="is-active" aria-pressed="true">Dagbok</button>
+          <button type="button" data-view="map" aria-pressed="false">Karta</button>
+        </nav>
+        <button type="button" class="shm-signout" id="signout">logga ut</button>
+      </div>
+    </header>
+
+    <main class="shm-main">
+
+      <section id="view-journal" class="shm-view is-active" aria-label="Fotodagbok">
+        <div class="shm-journal" id="journal"></div>
+        <p class="shm-empty" id="journal-empty" hidden>
+          Inga minnen ännu. <button type="button" class="shm-link" data-open-add>Lägg till det första</button>.
+        </p>
+      </section>
+
+      <section id="view-map" class="shm-view" aria-label="Karta" hidden>
+        <div id="map" class="shm-map" role="application" aria-label="Karta över minnen"></div>
+        <aside class="shm-map-panel" id="map-panel" hidden aria-live="polite">
+          <button type="button" class="shm-map-close" id="map-close" aria-label="Stäng">×</button>
+          <div id="map-panel-content"></div>
+        </aside>
+      </section>
+
+    </main>
+
+    <button type="button" class="shm-add" id="open-add" aria-label="Lägg till minne">+</button>
+
+  </div>
+
+  <!-- ── ADD MEMORY ───────────────────────────────────────── -->
+  <dialog class="shm-dialog" id="add-dialog" aria-labelledby="add-title">
+    <form method="dialog" class="shm-form" id="add-form">
+      <h2 id="add-title">Nytt minne</h2>
+
+      <label class="shm-field">
+        <span>Fotografi</span>
+        <input type="file" accept="image/*" id="add-file" required>
+      </label>
+
+      <div class="shm-preview" id="add-preview" hidden>
+        <img alt="" id="add-preview-img">
+        <div class="shm-stickers-layer" id="add-stickers-layer"></div>
+      </div>
+
+      <label class="shm-field">
+        <span>En rad</span>
+        <input type="text" id="add-title-input" maxlength="120" placeholder="t.ex. Kväll vid vattnet">
+      </label>
+
+      <label class="shm-field">
+        <span>Datum <em>(frivilligt)</em></span>
+        <input type="date" id="add-date">
+      </label>
+
+      <fieldset class="shm-field">
+        <legend>Plats</legend>
+        <p class="shm-hint" id="gps-hint">Välj ett foto först.</p>
+        <div class="shm-location-row">
+          <input type="text" id="add-place-search" placeholder="Sök ort…" autocomplete="off">
+          <button type="button" class="shm-btn-small" id="add-place-search-btn">Sök</button>
+        </div>
+        <div id="add-place-results" class="shm-place-results" hidden></div>
+        <p class="shm-hint" id="add-place-chosen"></p>
+      </fieldset>
+
+      <fieldset class="shm-field">
+        <legend>Stickers <em>(frivilligt)</em></legend>
+        <div class="shm-sticker-picker" id="sticker-picker">
+          <button type="button" data-sticker="heart" aria-label="Hjärta">♥</button>
+          <button type="button" data-sticker="pookie" aria-label="Pookie">pookie</button>
+          <button type="button" data-sticker="star" aria-label="Stjärna">★</button>
+          <button type="button" data-sticker="mark" aria-label="Streck">/</button>
+        </div>
+        <p class="shm-hint">Tryck på en sticker, sedan på fotot. Tryck på stickern för att skriva en rad.</p>
+      </fieldset>
+
+      <menu class="shm-form-actions">
+        <button type="button" class="shm-btn-ghost" id="add-cancel">Avbryt</button>
+        <button type="submit" class="shm-btn" id="add-save" disabled>Spara</button>
+      </menu>
+      <p class="shm-hint shm-sync-hint" id="add-status" aria-live="polite"></p>
+    </form>
+  </dialog>
+
+  <!-- ── STICKER NOTE ─────────────────────────────────────── -->
+  <dialog class="shm-dialog shm-dialog-small" id="sticker-dialog" aria-labelledby="sticker-note-title">
+    <form method="dialog" class="shm-form" id="sticker-form">
+      <h2 id="sticker-note-title">Rad till stickern</h2>
+      <label class="shm-field">
+        <span>Kort mening</span>
+        <input type="text" id="sticker-note-input" maxlength="80" placeholder="t.ex. just här">
+      </label>
+      <menu class="shm-form-actions">
+        <button type="button" class="shm-btn-ghost" id="sticker-remove">Ta bort</button>
+        <button type="submit" class="shm-btn">Klar</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/full.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
