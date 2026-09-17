@@ -663,3 +663,6 @@ body.shm.is-loading { visibility: hidden; }
   .shm-memory { opacity: 1; }
   .shm-note { transform: none; }
 }
+[hidden] {
+  display: none !important;
+}
