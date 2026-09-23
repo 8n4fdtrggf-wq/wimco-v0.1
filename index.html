@@ -1,1560 +1,251 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="sv">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WIM &amp; CO — Independent Digital Studio</title>
-<meta name="description" content="WIM & CO is an independent digital studio working across design, technology and motion.">
-<meta name="theme-color" content="#EDE9E2">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<style>
-/* ============================================================
-   00 — TOKENS
-   ============================================================ */
-:root{
-  --paper:#EDE9E2;
-  --paper-2:#E4DFD6;
-  --ink:#12110F;
-  --ink-70:rgba(18,17,15,.70);
-  --ink-50:rgba(18,17,15,.50);
-  --ink-30:rgba(18,17,15,.30);
-  --rule:rgba(18,17,15,.14);
-  --rule-strong:rgba(18,17,15,.28);
-  --accent:#FF3D00;
-  --void:#0B0A09;
-  --void-2:#151311;
-  --bone:#EDE9E2;
-  --bone-50:rgba(237,233,226,.5);
-  --bone-25:rgba(237,233,226,.25);
-
-  --f-sans:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
-  --f-serif:'Instrument Serif',Georgia,'Times New Roman',serif;
-  --f-mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
-
-  --pad:clamp(20px,5vw,80px);
-  --ease:cubic-bezier(.16,1,.3,1);
-  --ease-io:cubic-bezier(.65,0,.35,1);
-}
-
-/* ============================================================
-   01 — RESET
-   ============================================================ */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{
-  background:var(--paper);
-  color:var(--ink);
-  font-family:var(--f-sans);
-  font-size:16px;
-  line-height:1.5;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  font-synthesis:none;
-}
-img,canvas,svg{display:block;max-width:100%}
-a{color:inherit;text-decoration:none}
-button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-ul{list-style:none}
-em{font-style:italic}
-
-::selection{background:var(--accent);color:var(--paper)}
-
-:focus-visible{
-  outline:2px solid var(--accent);
-  outline-offset:3px;
-  border-radius:2px;
-}
-
-/* ============================================================
-   02 — ATMOSPHERE
-   ============================================================ */
-#field{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-}
-
-.grain{
-  position:fixed;
-  inset:-50%;
-  z-index:3;
-  pointer-events:none;
-  opacity:.28;
-  mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
-  animation:grainShift 8s steps(6,end) infinite;
-  will-change:transform;
-}
-@keyframes grainShift{
-  0%{transform:translate(0,0)}
-  20%{transform:translate(-3%,2%)}
-  40%{transform:translate(2%,-3%)}
-  60%{transform:translate(-2%,-2%)}
-  80%{transform:translate(3%,1%)}
-  100%{transform:translate(0,0)}
-}
-
-/* soft pointer light — atmospheric, not a neon blob */
-.light{
-  position:fixed;
-  top:0;left:0;
-  width:min(56vw,620px);
-  height:min(56vw,620px);
-  margin:0;
-  border-radius:50%;
-  pointer-events:none;
-  z-index:4;
-  opacity:0;
-  background:radial-gradient(circle at center,
-      rgba(255,61,0,.13) 0%,
-      rgba(255,61,0,.06) 34%,
-      rgba(255,61,0,0) 68%);
-  mix-blend-mode:multiply;
-  will-change:transform;
-  transition:opacity .8s var(--ease);
-}
-.light.is-on{opacity:.75}
-.light.is-hot{opacity:1}
-
-/* ============================================================
-   03 — PRELOADER (short, 0.9s total)
-   ============================================================ */
-.loader{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:var(--paper);
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  padding:var(--pad);
-  transition:opacity .45s var(--ease), visibility .45s;
-}
-.loader.is-done{opacity:0;visibility:hidden}
-.loader__mark{
-  font-family:var(--f-mono);
-  font-size:11px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--ink-50);
-}
-.loader__count{
-  font-family:var(--f-mono);
-  font-size:clamp(48px,14vw,140px);
-  font-weight:500;
-  line-height:.8;
-  letter-spacing:-.05em;
-  font-variant-numeric:tabular-nums;
-  color:var(--ink);
-}
-.loader__bar{
-  position:absolute;
-  left:var(--pad);
-  right:var(--pad);
-  bottom:calc(var(--pad) - 14px);
-  height:1px;
-  background:var(--rule);
-  transform-origin:left;
-}
-.loader__bar span{
-  display:block;
-  height:100%;
-  width:0%;
-  background:var(--accent);
-}
-
-/* ============================================================
-   04 — NAV
-   ============================================================ */
-.nav{
-  position:fixed;
-  top:0;left:0;right:0;
-  z-index:20;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:clamp(16px,2.4vw,28px) var(--pad);
-  mix-blend-mode:normal;
-  pointer-events:none;
-}
-.nav > *{pointer-events:auto}
-
-.wordmark{
-  font-family:var(--f-sans);
-  font-weight:800;
-  font-size:clamp(14px,1.35vw,18px);
-  letter-spacing:-.02em;
-  text-transform:uppercase;
-  display:inline-flex;
-  align-items:baseline;
-  gap:.28em;
-  line-height:1;
-}
-.wordmark .amp{color:var(--accent);font-weight:700}
-.wordmark__sub{
-  display:block;
-  font-family:var(--f-mono);
-  font-size:8px;
-  font-weight:400;
-  letter-spacing:.28em;
-  color:var(--ink-50);
-  margin-top:.55em;
-}
-.nav.is-dark .wordmark__sub{color:var(--bone-50)}
-
-.menu-btn{
-  display:inline-flex;
-  align-items:center;
-  gap:.6em;
-  font-family:var(--f-mono);
-  font-size:11px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  padding:8px 0;
-  transition:color .3s var(--ease);
-}
-.menu-btn__dot{
-  width:7px;height:7px;
-  border-radius:50%;
-  background:var(--accent);
-  transition:transform .45s var(--ease), border-radius .45s var(--ease);
-}
-.menu-btn:hover .menu-btn__dot{transform:scale(1.5)}
-.nav.is-dark .menu-btn{color:var(--bone)}
-
-/* ============================================================
-   05 — MENU OVERLAY
-   ============================================================ */
-.menu{
-  position:fixed;
-  inset:0;
-  z-index:30;
-  background:var(--void);
-  color:var(--bone);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:var(--pad);
-  visibility:hidden;
-  opacity:0;
-  transition:opacity .5s var(--ease), visibility .5s;
-}
-.menu.is-open{visibility:visible;opacity:1}
-
-.menu__list{display:flex;flex-direction:column;gap:clamp(4px,1vh,14px)}
-.menu__item{
-  overflow:hidden;
-  border-top:1px solid var(--bone-25);
-}
-.menu__item:last-child{border-bottom:1px solid var(--bone-25)}
-.menu__link{
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  align-items:center;
-  gap:clamp(14px,3vw,48px);
-  padding:clamp(10px,2.2vh,22px) 0;
-  font-size:clamp(34px,8.5vw,104px);
-  font-weight:800;
-  letter-spacing:-.045em;
-  line-height:.95;
-  text-transform:uppercase;
-  transform:translateY(105%);
-  transition:transform .8s var(--ease), color .4s var(--ease);
-  will-change:transform;
-}
-.menu.is-open .menu__link{transform:translateY(0)}
-.menu.is-open .menu__item:nth-child(1) .menu__link{transition-delay:.08s}
-.menu.is-open .menu__item:nth-child(2) .menu__link{transition-delay:.15s}
-.menu.is-open .menu__item:nth-child(3) .menu__link{transition-delay:.22s}
-.menu__link:hover{color:var(--accent)}
-.menu__idx{
-  font-family:var(--f-mono);
-  font-size:clamp(10px,1.1vw,13px);
-  font-weight:400;
-  letter-spacing:.14em;
-  color:var(--bone-50);
-  align-self:flex-start;
-  padding-top:.7em;
-}
-.menu__arrow{
-  font-size:.34em;
-  font-weight:400;
-  color:var(--bone-50);
-  transition:transform .5s var(--ease), color .4s var(--ease);
-}
-.menu__link:hover .menu__arrow{transform:translateX(14px);color:var(--accent)}
-
-.menu__foot{
-  margin-top:clamp(28px,6vh,72px);
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px 32px;
-  justify-content:space-between;
-  font-family:var(--f-mono);
-  font-size:11px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--bone-50);
-  opacity:0;
-  transition:opacity .6s var(--ease) .4s;
-}
-.menu.is-open .menu__foot{opacity:1}
-.menu__foot a{border-bottom:1px solid transparent;transition:border-color .3s,color .3s}
-.menu__foot a:hover{color:var(--bone);border-color:var(--accent)}
-
-/* ============================================================
-   06 — LAYOUT PRIMITIVES
-   ============================================================ */
-.wrap{
-  width:100%;
-  max-width:1680px;
-  margin:0 auto;
-  padding-inline:var(--pad);
-}
-main{position:relative;z-index:1}
-
-.sec{
-  position:relative;
-  background:var(--paper);
-}
-.sec-head{
-  display:grid;
-  grid-template-columns:auto 1fr;
-  gap:clamp(16px,3vw,40px);
-  align-items:baseline;
-  padding-bottom:clamp(28px,5vh,64px);
-  border-bottom:1px solid var(--rule);
-}
-.sec-num{
-  font-family:var(--f-mono);
-  font-size:11px;
-  letter-spacing:.2em;
-  color:var(--accent);
-  padding-top:.6em;
-}
-.sec-title{
-  font-size:clamp(30px,5.2vw,72px);
-  font-weight:800;
-  letter-spacing:-.045em;
-  line-height:.95;
-  text-transform:uppercase;
-}
-.sec-note{
-  grid-column:2;
-  max-width:52ch;
-  margin-top:clamp(14px,2.4vh,26px);
-  font-size:clamp(13px,1.1vw,15px);
-  line-height:1.62;
-  color:var(--ink-70);
-}
-.sec-note .tag{
-  display:inline-block;
-  font-family:var(--f-mono);
-  font-size:10px;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-  color:var(--accent);
-  border:1px solid currentColor;
-  border-radius:999px;
-  padding:2px 9px;
-  margin-top:8px;
-}
-
-/* ============================================================
-   07 — HERO
-   ============================================================ */
-.hero{
-  min-height:100svh;
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  align-content:center;
-  padding:clamp(96px,16vh,180px) var(--pad) clamp(88px,14vh,140px);
-  position:relative;
-}
-.hero__eyebrow{
-  grid-column:1/13;
-  display:flex;
-  align-items:center;
-  gap:14px;
-  font-family:var(--f-mono);
-  font-size:10px;
-  letter-spacing:.24em;
-  text-transform:uppercase;
-  color:var(--ink-50);
-  margin-bottom:clamp(18px,3vh,34px);
-}
-.hero__eyebrow::before{
-  content:"";
-  width:clamp(28px,6vw,72px);
-  height:1px;
-  background:var(--accent);
-  flex:none;
-}
-
-.hero__title{
-  grid-column:1/13;
-  font-weight:800;
-  font-size:clamp(3.6rem,15vw,15rem);
-  line-height:.82;
-  letter-spacing:-.05em;
-  text-transform:uppercase;
-  margin:0;
-}
-.hero__line{display:block;overflow:hidden;padding-bottom:.02em}
-.hero__line > span{
-  display:block;
-  transform:translateY(112%);
-  animation:rise 1.15s var(--ease) forwards;
-}
-.hero__line:nth-child(1) > span{animation-delay:.08s}
-.hero__line:nth-child(2) > span{animation-delay:.18s}
-
-.hero__line--ghost > span{
-  color:transparent;
-  -webkit-text-stroke:1px rgba(18,17,15,.42);
-}
-@supports not (-webkit-text-stroke:1px black){
-  .hero__line--ghost > span{color:rgba(18,17,15,.18);-webkit-text-stroke:0}
-}
-.hero__line--solid > span{color:var(--ink)}
-.hero__line--solid .dot{color:var(--accent)}
-
-@keyframes rise{to{transform:translateY(0)}}
-
-.hero__foot{
-  grid-column:1/13;
-  display:grid;
-  grid-template-columns:1fr;
-  gap:clamp(24px,4vh,44px);
-  margin-top:clamp(34px,6vh,72px);
-  opacity:0;
-  animation:fadeUp 1s var(--ease) .85s forwards;
-}
-@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-
-.hero__blurb{
-  max-width:44ch;
-  font-size:clamp(14px,1.15vw,17px);
-  line-height:1.6;
-  color:var(--ink-70);
-}
-.hero__blurb em{
-  font-family:var(--f-serif);
-  font-size:1.18em;
-  letter-spacing:0;
-  color:var(--ink);
-}
-
-.hero__scroll{
-  display:inline-flex;
-  align-items:center;
-  gap:12px;
-  font-family:var(--f-mono);
-  font-size:10px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--ink-50);
-  align-self:end;
-}
-.hero__scroll i{
-  display:block;
-  width:1px;height:44px;
-  background:linear-gradient(var(--ink-30),transparent);
-  position:relative;
-  overflow:hidden;
-}
-.hero__scroll i::after{
-  content:"";
-  position:absolute;
-  top:0;left:0;
-  width:100%;height:38%;
-  background:var(--accent);
-  animation:trickle 2.1s var(--ease-io) infinite;
-}
-@keyframes trickle{
-  0%{transform:translateY(-110%)}
-  60%,100%{transform:translateY(280%)}
-}
-
-@media (min-width:900px){
-  .hero__foot{
-    grid-template-columns:1fr 1fr;
-    align-items:end;
-  }
-  .hero__blurb{grid-column:1}
-  .hero__scroll{grid-column:2;justify-self:end;align-self:end}
-}
-
-/* ============================================================
-   08 — ABOUT / PRINCIPLES
-   ============================================================ */
-.about{
-  padding-block:clamp(90px,16vh,200px);
-  border-top:1px solid var(--rule);
-}
-.about__grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:clamp(48px,7vw,90px);
-  margin-top:clamp(40px,7vh,90px);
-}
-@media (min-width:1000px){
-  .about__grid{grid-template-columns:minmax(220px,.9fr) 2fr;gap:clamp(40px,7vw,120px)}
-  .about__aside{position:sticky;top:20vh;align-self:start}
-}
-
-.about__aside p{
-  font-size:clamp(14px,1.1vw,16px);
-  line-height:1.68;
-  color:var(--ink-70);
-  max-width:34ch;
-}
-.about__aside .rule{
-  width:52px;height:1px;background:var(--accent);
-  margin-bottom:22px;
-}
-
-.principles{display:flex;flex-direction:column}
-.principle{
-  display:grid;
-  grid-template-columns:auto 1fr;
-  gap:clamp(18px,3.4vw,54px);
-  padding:clamp(30px,5vh,58px) 0;
-  border-top:1px solid var(--rule);
-  position:relative;
-}
-.principle:last-child{border-bottom:1px solid var(--rule)}
-
-.principle__n{
-  font-family:var(--f-mono);
-  font-size:clamp(11px,1.1vw,13px);
-  letter-spacing:.14em;
-  color:var(--accent);
-  padding-top:.85em;
-  transition:transform .6s var(--ease);
-}
-.principle:hover .principle__n{transform:translateY(-3px)}
-
-.principle__body{position:relative;z-index:1}
-.principle__title{
-  font-size:clamp(38px,7.4vw,104px);
-  font-weight:800;
-  letter-spacing:-.05em;
-  line-height:.92;
-  text-transform:uppercase;
-  transition:transform .7s var(--ease), color .4s var(--ease);
-}
-.principle:hover .principle__title{transform:translateX(clamp(6px,1.4vw,22px))}
-.principle__copy{
-  margin-top:clamp(10px,1.6vh,18px);
-  font-family:var(--f-serif);
-  font-size:clamp(17px,1.9vw,30px);
-  line-height:1.28;
-  color:var(--ink-70);
-  max-width:24ch;
-  transition:color .4s var(--ease);
-}
-.principle:hover .principle__copy{color:var(--ink)}
-
-/* ============================================================
-   09 — ARCHIVE
-   ============================================================ */
-.archive{
-  background:var(--void);
-  color:var(--bone);
-  padding-block:clamp(90px,16vh,200px);
-  position:relative;
-  isolation:isolate;
-}
-.archive .sec-head{border-color:var(--bone-25)}
-.archive .sec-title{color:var(--bone)}
-.archive .sec-note{color:var(--bone-50)}
-.archive .sec-num{color:var(--accent)}
-
-.group{margin-top:clamp(46px,8vh,100px)}
-.group__label{
-  font-family:var(--f-mono);
-  font-size:10px;
-  letter-spacing:.26em;
-  text-transform:uppercase;
-  color:var(--bone-50);
-  padding-bottom:16px;
-  border-bottom:1px solid var(--bone-25);
-  display:flex;
-  justify-content:space-between;
-  gap:16px;
-  flex-wrap:wrap;
-}
-.group__label span:last-child{color:var(--accent)}
-
-.index{margin-top:0}
-.idx{border-bottom:1px solid var(--bone-25)}
-
-.idx__link{
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  align-items:baseline;
-  gap:clamp(12px,2.6vw,42px);
-  padding:clamp(16px,2.6vh,30px) 0;
-  position:relative;
-  transition:padding-left .55s var(--ease), color .35s var(--ease);
-}
-@media (min-width:820px){
-  .idx__link{
-    grid-template-columns:76px 1fr minmax(140px,auto) 74px;
-    gap:clamp(16px,3vw,54px);
-  }
-  .idx__link:hover{padding-left:clamp(8px,1.6vw,26px)}
-}
-
-.idx__n{
-  font-family:var(--f-mono);
-  font-size:11px;
-  letter-spacing:.12em;
-  color:var(--bone-50);
-  transition:color .35s var(--ease);
-}
-.idx__link:hover .idx__n{color:var(--accent)}
-
-.idx__t{
-  font-size:clamp(22px,3.5vw,50px);
-  font-weight:700;
-  letter-spacing:-.035em;
-  line-height:1.05;
-  text-transform:uppercase;
-  color:var(--bone-25);
-  transition:color .45s var(--ease);
-  -webkit-text-stroke:0;
-}
-.idx__link:hover .idx__t,
-.idx__link:focus-visible .idx__t{color:var(--bone)}
-
-.idx__m,.idx__y{
-  font-family:var(--f-mono);
-  font-size:10.5px;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:var(--bone-50);
-}
-.idx__y{text-align:right}
-@media (max-width:819px){
-  .idx__m{grid-column:2;display:block;margin-top:8px}
-  .idx__y{grid-column:3;grid-row:1}
-  .idx__t{grid-column:2;grid-row:1}
-}
-
-/* floating preview */
-.preview{
-  position:fixed;
-  top:0;left:0;
-  width:232px;
-  height:292px;
-  margin:-146px 0 0 -116px;
-  z-index:25;
-  pointer-events:none;
-  opacity:0;
-  transform:scale(.9);
-  transition:opacity .4s var(--ease), transform .5s var(--ease);
-  will-change:transform;
-  overflow:hidden;
-  border-radius:3px;
-  border:1px solid var(--bone-25);
-  background:var(--void-2);
-}
-.preview.is-on{opacity:1;transform:scale(1)}
-.preview__art{position:absolute;inset:0}
-.preview__art::after{
-  content:"";
-  position:absolute;inset:0;
-  background-image:radial-gradient(rgba(237,233,226,.16) 1px,transparent 1px);
-  background-size:9px 9px;
-  mix-blend-mode:overlay;
-}
-.preview__label{
-  position:absolute;
-  left:14px;bottom:12px;
-  font-family:var(--f-mono);
-  font-size:10px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--bone);
-  mix-blend-mode:difference;
-}
-
-/* tone plates — stand-ins for real imagery */
-.tone-1{background:linear-gradient(140deg,#FF3D00 0%,#2a1206 62%,#0B0A09 100%)}
-.tone-2{background:linear-gradient(200deg,#EDE9E2 0%,#8d8a83 40%,#0B0A09 100%)}
-.tone-3{background:radial-gradient(120% 90% at 20% 15%,#FF3D00 0%,#1a1a1a 55%,#0B0A09 100%)}
-.tone-4{background:conic-gradient(from 210deg at 60% 40%,#0B0A09,#3a3630,#FF3D00,#0B0A09)}
-.tone-5{background:linear-gradient(90deg,#0B0A09 0%,#EDE9E2 50%,#0B0A09 100%)}
-.tone-6{background:linear-gradient(160deg,#3a3630 0%,#0B0A09 45%,#FF3D00 140%)}
-
-/* ============================================================
-   10 — CONTACT
-   ============================================================ */
-.contact{
-  padding-block:clamp(100px,18vh,220px);
-  background:var(--paper);
-  border-top:1px solid var(--rule);
-}
-.contact__title{
-  margin-top:clamp(36px,7vh,80px);
-  font-size:clamp(2.6rem,11.5vw,12rem);
-  font-weight:800;
-  letter-spacing:-.055em;
-  line-height:.86;
-  text-transform:uppercase;
-}
-.contact__title .ital{
-  font-family:var(--f-serif);
-  font-style:italic;
-  font-weight:400;
-  letter-spacing:-.02em;
-  text-transform:none;
-}
-.contact__title .dot{color:var(--accent)}
-
-.contact__row{
-  margin-top:clamp(36px,7vh,84px);
-  display:grid;
-  grid-template-columns:1fr;
-  gap:clamp(26px,4vh,40px);
-  padding-top:clamp(24px,4vh,40px);
-  border-top:1px solid var(--rule);
-}
-@media (min-width:860px){
-  .contact__row{grid-template-columns:1.4fr 1fr;gap:60px;align-items:start}
-}
-
-.mail{
-  display:inline-block;
-  font-family:var(--f-serif);
-  font-size:clamp(26px,5.4vw,72px);
-  line-height:1.05;
-  letter-spacing:-.02em;
-  position:relative;
-  padding-bottom:.08em;
-  word-break:break-word;
-}
-.mail::after{
-  content:"";
-  position:absolute;
-  left:0;bottom:0;
-  width:100%;height:1px;
-  background:var(--ink);
-  transform-origin:right;
-  transform:scaleX(1);
-  transition:transform .6s var(--ease), background .4s;
-}
-.mail:hover{color:var(--accent)}
-.mail:hover::after{background:var(--accent);transform:scaleX(0);transform-origin:left}
-
-.contact__meta{
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-  font-family:var(--f-mono);
-  font-size:11px;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:var(--ink-50);
-}
-.contact__meta a{
-  color:var(--ink);
-  border-bottom:1px solid var(--rule-strong);
-  padding-bottom:2px;
-  align-self:flex-start;
-  transition:color .3s,border-color .3s;
-}
-.contact__meta a:hover{color:var(--accent);border-color:var(--accent)}
-
-/* ============================================================
-   11 — FOOTER
-   ============================================================ */
-.footer{
-  background:var(--paper);
-  border-top:1px solid var(--rule);
-  padding:clamp(28px,4vh,44px) var(--pad);
-  display:flex;
-  flex-wrap:wrap;
-  gap:16px 32px;
-  align-items:center;
-  justify-content:space-between;
-  font-family:var(--f-mono);
-  font-size:10.5px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--ink-50);
-}
-.footer a{transition:color .3s}
-.footer a:hover{color:var(--accent)}
-
-/* ============================================================
-   12 — REVEALS
-   ============================================================ */
-[data-reveal]{
-  opacity:0;
-  transform:translateY(26px);
-  transition:opacity .9s var(--ease), transform .9s var(--ease);
-  transition-delay:var(--d,0s);
-}
-[data-reveal].is-in{opacity:1;transform:none}
-
-/* ============================================================
-   13 — REDUCED MOTION
-   ============================================================ */
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{
-    animation-duration:.001ms !important;
-    animation-iteration-count:1 !important;
-    transition-duration:.001ms !important;
-  }
-  .hero__line > span{transform:none}
-  .hero__foot{opacity:1}
-  .grain{animation:none}
-  [data-reveal]{opacity:1;transform:none}
-}
-
-/* ============================================================
-   14 — POINTER / TOUCH GUARDS
-   ============================================================ */
-@media (hover:none),(pointer:coarse){
-  .light{display:none}
-  .preview{display:none}
-  .idx__t{color:var(--bone-50)}
-}
-@media (max-width:640px){
-  .preview{display:none}
-}
-
-
-/* Kinetic Type Test — looping typographic preview */
-.preview__art.is-kinetic::before{
-  content:"IDEAS\\A INTO\\A INTERACTION.";
-  white-space:pre;
-  position:absolute;
-  inset:12% 8%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--bone);
-  font-family:var(--f-sans);
-  font-weight:900;
-  font-size:clamp(22px,3.1vw,38px);
-  line-height:.82;
-  letter-spacing:-.07em;
-  overflow:hidden;
-  animation:kineticTypeLoop 5.5s cubic-bezier(.65,0,.35,1) infinite;
-}
-@keyframes kineticTypeLoop{
-  0%,8%{transform:translateY(18%) rotate(-5deg) scale(.82);opacity:0}
-  20%{transform:translateY(0) rotate(0) scale(1);opacity:1}
-  42%{transform:translateY(-4%) rotate(2deg) scale(1.08);letter-spacing:-.09em}
-  64%{transform:translateY(3%) rotate(-2deg) scale(.96);opacity:1}
-  88%,100%{transform:translateY(-16%) rotate(5deg) scale(.82);opacity:0}
-}
-@media (prefers-reduced-motion:reduce){
-  .preview__art.is-kinetic::before{animation:none;opacity:1;transform:none}
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wimco | Webb, SEO & Automatisering för småföretag</title>
+    <meta name="description" content="Få en hemsida som ger fler kunder. Wimco hjälper småföretag med tydlig webbdesign, SEO och smarta automatiseringar. Boka ett kostnadsfritt samtal idag!">
+    <meta name="theme-color" content="#0F172A">
+    
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Wimco | Webb, SEO & Automatisering för småföretag">
+    <meta property="og:description" content="Praktisk digital hjälp för små och medelstora företag. Fler kunder, mindre manuellt arbete.">
+    <meta property="og:url" content="https://wimco.se/">
+    
+    <!-- Fonts (Clash Display för rubriker, Inter för brödtext) -->
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+    
+    <!-- Styles & Favicon -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 </head>
 <body>
 
-<!-- ============================================================
-     PRELOADER
-     ============================================================ -->
-<div class="loader" id="loader" aria-hidden="true">
-  <span class="loader__mark">WIM &amp; CO — Signal</span>
-  <span class="loader__count" id="loaderCount">000</span>
-  <span class="loader__bar"><span id="loaderBar"></span></span>
-</div>
-
-<!-- ============================================================
-     ATMOSPHERE
-     ============================================================ -->
-<canvas id="field" aria-hidden="true"></canvas>
-<div class="light" id="light" aria-hidden="true"></div>
-<div class="grain" aria-hidden="true"></div>
-
-<!-- ============================================================
-     NAV
-     ============================================================ -->
-<header class="nav" id="nav">
-  <a class="wordmark" href="#top" aria-label="WIM and CO — home">
-    <span>WIM<span class="amp">&amp;</span>CO</span>
-    <span class="wordmark__sub">Digital&nbsp;Studio</span>
-  </a>
-  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu">
-    <span class="menu-btn__dot" aria-hidden="true"></span>
-    <span id="menuBtnLabel">Menu</span>
-  </button>
-</header>
-
-<!-- ============================================================
-     MENU OVERLAY
-     ============================================================ -->
-<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Site navigation" aria-hidden="true">
-  <nav>
-    <ul class="menu__list">
-      <li class="menu__item">
-        <a class="menu__link" href="#about">
-          <span class="menu__idx">01</span>
-          <span>About</span>
-          <span class="menu__arrow" aria-hidden="true">→</span>
-        </a>
-      </li>
-      <li class="menu__item">
-        <a class="menu__link" href="#archive">
-          <span class="menu__idx">02</span>
-          <span>Archive</span>
-          <span class="menu__arrow" aria-hidden="true">→</span>
-        </a>
-      </li>
-      <li class="menu__item">
-        <a class="menu__link" href="#contact">
-          <span class="menu__idx">03</span>
-          <span>Contact</span>
-          <span class="menu__arrow" aria-hidden="true">→</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
-  <div class="menu__foot">
-    <!-- REPLACE: real contact details -->
-    <a href="mailto:hello@wimco.se">hello@wimco.se</a>
-    <span>WIM &amp; CO — Independent digital studio</span>
-  </div>
-</div>
-
-<!-- ============================================================
-     MAIN
-     ============================================================ -->
-<main id="top">
-
-  <!-- ========== HERO ========== -->
-  <section class="hero" id="hero">
-    <p class="hero__eyebrow">Independent digital studio</p>
-
-    <h1 class="hero__title">
-      <span class="hero__line hero__line--ghost"><span>Noise</span></span>
-      <span class="hero__line hero__line--solid"><span>Signal<span class="dot">.</span></span></span>
-    </h1>
-
-    <div class="hero__foot">
-      <p class="hero__blurb">
-        WIM&nbsp;&amp;&nbsp;CO is an independent digital studio working across design,
-        technology and motion — building the <em>signal</em> that survives the noise.
-      </p>
-      <a class="hero__scroll" href="#about">
-        <i aria-hidden="true"></i>
-        Scroll — 01 About
-      </a>
-    </div>
-  </section>
-
-  <!-- ========== ABOUT ========== -->
-  <section class="sec about" id="about">
-    <div class="wrap">
-      <div class="sec-head" data-reveal>
-        <span class="sec-num">01</span>
-        <div>
-          <h2 class="sec-title">About</h2>
-          <p class="sec-note">
-            Three principles run through everything the studio makes. They are not
-            values on a wall — they are the tests every project has to pass before it ships.
-          </p>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <a href="/" class="logo">Wimco<span class="logo-dot">.</span></a>
+            <nav class="nav-desktop">
+                <a href="#tjanster">Tjänster</a>
+                <a href="#sa-funkar-det">Så funkar det</a>
+                <a href="#om-oss">Om oss</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+            <a href="#boka" class="btn btn-primary btn-sm">Boka samtal</a>
         </div>
-      </div>
+    </header>
 
-      <div class="about__grid">
-        <aside class="about__aside" data-reveal>
-          <div class="rule" aria-hidden="true"></div>
-          <p>
-            A small studio operating at the intersection of design, technology,
-            motion and digital art. Built for work that needs a point of view,
-            not just a deliverable.
-          </p>
-        </aside>
-
-        <div class="principles">
-          <article class="principle" data-reveal>
-            <span class="principle__n">01</span>
-            <div class="principle__body">
-              <h3 class="principle__title">Clarity</h3>
-              <p class="principle__copy">Make the idea obvious.</p>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-inner fade-up">
+                <span class="badge">🚀 Praktisk digital hjälp för småföretag</span>
+                <h1>En hemsida som faktiskt ger dig fler kunder.</h1>
+                <p class="hero-sub">Vi hjälper små och medelstora företag att synas på Google, se professionella ut och spara tid med smarta automatiseringar.</p>
+                <div class="hero-cta">
+                    <a href="#boka" class="btn btn-primary">Boka kostnadsfritt samtal <span aria-hidden="true">→</span></a>
+                    <a href="#tjanster" class="btn btn-secondary">Se hur det funkar</a>
+                </div>
+                <p class="trust-text">Praktisk hjälp för dig som vill ha en hemsida som gör nytta – utan krångel.</p>
             </div>
-          </article>
+        </section>
 
-          <article class="principle" data-reveal style="--d:.08s">
-            <span class="principle__n">02</span>
-            <div class="principle__body">
-              <h3 class="principle__title">Character</h3>
-              <p class="principle__copy">Give it something of its own.</p>
+        <!-- Problem Section -->
+        <section class="section bg-white">
+            <div class="container narrow fade-up">
+                <h2 class="section-title">Känner du igen dig?</h2>
+                <p class="text-large text-muted">Du har en hemsida, men den känns omodern och lockar sällan nya kunder. Du vet att du borde synas bättre på Google, men det är svårt att veta vad som faktiskt är värt att satsa på. Samtidigt lägger du onödigt mycket tid på att svara på mejl och följa upp leads manuellt.</p>
+                <p class="text-large font-medium mt-4">Det ska inte behöva vara så komplicerat – eller dyrt.</p>
             </div>
-          </article>
+        </section>
 
-          <article class="principle" data-reveal style="--d:.16s">
-            <span class="principle__n">03</span>
-            <div class="principle__body">
-              <h3 class="principle__title">Motion</h3>
-              <p class="principle__copy">Make it feel alive.</p>
+        <!-- Solution Section -->
+        <section class="section bg-light">
+            <div class="container narrow text-center fade-up">
+                <h2 class="section-title">En digital partner som gör det enkelt</h2>
+                <p class="text-large text-muted">På Wimco utgår vi från din verklighet. Vi är din långsiktiga partner för allt från den första radkoden till den löpande förbättringen. Vi börjar där du är, anpassar oss efter din budget och fokuserar bara på de åtgärder som ger faktisk effekt för din affär. Inga dyra paket du inte behöver. Bara konkreta lösningar.</p>
             </div>
-          </article>
+        </section>
+
+        <!-- Services (Bento Grid) -->
+        <section id="tjanster" class="section">
+            <div class="container">
+                <div class="text-center mb-12 fade-up">
+                    <h2 class="section-title">Vad vi kan hjälpa dig med</h2>
+                    <p class="text-muted">Inga krångliga paket. Bara det du behöver, när du behöver det.</p>
+                </div>
+                
+                <div class="bento-grid">
+                    <!-- Card 1: Large -->
+                    <div class="bento-card bento-large fade-up">
+                        <div class="bento-icon">🎨</div>
+                        <h3>Webbdesign</h3>
+                        <p>Tydliga, snabba och professionella hemsidor som bygger förtroende direkt. Vi designar inte bara för att det ska se snyggt ut, utan för att besökare ska stanna längre och våga kontakta dig.</p>
+                        <ul class="check-list mt-4">
+                            <li>Mobilanpassad och blixtsnabb</li>
+                            <li>Tydliga vägar till "Kontakta oss"</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="bento-card fade-up">
+                        <div class="bento-icon">🔍</div>
+                        <h3>Sökoptimering (SEO)</h3>
+                        <p>Syns du när kunderna söker? Vi hjälper dig att ranka högre på Google med lokal SEO och optimerade texter, så du får fler organiska förfrågningar.</p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="bento-card fade-up">
+                        <div class="bento-icon">⚙️</div>
+                        <h3>Enkla automatiseringar</h3>
+                        <p>Slipp manuellt arbete. Vi kopplar ihop dina system så att kundförfrågningar, bokningar och uppföljningar hanteras automatiskt.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it works -->
+        <section id="sa-funkar-det" class="section bg-light">
+            <div class="container">
+                <h2 class="section-title text-center mb-12 fade-up">Från idé till resultat i 4 steg</h2>
+                <div class="steps-grid">
+                    <div class="step-card fade-up">
+                        <span class="step-number">1</span>
+                        <h4>Kostnadsfritt samtal</h4>
+                        <p class="text-muted">Vi lyssnar på dina utmaningar och mål.</p>
+                    </div>
+                    <div class="step-card fade-up">
+                        <span class="step-number">2</span>
+                        <h4>Förslag & prioritering</h4>
+                        <p class="text-muted">Vi tar fram en konkret plan som passar din budget.</p>
+                    </div>
+                    <div class="step-card fade-up">
+                        <span class="step-number">3</span>
+                        <h4>Genomförande</h4>
+                        <p class="text-muted">Vi bygger och sätter upp. Du godkänner längs vägen.</p>
+                    </div>
+                    <div class="step-card fade-up">
+                        <span class="step-number">4</span>
+                        <h4>Uppföljning</h4>
+                        <p class="text-muted">Vi mäter resultaten och gör löpande förbättringar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Wimco & About -->
+        <section id="om-oss" class="section">
+            <div class="container grid-2-col">
+                <div class="fade-up">
+                    <h2 class="section-title">Därför väljer företagare oss</h2>
+                    <ul class="feature-list">
+                        <li><strong>Långsiktig partner:</strong> Vi försvinner inte efter leverans.</li>
+                        <li><strong>Praktiskt fokus:</strong> Vi bygger för affärsnytta, inte bara estetik.</li>
+                        <li><strong>Anpassat efter budget:</strong> Vi prioriterar det som ger mest effekt först.</li>
+                        <li><strong>Tydlig kommunikation:</strong> Ingen teknisk jargong, bara rak sak.</li>
+                    </ul>
+                </div>
+                <div class="about-card fade-up">
+                    <h3>Hej, jag är Willem!</h3>
+                    <p>Jag startade Wimco för att jag såg att alltför många duktiga företagare kämpar med teknik som borde vara enkel. Min bakgrund är inom webb och digital utveckling, men mitt fokus ligger alltid på <em>din</em> vardag.</p>
+                    <p>Jag är lyhörd, praktiskt lagd och tror på att små, smarta steg ger stora resultat över tid. Låt mig ta hand om tekniken, så kan du fokusera på det du är bäst på.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Proof -->
+        <section class="section bg-light">
+            <div class="container">
+                <h2 class="section-title text-center mb-12 fade-up">Resultat som talar för sig själva</h2>
+                <div class="testimonials-grid">
+                    <blockquote class="testimonial fade-up">
+                        <p>"Tack vare Willems arbete får vi nu fler förfrågningar via Google än någonsin. Väldigt tydlig process."</p>
+                        <cite>– Anna, Ägare av Lokalt Hantverksföretag</cite>
+                    </blockquote>
+                    <blockquote class="testimonial fade-up">
+                        <p>"Vi sparar minst 5 timmar i veckan tack vare den automatiserade kundmottagningen. Bästa investeringen."</p>
+                        <cite>– Markus, VD för Konsultbyrå</cite>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="section">
+            <div class="container narrow">
+                <h2 class="section-title text-center mb-12 fade-up">Vanliga frågor</h2>
+                <div class="accordion fade-up">
+                    <div class="accordion-item">
+                        <button class="accordion-header" aria-expanded="false">
+                            Vad kostar det?
+                            <span class="accordion-icon" aria-hidden="true">+</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Det beror helt på dina behov. Vi utgår alltid från din budget och prioriterar det som ger mest effekt först. Boka ett samtal så ger jag en kostnadsfri uppskattning.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" aria-expanded="false">
+                            Hur lång tid tar ett projekt?
+                            <span class="accordion-icon" aria-hidden="true">+</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p>En enklare uppdatering kan vara klar på en vecka. En ny hemsida tar oftast 3–6 veckor, beroende på omfattning och hur snabbt vi får material från dig.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" aria-expanded="false">
+                            Måste jag bygga en helt ny hemsida?
+                            <span class="accordion-icon" aria-hidden="true">+</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Nej, ofta räcker det med att vässa det du redan har. Vi utgår från din befintliga plattform om den fungerar tekniskt och bara behöver ett lyft.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" aria-expanded="false">
+                            Kan ni hjälpa till med automatisering även om jag har ett litet företag?
+                            <span class="accordion-icon" aria-hidden="true">+</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Absolut. Små företag har ofta allra mest att vinna på att automatisera tråkiga och tidskrävande moment, som t.ex. bokningsbekräftelser eller enkla uppföljningsmail.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section id="boka" class="section cta-section">
+            <div class="container narrow text-center fade-up">
+                <h2>Låt oss ta din hemsida till nästa nivå</h2>
+                <p class="text-large mt-4 mb-8">Boka ett förutsättningslöst samtal på 20 minuter. Vi kikar på din hemsida, pratar om dina mål och ser om vi kan hjälpa dig. Inga förpliktelser.</p>
+                <a href="mailto:hej@wimco.se?subject=Förfrågan%20om%20kostnadsfritt%20samtal" class="btn btn-primary btn-lg">Boka kostnadsfritt samtal</a>
+                <p class="mt-4 text-sm opacity-80">Eller mejla oss direkt på <a href="mailto:hej@wimco.se" class="underline">hej@wimco.se</a></p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <span class="logo">Wimco<span class="logo-dot">.</span></span>
+                <p class="text-sm text-muted mt-2">Praktisk digital hjälp för små och medelstora företag.</p>
+            </div>
+            <div class="footer-links">
+                <a href="mailto:hej@wimco.se">hej@wimco.se</a>
+                <a href="tel:+46701234567">070-123 45 67</a>
+                <span>Org.nr: 559XXX-XXXX</span>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== ARCHIVE ========== -->
-  <section class="sec archive" id="archive">
-    <div class="wrap">
-      <div class="sec-head" data-reveal>
-        <span class="sec-num">02</span>
-        <div>
-          <h2 class="sec-title">Archive</h2>
-          <p class="sec-note">
-            An open index of work, experiments and unfinished ideas.
-            <br><span class="tag">Selected work &amp; ongoing experiments</span>
-          </p>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 Wimco. Alla rättigheter förbehållna.</p>
         </div>
-      </div>
+    </footer>
 
-      <!-- --- Selected work --- -->
-      <div class="group" data-reveal>
-        <h3 class="group__label">
-          <span>Selected work</span>
-          <span>Client</span>
-        </h3>
-        <ul class="index">
-
-          <li class="idx">
-            <a class="idx__link" href="http://ddtransformers.se/" target="_blank" rel="noopener noreferrer" data-preview data-tone="tone-1" data-label="D&amp;D Transformers — Concept">
-              <span class="idx__n">001</span>
-              <span class="idx__t">D&amp;D Transformers</span>
-              <span class="idx__m">Concept / Web Design</span>
-              <span class="idx__y">2026</span>
-            </a>
-          </li>
-
-          <li class="idx">
-            <a class="idx__link" href="#" data-preview data-tone="tone-3" data-label="Placeholder 002">
-              <span class="idx__n">002</span>
-              <span class="idx__t">Placeholder Project</span>
-              <span class="idx__m">Art Direction</span>
-              <span class="idx__y">2024</span>
-            </a>
-          </li>
-
-          <li class="idx">
-            <a class="idx__link" href="#" data-preview data-tone="tone-2" data-label="Placeholder 003">
-              <span class="idx__n">003</span>
-              <span class="idx__t">Placeholder Project</span>
-              <span class="idx__m">Web / Motion</span>
-              <span class="idx__y">2024</span>
-            </a>
-          </li>
-
-        </ul>
-      </div>
-
-      <!-- --- Playground --- -->
-      <div class="group" data-reveal>
-        <h3 class="group__label">
-          <span>Interactive</span>
-          <span>Play</span>
-        </h3>
-        <ul class="index">
-          <li class="idx">
-            <a class="idx__link" href="/playground/">
-              <span class="idx__n">P01</span>
-              <span class="idx__t">Playground</span>
-              <span class="idx__m">Interactive experiment</span>
-              <span class="idx__y">2026</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <!-- --- Experiments --- -->
-      <div class="group" data-reveal>
-        <h3 class="group__label">
-          <span>Experiments &amp; studies</span>
-          <span>Unfinished</span>
-        </h3>
-        <ul class="index">
-
-          <li class="idx">
-            <a class="idx__link" href="#" data-preview data-tone="tone-4" data-label="Study 01">
-              <span class="idx__n">S01</span>
-              <span class="idx__t">Dot Field Study</span>
-              <span class="idx__m">Canvas</span>
-              <span class="idx__y">2025</span>
-            </a>
-          </li>
-
-          <li class="idx">
-            <a class="idx__link" href="#" data-preview data-tone="tone-5" data-label="Kinetic Type Test — WIP" data-kinetic="true" aria-label="Kinetic Type Test, experiment 001, work in progress">
-              <span class="idx__n">E01</span>
-              <span class="idx__t">Kinetic Type Test</span>
-              <span class="idx__m">Typography / Motion · WIP</span>
-              <span class="idx__y">2026</span>
-            </a>
-          </li>
-
-          <li class="idx">
-            <a class="idx__link" href="#" data-preview data-tone="tone-6" data-label="Study 03">
-              <span class="idx__n">S03</span>
-              <span class="idx__t">Unfinished Interface</span>
-              <span class="idx__m">Web</span>
-              <span class="idx__y">2024</span>
-            </a>
-          </li>
-
-          <li class="idx">
-            <a class="idx__link" href="#" data-preview data-tone="tone-3" data-label="Study 04">
-              <span class="idx__n">S04</span>
-              <span class="idx__t">Light Study</span>
-              <span class="idx__m">WebGL</span>
-              <span class="idx__y">2023</span>
-            </a>
-          </li>
-
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== CONTACT ========== -->
-  <section class="sec contact" id="contact">
-    <div class="wrap">
-      <div class="sec-head" data-reveal>
-        <span class="sec-num">03</span>
-        <div>
-          <h2 class="sec-title">Contact</h2>
-        </div>
-      </div>
-
-      <h2 class="contact__title" data-reveal>
-        Let's make<br>
-        <span class="ital">signal</span><span class="dot">.</span>
-      </h2>
-
-      <div class="contact__row" data-reveal>
-        <div>
-          <!-- REPLACE: your real email address -->
-          <a class="mail" href="mailto:hello@wimco.se">hello@wimco.se</a>
-        </div>
-        <div class="contact__meta">
-          <span>Open for select projects &amp; collaborations</span>
-          <!-- REPLACE: your real social links -->
-          <a href="https://instagram.com/wimco.se" target="_blank" rel="noopener noreferrer" aria-label="WIM &amp; CO on Instagram">Instagram ↗</a>
-          <span>LinkedIn — coming soon</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
-<footer class="footer">
-  <span>WIM &amp; CO — Independent digital studio</span>
-  <span>© <span id="year">2026</span> All rights reserved</span>
-  <a href="#top">Back to top ↑</a>
-</footer>
-
-<!-- ============================================================
-     FLOATING ARCHIVE PREVIEW
-     ============================================================ -->
-<div class="preview" id="preview" aria-hidden="true">
-  <div class="preview__art" id="previewArt"></div>
-  <span class="preview__label" id="previewLabel"></span>
-</div>
-
-<script>
-(function(){
-  'use strict';
-
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var isTouch = window.matchMedia('(hover:none), (pointer:coarse)').matches;
-
-  /* ==========================================================
-     1 — POINTER STATE (shared by light + preview)
-     ========================================================== */
-  var pointer = { x: window.innerWidth * 0.5, y: window.innerHeight * 0.5, tx: 0, ty: 0, active: false };
-  pointer.tx = pointer.x; pointer.ty = pointer.y;
-
-  window.addEventListener('pointermove', function(e){
-    pointer.tx = e.clientX;
-    pointer.ty = e.clientY;
-    pointer.active = true;
-  }, { passive: true });
-
-  /* ==========================================================
-     2 — DOT FIELD  (noise → signal)
-     ========================================================== */
-  (function field(){
-    var canvas = document.getElementById('field');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d', { alpha: true });
-    if (!ctx) return;
-
-    var W = 0, H = 0, DPR = 1, gap = 26, dots = [], cols = 0, rows = 0;
-    var t = 0, raf = null, running = true, visible = true;
-
-    var BASE_ALPHA = 0.20;
-    var BASE_COLOR = 'rgba(18,17,15,' + BASE_ALPHA + ')';
-    var INK = [18, 17, 15];
-    var ACC = [255, 61, 0];
-
-    function build(){
-      DPR = Math.min(window.devicePixelRatio || 1, 2);
-      W = window.innerWidth;
-      H = window.innerHeight;
-
-      canvas.width  = Math.floor(W * DPR);
-      canvas.height = Math.floor(H * DPR);
-      canvas.style.width  = W + 'px';
-      canvas.style.height = H + 'px';
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-
-      gap = W < 560 ? 34 : (W < 1024 ? 30 : 27);
-      cols = Math.ceil(W / gap) + 1;
-      rows = Math.ceil(H / gap) + 1;
-
-      dots = new Array(cols * rows);
-      var k = 0;
-      for (var i = 0; i < cols; i++){
-        for (var j = 0; j < rows; j++){
-          var x = i * gap + gap * 0.5;
-          var y = j * gap + gap * 0.5;
-          dots[k++] = { ox: x, oy: y, x: x, y: y, ph: (i * 0.55 + j * 0.31) };
-        }
-      }
-    }
-
-    function frame(){
-      t += 1;
-
-      // lerp the pointer for a soft, atmospheric trail
-      pointer.x += (pointer.tx - pointer.x) * 0.12;
-      pointer.y += (pointer.ty - pointer.y) * 0.12;
-
-      // autonomous drift on touch devices so the field stays alive
-      var px = pointer.x, py = pointer.y;
-      if (isTouch){
-        px = W * 0.5 + Math.cos(t * 0.0055) * W * 0.32;
-        py = H * 0.5 + Math.sin(t * 0.0082) * H * 0.30;
-      }
-
-      var R = Math.min(W, H) * 0.34;
-      var R2 = R * R;
-
-      ctx.clearRect(0, 0, W, H);
-
-      // ---- pass 1: untouched grid (single path, cheap) ----
-      ctx.beginPath();
-      for (var i = 0; i < dots.length; i++){
-        var d = dots[i];
-        var wave = Math.sin(d.ox * 0.0075 - t * 0.014) * 3.2;
-        d.y = d.oy + wave;
-
-        var dx = d.ox - px, dy = d.y - py;
-        var dist2 = dx * dx + dy * dy;
-        if (dist2 > R2){
-          ctx.moveTo(d.ox + 0.9, d.y);
-          ctx.arc(d.ox, d.y, 0.9, 0, 6.283185);
-        }
-      }
-      ctx.fillStyle = BASE_COLOR;
-      ctx.fill();
-
-      // ---- pass 2: influenced dots drawn individually ----
-      if (true){
-        for (var m = 0; m < dots.length; m++){
-          var p = dots[m];
-          var ddx = p.ox - px, ddy = p.y - py;
-          var dd = ddx * ddx + ddy * ddy;
-          if (dd >= R2) continue;
-
-          var inf = 1 - dd / R2;
-          inf = inf * inf * (3 - 2 * inf); // smoothstep
-
-          var dist = Math.sqrt(dd) || 0.0001;
-          var nx = ddx / dist, ny = ddy / dist;
-
-          // radial push + slight tangential swirl
-          var push = inf * 17;
-          var swirl = inf * 9;
-          var x = p.ox + nx * push - ny * swirl;
-          var y = p.y  + ny * push + nx * swirl;
-
-          var rad = 0.9 + inf * 1.7;
-          var a = BASE_ALPHA + inf * 0.78;
-
-          var cr = Math.round(INK[0] + (ACC[0] - INK[0]) * inf);
-          var cg = Math.round(INK[1] + (ACC[1] - INK[1]) * inf);
-          var cb = Math.round(INK[2] + (ACC[2] - INK[2]) * inf);
-
-          ctx.beginPath();
-          ctx.arc(x, y, rad, 0, 6.283185);
-          ctx.fillStyle = 'rgba(' + cr + ',' + cg + ',' + cb + ',' + a.toFixed(3) + ')';
-          ctx.fill();
-        }
-      }
-
-      if (running && visible) raf = requestAnimationFrame(frame);
-    }
-
-    function start(){
-      if (reduced){
-        // single static frame
-        pointer.x = pointer.tx = W * 0.62;
-        pointer.y = pointer.ty = H * 0.42;
-        running = true; visible = true;
-        frame();
-        running = false;
-        return;
-      }
-      if (raf === null) raf = requestAnimationFrame(frame);
-    }
-
-    function stop(){
-      if (raf !== null){ cancelAnimationFrame(raf); raf = null; }
-    }
-
-    build();
-    start();
-
-    var rT;
-    window.addEventListener('resize', function(){
-      clearTimeout(rT);
-      rT = setTimeout(function(){
-        stop();
-        build();
-        if (!reduced) start();
-      }, 180);
-    });
-
-    // pause when hero scrolls away (saves battery, no visual cost)
-    if ('IntersectionObserver' in window){
-      var hero = document.getElementById('hero');
-      if (hero){
-        new IntersectionObserver(function(entries){
-          visible = entries[0].isIntersecting;
-          if (visible && !reduced){ running = true; if (raf === null) raf = requestAnimationFrame(frame); }
-          else { running = false; stop(); }
-        }, { threshold: 0 }).observe(hero);
-      }
-    }
-  })();
-
-  /* ==========================================================
-     3 — SOFT POINTER LIGHT
-     ========================================================== */
-  (function light(){
-    var el = document.getElementById('light');
-    if (!el || isTouch || reduced) return;
-
-    var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
-
-    (function loop(){
-      cx += (pointer.tx - cx) * 0.085;
-      cy += (pointer.ty - cy) * 0.085;
-      el.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0) translate(-50%,-50%)';
-      requestAnimationFrame(loop);
-    })();
-
-    window.addEventListener('pointermove', function(){ el.classList.add('is-on'); }, { passive: true, once: true });
-    window.addEventListener('pointerleave', function(){ el.classList.remove('is-on'); });
-
-    // intensify over interactive elements
-    document.addEventListener('pointerover', function(e){
-      var hit = e.target.closest('a, button');
-      el.classList.toggle('is-hot', !!hit);
-    }, { passive: true });
-  })();
-
-  /* ==========================================================
-     4 — MENU
-     ========================================================== */
-  (function menu(){
-    var btn = document.getElementById('menuBtn');
-    var label = document.getElementById('menuBtnLabel');
-    var overlay = document.getElementById('menu');
-    if (!btn || !overlay) return;
-
-    var open = false;
-    var previousFocus = null;
-
-    function setMenu(state){
-      open = state;
-      if (open) previousFocus = document.activeElement;
-      overlay.classList.toggle('is-open', open);
-      overlay.setAttribute('aria-hidden', String(!open));
-      btn.setAttribute('aria-expanded', String(open));
-      label.textContent = open ? 'Close' : 'Menu';
-      document.body.style.overflow = open ? 'hidden' : '';
-      if (open){
-        var first = overlay.querySelector('.menu__link');
-        if (first) setTimeout(function(){ first.focus({ preventScroll: true }); }, 350);
-      } else if (previousFocus && previousFocus.focus) {
-        previousFocus.focus({ preventScroll: true });
-      }
-    }
-
-    btn.addEventListener('click', function(){ setMenu(!open); });
-
-    overlay.querySelectorAll('a').forEach(function(a){
-      a.addEventListener('click', function(){ setMenu(false); });
-    });
-
-    document.addEventListener('keydown', function(e){
-      if (!open) return;
-      if (e.key === 'Escape'){ setMenu(false); btn.focus(); return; }
-      if (e.key === 'Tab'){
-        var focusables = Array.from(overlay.querySelectorAll('a[href], button:not([disabled])'));
-        if (!focusables.length) return;
-        var first = focusables[0], last = focusables[focusables.length - 1];
-        if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
-        else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
-      }
-    });
-  })();
-
-  /* ==========================================================
-     5 — SCROLL REVEALS
-     ========================================================== */
-  (function reveals(){
-    var nodes = document.querySelectorAll('[data-reveal]');
-    if (!nodes.length) return;
-
-    if (reduced || !('IntersectionObserver' in window)){
-      nodes.forEach(function(n){ n.classList.add('is-in'); });
-      return;
-    }
-
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if (entry.isIntersecting){
-          entry.target.classList.add('is-in');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
-
-    nodes.forEach(function(n){ io.observe(n); });
-  })();
-
-  /* ==========================================================
-     6 — NAV DARK STATE (over the archive chapter)
-     ========================================================== */
-  (function navTheme(){
-    var nav = document.getElementById('nav');
-    var archive = document.getElementById('archive');
-    if (!nav || !archive || !('IntersectionObserver' in window)) return;
-
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        nav.classList.toggle('is-dark', entry.isIntersecting);
-      });
-    }, { rootMargin: '-8% 0px -88% 0px', threshold: 0 });
-
-    io.observe(archive);
-  })();
-
-  /* ==========================================================
-     7 — ARCHIVE FLOATING PREVIEW
-     ========================================================== */
-  (function preview(){
-    if (isTouch || reduced) return;
-
-    var el = document.getElementById('preview');
-    var art = document.getElementById('previewArt');
-    var lab = document.getElementById('previewLabel');
-    if (!el || !art || !lab) return;
-
-    var links = document.querySelectorAll('[data-preview]');
-    if (!links.length) return;
-
-    var x = 0, y = 0, on = false;
-
-    (function loop(){
-      x += (pointer.tx - x) * 0.14;
-      y += (pointer.ty - y) * 0.14;
-      el.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) scale(' + (on ? 1 : 0.9) + ')';
-      requestAnimationFrame(loop);
-    })();
-
-    links.forEach(function(link){
-      link.addEventListener('pointerenter', function(){
-        art.className = 'preview__art ' + (link.dataset.tone || 'tone-1') + (link.dataset.kinetic === 'true' ? ' is-kinetic' : '');
-        lab.textContent = link.dataset.label || '';
-        on = true;
-        el.classList.add('is-on');
-      });
-      link.addEventListener('pointerleave', function(){
-        on = false;
-        el.classList.remove('is-on');
-      });
-      // placeholder links shouldn't jump the page
-      link.addEventListener('click', function(e){
-        if (link.getAttribute('href') === '#') e.preventDefault();
-      });
-    });
-  })();
-
-  /* ==========================================================
-     8 — PRELOADER + FOOTER YEAR
-     ========================================================== */
-  (function boot(){
-    var loader = document.getElementById('loader');
-    var count = document.getElementById('loaderCount');
-    var bar = document.getElementById('loaderBar');
-
-    var y = document.getElementById('year');
-    if (y) y.textContent = String(new Date().getFullYear());
-
-    if (!loader || !count || !bar) return;
-
-    if (reduced){
-      loader.classList.add('is-done');
-      return;
-    }
-
-    var start = performance.now();
-    var DURATION = 620;
-
-    (function tick(now){
-      var p = Math.min((now - start) / DURATION, 1);
-      var eased = 1 - Math.pow(1 - p, 3);
-      var v = Math.round(eased * 100);
-      count.textContent = String(v).padStart(3, '0');
-      bar.style.width = v + '%';
-
-      if (p < 1){
-        requestAnimationFrame(tick);
-      } else {
-        setTimeout(function(){
-          loader.classList.add('is-done');
-          // release the intro animations
-          document.body.classList.add('is-ready');
-        }, 200);
-      }
-    })(start);
-  })();
-
-})();
-</script>
+    <script src="js/main.js" defer></script>
 </body>
 </html>
