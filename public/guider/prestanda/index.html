@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Snabbare webbplats: Core Web Vitals på svenska | Wimco</title>
+<meta name="description" content="Vad LCP, INP och CLS betyder, vilka gränsvärden Google använder och vad som oftast gör en företagssajt långsam – med en åtgärdslista i prioritetsordning.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://wimco.se/guider/prestanda/">
+<meta name="theme-color" content="#F3F5F4">
+<meta name="color-scheme" content="light">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Wimco">
+<meta property="og:locale" content="sv_SE">
+<meta property="og:title" content="Snabbare webbplats: Core Web Vitals på svenska | Wimco">
+<meta property="og:description" content="Vad LCP, INP och CLS betyder, vilka gränsvärden Google använder och vad som oftast gör en företagssajt långsam – med en åtgärdslista i prioritetsordning.">
+<meta property="og:url" content="https://wimco.se/guider/prestanda/">
+<meta property="og:image" content="https://wimco.se/assets/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://wimco.se/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css">
+<script type="module" src="/assets/js/site.js"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Snabbare webbplats: Core Web Vitals på svenska",
+  "description": "Vad LCP, INP och CLS betyder, vilka gränsvärden Google använder och vad som oftast gör en företagssajt långsam – med en åtgärdslista i prioritetsordning.",
+  "datePublished": "2026-09-30",
+  "dateModified": "2026-09-30",
+  "inLanguage": "sv-SE",
+  "author": {
+    "@type": "Person",
+    "name": "Willem"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wimco",
+    "url": "https://wimco.se",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wimco.se/assets/favicon.svg"
+    }
+  },
+  "mainEntityOfPage": "https://wimco.se/guider/prestanda/"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Hoppa till innehållet</a>
+
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="logo" href="/" aria-label="Wimco, till startsidan" translate="no">Wimco<span class="logo-dot" aria-hidden="true">.</span></a>
+    <nav class="nav" aria-label="Huvudmeny">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list" data-nav-toggle>
+        <span class="nav-toggle-bars" aria-hidden="true"></span><span class="nav-toggle-label">Meny</span>
+      </button>
+      <ul class="nav-list" id="nav-list">
+        <li><a href="/#tjanster">Tjänster</a></li>
+        <li><a href="/#score">Wimco Score</a></li>
+        <li><a href="/#arbetssatt">Arbetssätt</a></li>
+        <li><a href="/guider/">Guider</a></li>
+        <li><a href="/#faq">Frågor</a></li>
+        <li class="nav-cta"><a class="btn btn-line" href="/#starta" data-track="cta_project_nav">Starta ett projekt</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="wrap">
+  <header class="page-head">
+    <p class="crumbs"><a href="/">Wimco</a> <span aria-hidden="true">/</span> <a href="/guider/">Guider</a></p>
+    <h1 class="display">Snabbare webbplats: Core Web Vitals på svenska</h1>
+    <p class="lead">Tre mått avgör om Google och dina besökare upplever sajten som snabb. Här är vad de betyder och vad du gör åt dem.</p>
+    <p class="crumbs">Uppdaterad <time datetime="2026-09-30">30 september 2026</time> · Willem, Wimco</p>
+  </header>
+  <div class="guide-layout">
+    <article class="prose">
+<p>En långsam sida kostar på två sätt. Besökare som väntar lämnar innan de sett ditt erbjudande, och Google använder laddupplevelsen som en av signalerna när sidor rankas. Den goda nyheten är att de vanligaste problemen går att åtgärda utan att bygga om allt.</p>
+<h2>De tre måtten</h2>
+<table>
+<thead><tr><th scope="col">Mått</th><th scope="col">Vad det mäter</th><th scope="col">Bra enligt Google</th></tr></thead>
+<tbody>
+<tr><td><strong>LCP</strong> – Largest Contentful Paint</td><td>När sidans största synliga innehåll, ofta en bild eller rubrik, har laddats.</td><td>2,5 sekunder eller snabbare</td></tr>
+<tr><td><strong>INP</strong> – Interaction to Next Paint</td><td>Hur snabbt sidan reagerar när någon klickar, trycker eller skriver.</td><td>200 millisekunder eller snabbare</td></tr>
+<tr><td><strong>CLS</strong> – Cumulative Layout Shift</td><td>Hur mycket innehållet hoppar medan sidan laddar.</td><td>0,1 eller lägre</td></tr>
+</tbody>
+</table>
+<p>Google bedömer värdena för 75 procent av besöken. Det räcker alltså inte att sidan är snabb på din egen dator med fiber – den ska vara snabb för de flesta, även på mobilnät.</p>
+<h2>Labbdata och riktiga besökare</h2>
+<p>Verktyg som Lighthouse och PageSpeed Insights testar sidan i en kontrollerad miljö: en emulerad mellanklasstelefon på ett begränsat mobilnät. Det kallas labbdata och är perfekt för att hitta orsaker. Om din sajt har tillräckligt många besökare visar PageSpeed Insights också fältdata från Chrome-användare, och det är de siffrorna Google använder i sökrankningen.</p>
+<p>INP kräver riktiga interaktioner och kan inte mätas i labbet. Där används i stället <em>Total Blocking Time</em> (TBT) som en indikator: hur länge tunga skript blockerar sidan.</p>
+<h2>Det här gör oftast en sajt långsam</h2>
+<ul>
+<li><strong>Stora bilder.</strong> En bild från mobilkameran kan väga flera megabyte. Skala ned, konvertera till WebP eller AVIF och låt bilder längre ned på sidan laddas först när de behövs.</li>
+<li><strong>Tredjepartsskript.</strong> Chattwidgetar, spårningspixlar, sliders och inbäddade flöden laddar ofta mer kod än resten av sidan tillsammans.</li>
+<li><strong>Många typsnitt.</strong> Varje typsnitt och vikt är en egen fil. Två familjer räcker nästan alltid.</li>
+<li><strong>Långsam server.</strong> Om servern tar mer än en knapp sekund innan den svarar hjälper ingen optimering längre fram. Billiga webbhotell och tunga plugin är vanliga orsaker.</li>
+<li><strong>Innehåll utan reserverad plats.</strong> Bilder utan angiven bredd och höjd, sena cookiebanners och annonser får innehållet att hoppa.</li>
+</ul>
+<h2>Åtgärder i prioritetsordning</h2>
+<ol>
+<li>Mät startsidan och din viktigaste undersida i PageSpeed Insights eller <a href="/#analys">Wimco Score</a>.</li>
+<li>Optimera den bild som är ditt LCP-element – oftast hero-bilden. Rätt storlek, modernt format och ingen lazy loading på just den.</li>
+<li>Gå igenom tredjepartsskripten. Ta bort det som inte används och ladda resten med <code>defer</code> eller först efter samtycke.</li>
+<li>Ange <code>width</code> och <code>height</code> på bilder och reservera plats för det som laddas sent.</li>
+<li>Se över hosting och cache om serverns svarstid är hög.</li>
+<li>Mät igen och jämför. Följ fältdatan i Google Search Console över tid.</li>
+</ol>
+<aside class="callout">
+  <h2 class="h-md">Hur snabb är din sajt?</h2>
+  <p>Wimco Score mäter med Google Lighthouse och visar vad som bromsar mest – gratis och utan registrering.</p>
+  <p><a class="btn btn-signal" href="/#analys">Analysera min webbplats</a></p>
+</aside>
+    </article>
+    <aside class="guide-aside" aria-label="Hjälp från Wimco">
+  <p class="aside-line"><span class="badge badge-o" aria-hidden="true">O</span> Optimering</p>
+  <p>Vill du att någon annan tar hand om hastigheten? Wimco optimerar befintliga sajter och bygger nya som är snabba från start.</p>
+  <a class="btn btn-ink" href="/#starta">Få hjälp med prestanda</a>
+  <a class="link-arrow" href="/#analys">Gratis analys av din sajt</a>
+</aside>
+  </div>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <a class="logo logo-light" href="/" aria-label="Wimco, till startsidan" translate="no">Wimco<span class="logo-dot" aria-hidden="true">.</span></a>
+      <p>Hemsidor, webbutveckling och automation för små och medelstora företag.</p>
+    </div>
+    <div class="footer-col">
+      <h2 class="footer-h">Kontakt</h2>
+      <ul>
+        <li><a href="mailto:hej@wimco.se">hej@wimco.se</a></li>
+        <li><a href="tel:+46722180509">+46 72 218 05 09</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h2 class="footer-h">Läs mer</h2>
+      <ul>
+        <li><a href="/guider/">Guider</a></li>
+        <li><a href="/wimco-score/">Så fungerar Wimco Score</a></li>
+        <li><a href="/playground/">Playground</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h2 class="footer-h">Integritet</h2>
+      <ul>
+        <li><a href="/integritet/">Integritetspolicy</a></li>
+        <li><button class="linklike" type="button" data-consent-open>Cookieinställningar</button></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom"><p>© 2026 Wimco</p></div>
+</footer>
+
+<div class="consent" data-consent hidden>
+  <p>Vi vill använda Google Analytics för att se hur sajten används. Det sätter cookies och körs bara om du godkänner. <a href="/integritet/">Läs mer</a></p>
+  <div class="consent-actions">
+    <button class="btn btn-line btn-sm" type="button" data-consent-choice="denied">Nej tack</button>
+    <button class="btn btn-ink btn-sm" type="button" data-consent-choice="granted">Godkänn</button>
+  </div>
+</div>
+</body>
+</html>

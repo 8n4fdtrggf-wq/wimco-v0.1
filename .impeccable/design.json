@@ -1,0 +1,664 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-30T16:31:39+00:00",
+  "title": "Design System: Wimco",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Platform White",
+        "canonical": "oklch(96.8% 0.002 165.1)",
+        "tonalRamp": [
+          "#0A0B0B",
+          "#232424",
+          "#3F403F",
+          "#5C5E5D",
+          "#7C7E7D",
+          "#9D9F9E",
+          "#C6C8C7",
+          "#EDEFEE"
+        ]
+      },
+      "paper-2": {
+        "role": "neutral",
+        "displayName": "Worn Platform",
+        "canonical": "oklch(93.9% 0.006 170.4)",
+        "tonalRamp": [
+          "#090C0B",
+          "#212524",
+          "#3D413F",
+          "#5A5F5D",
+          "#7A7E7D",
+          "#9BA09E",
+          "#C4C9C7",
+          "#EBF0EE"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#242424",
+          "#404040",
+          "#5D5D5D",
+          "#7D7D7D",
+          "#9E9E9E",
+          "#C7C7C7",
+          "#EEEEEE"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Signage Navy (text)",
+        "canonical": "oklch(22.3% 0.052 258.3)",
+        "tonalRamp": [
+          "#010A20",
+          "#14243D",
+          "#2F405B",
+          "#4C5F7B",
+          "#6A7E9D",
+          "#8BA0BF",
+          "#B3C9EA",
+          "#E5EFFE"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Ink 2",
+        "canonical": "oklch(37.7% 0.046 259.6)",
+        "tonalRamp": [
+          "#020A1E",
+          "#16243A",
+          "#314058",
+          "#4E5E78",
+          "#6D7E99",
+          "#8E9FBB",
+          "#B6C9E6",
+          "#E5EFFF"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Ink 3",
+        "canonical": "oklch(50.0% 0.039 259.4)",
+        "tonalRamp": [
+          "#030B1B",
+          "#182437",
+          "#334055",
+          "#515E74",
+          "#707E95",
+          "#909FB7",
+          "#B8C8E1",
+          "#E5EFFF"
+        ]
+      },
+      "navy": {
+        "role": "neutral",
+        "displayName": "Signage Navy",
+        "canonical": "oklch(22.3% 0.052 258.3)",
+        "tonalRamp": [
+          "#010A20",
+          "#14243D",
+          "#2F405B",
+          "#4C5F7B",
+          "#6A7E9D",
+          "#8BA0BF",
+          "#B3C9EA",
+          "#E5EFFE"
+        ]
+      },
+      "navy-2": {
+        "role": "neutral",
+        "displayName": "Navy, raised",
+        "canonical": "oklch(28.6% 0.067 258.3)",
+        "tonalRamp": [
+          "#000826",
+          "#0E2344",
+          "#294063",
+          "#465E83",
+          "#657FA5",
+          "#85A0C8",
+          "#ADC9F3",
+          "#E5EFFE"
+        ]
+      },
+      "on-navy": {
+        "role": "neutral",
+        "displayName": "Platform White on navy",
+        "canonical": "oklch(96.8% 0.002 165.1)",
+        "tonalRamp": [
+          "#0A0B0B",
+          "#232424",
+          "#3F403F",
+          "#5C5E5D",
+          "#7C7E7D",
+          "#9D9F9E",
+          "#C6C8C7",
+          "#EDEFEE"
+        ]
+      },
+      "on-navy-2": {
+        "role": "neutral",
+        "displayName": "Soft Navy",
+        "canonical": "oklch(77.8% 0.033 257.2)",
+        "tonalRamp": [
+          "#040B19",
+          "#1A2534",
+          "#354151",
+          "#525F70",
+          "#717E91",
+          "#92A0B3",
+          "#BAC9DD",
+          "#E5EFFF"
+        ]
+      },
+      "signal": {
+        "role": "primary",
+        "displayName": "Signal Orange",
+        "canonical": "oklch(68.2% 0.211 37.7)",
+        "tonalRamp": [
+          "#230000",
+          "#460C00",
+          "#702104",
+          "#A0340B",
+          "#D74301",
+          "#FE6838",
+          "#FCB39D",
+          "#FEE9E3"
+        ]
+      },
+      "signal-hover": {
+        "role": "primary",
+        "displayName": "Signal Orange, lifted",
+        "canonical": "oklch(71.8% 0.182 40.0)",
+        "tonalRamp": [
+          "#210000",
+          "#440F00",
+          "#6D2505",
+          "#9C390E",
+          "#D24A07",
+          "#F96E3A",
+          "#FDB399",
+          "#FEE9E2"
+        ]
+      },
+      "signal-ink": {
+        "role": "primary",
+        "displayName": "Signal Orange, ink",
+        "canonical": "oklch(52.8% 0.170 37.3)",
+        "tonalRamp": [
+          "#220000",
+          "#450E00",
+          "#721F01",
+          "#A23105",
+          "#CD4E26",
+          "#F4724B",
+          "#FEB29B",
+          "#FFE9E3"
+        ]
+      },
+      "line-h": {
+        "role": "secondary",
+        "displayName": "Line Blue (H)",
+        "canonical": "oklch(51.6% 0.188 261.0)",
+        "tonalRamp": [
+          "#00003A",
+          "#001C5E",
+          "#013691",
+          "#1354C5",
+          "#3677EB",
+          "#699DF9",
+          "#AAC8FD",
+          "#E6EFFF"
+        ]
+      },
+      "line-w": {
+        "role": "secondary",
+        "displayName": "Line Green (W)",
+        "canonical": "oklch(51.4% 0.108 163.1)",
+        "tonalRamp": [
+          "#001007",
+          "#012C1C",
+          "#054C34",
+          "#0D6F4D",
+          "#30916B",
+          "#56B38B",
+          "#81DEB3",
+          "#C3FEE1"
+        ]
+      },
+      "line-a": {
+        "role": "secondary",
+        "displayName": "Line Yellow (A)",
+        "canonical": "oklch(81.4% 0.167 83.9)",
+        "tonalRamp": [
+          "#140900",
+          "#312100",
+          "#523C05",
+          "#76580E",
+          "#9F7605",
+          "#C8950C",
+          "#FABC15",
+          "#FEEDCB"
+        ]
+      },
+      "pass": {
+        "role": "tertiary",
+        "displayName": "Pass",
+        "canonical": "oklch(57.6% 0.123 161.9)",
+        "tonalRamp": [
+          "#001006",
+          "#002C1B",
+          "#004D32",
+          "#036F4B",
+          "#189366",
+          "#48B686",
+          "#75E0AF",
+          "#C2FFDF"
+        ]
+      },
+      "pass-ink": {
+        "role": "tertiary",
+        "displayName": "Pass ink",
+        "canonical": "oklch(49.8% 0.106 162.2)",
+        "tonalRamp": [
+          "#001006",
+          "#002D1B",
+          "#094C33",
+          "#156E4D",
+          "#34916A",
+          "#5AB38A",
+          "#84DDB3",
+          "#C5FEE0"
+        ]
+      },
+      "warn": {
+        "role": "tertiary",
+        "displayName": "Warn",
+        "canonical": "oklch(77.0% 0.162 74.4)",
+        "tonalRamp": [
+          "#160700",
+          "#331F00",
+          "#573902",
+          "#7E5408",
+          "#A67119",
+          "#D09024",
+          "#FCB956",
+          "#FFEBD2"
+        ]
+      },
+      "warn-ink": {
+        "role": "tertiary",
+        "displayName": "Warn ink",
+        "canonical": "oklch(49.8% 0.106 72.4)",
+        "tonalRamp": [
+          "#160700",
+          "#351E00",
+          "#583804",
+          "#7F530C",
+          "#A4722B",
+          "#C7934E",
+          "#F2BC77",
+          "#FEEBD5"
+        ]
+      },
+      "fail": {
+        "role": "tertiary",
+        "displayName": "Fail",
+        "canonical": "oklch(59.4% 0.209 28.7)",
+        "tonalRamp": [
+          "#210000",
+          "#4C0000",
+          "#7C0203",
+          "#B1090A",
+          "#DE3228",
+          "#F96B5B",
+          "#FDB1A6",
+          "#FEE9E5"
+        ]
+      },
+      "fail-ink": {
+        "role": "tertiary",
+        "displayName": "Fail ink",
+        "canonical": "oklch(50.0% 0.182 29.5)",
+        "tonalRamp": [
+          "#220000",
+          "#4C0000",
+          "#7E0000",
+          "#AD1A10",
+          "#D44536",
+          "#FB6957",
+          "#FEB1A4",
+          "#FFE9E5"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule",
+        "canonical": "rgba(11, 27, 51, 0.14)"
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Rule, strong",
+        "canonical": "rgba(11, 27, 51, 0.28)"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page headlines; hero variant at clamp(2.5rem, 4.9vw, 4.8rem) / 24ch."
+      },
+      "headline-xl": {
+        "displayName": "Headline XL",
+        "purpose": "Statement headlines: builds statement, closing choice."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Panel titles, founder note, list titles."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Hero and page intros in ink-2."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running copy, 52–70ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Nav links, buttons, form labels, station names, tabs."
+      },
+      "numeral": {
+        "displayName": "Numeral",
+        "purpose": "Wimco Score numbers; scoreboard, inline result, category scores."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Instrument voice: weights, /100, timestamps, counts, finding values."
+      }
+    },
+    "shadows": [
+      {
+        "name": "float",
+        "value": "0 1px 2px rgba(11, 27, 51, 0.06), 0 12px 32px -12px rgba(11, 27, 51, 0.22)",
+        "purpose": "Only shadow: scan bar, mobile nav sheet, consent card, screenshot frame."
+      },
+      {
+        "name": "signal-focus-halo",
+        "value": "0 0 0 4px rgba(255, 90, 31, 0.35)",
+        "purpose": "Focus-within on the scan bar (0.3 alpha on form fields)."
+      },
+      {
+        "name": "error-ring",
+        "value": "0 0 0 3px #E0342A",
+        "purpose": "Invalid scan bar, layered over float."
+      },
+      {
+        "name": "focus-outline",
+        "value": "outline: 3px solid #FF5A1F; outline-offset: 3px",
+        "purpose": "Global :focus-visible treatment."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Default for state changes: press, nav underline, station scale, panel swap."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "purpose": "Travel along a line: train (900ms), progress fill (700ms), automation packet (4.8s)."
+      },
+      {
+        "name": "ease-drawer",
+        "value": "cubic-bezier(0.32, 0.72, 0, 1)",
+        "purpose": "Declared, currently unused."
+      },
+      {
+        "name": "press",
+        "value": "transform scale(0.97) 160ms ease-out",
+        "purpose": "Buttons and tabs on :active."
+      },
+      {
+        "name": "swap-in",
+        "value": "opacity 0.2→1, translateY 4px→0, 220–240ms ease-out",
+        "purpose": "Tab panel content change."
+      },
+      {
+        "name": "station-ping",
+        "value": "ring scale 0.7→1.35, opacity 0.9→0, 1.2s infinite",
+        "purpose": "Active station while measuring."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animations collapsed to 0.001ms; train fades, progress jumps, ping held static",
+        "purpose": "prefers-reduced-motion parity."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "xs",
+        "value": "380px"
+      },
+      {
+        "name": "footer-1col",
+        "value": "420px"
+      },
+      {
+        "name": "sm",
+        "value": "560px"
+      },
+      {
+        "name": "scan-stack",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "800px"
+      },
+      {
+        "name": "line-vertical",
+        "value": "860px"
+      },
+      {
+        "name": "nav-sheet",
+        "value": "900px"
+      },
+      {
+        "name": "hero-stack",
+        "value": "960px"
+      },
+      {
+        "name": "scoreboard",
+        "value": "1000px"
+      },
+      {
+        "name": "container",
+        "value": "1320px"
+      }
+    ],
+    "fonts": {
+      "archivo": {
+        "src": "/assets/fonts/archivo-var.woff2",
+        "axes": {
+          "wght": "400 850",
+          "wdth": "100% 125%"
+        },
+        "features": "kern liga calt tnum lnum case ss01",
+        "fallback": "Archivo Fallback = local Arial, size-adjust 104%, ascent 88%, descent 21%"
+      },
+      "jetbrains-mono": {
+        "src": "/assets/fonts/jetbrains-mono-var.woff2",
+        "axes": {
+          "wght": "400 700"
+        },
+        "features": "kern tnum zero"
+      }
+    },
+    "ogImage": {
+      "size": "1200x630",
+      "ground": "#0B1B33",
+      "track": "#FF5A1F (12px, radius 6)",
+      "text": "#F3F5F4 / soft #AAB8CC",
+      "font": "Archivo (logo 44/800/112%, headline 68/820/104%, score 236/850/112%), JetBrains Mono for station numbers",
+      "source": "tools/build-og-assets.py, rendered programmatically"
+    }
+  },
+  "components": [
+    {
+      "name": "Signal Button",
+      "kind": "button",
+      "refersTo": "button-signal",
+      "description": "Primary action; analysis entry points only.",
+      "html": "<button class=\"ds-btn ds-btn-signal\">Analysera min webbplats</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 22px;border-radius:var(--r-m,12px);border:2px solid transparent;font-family:var(--f-sans,Archivo,system-ui,sans-serif);font-weight:700;font-stretch:108%;font-size:1rem;line-height:1.1;cursor:pointer;white-space:nowrap;transition:transform 160ms cubic-bezier(0.23,1,0.32,1),background-color 200ms ease,color 200ms ease,border-color 200ms ease}.ds-btn:active{transform:scale(0.97)}.ds-btn:focus-visible{outline:3px solid var(--signal,#FF5A1F);outline-offset:3px}.ds-btn-signal{background:var(--signal,#FF5A1F);color:var(--navy,#0B1B33)}.ds-btn-signal:hover{background:var(--signal-hover,#FF7440)}"
+    },
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "Project / enquiry action on light grounds.",
+      "html": "<button class=\"ds-btn ds-btn-ink\">Skicka förfrågan</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 22px;border-radius:var(--r-m,12px);border:2px solid transparent;font-family:var(--f-sans,Archivo,system-ui,sans-serif);font-weight:700;font-stretch:108%;font-size:1rem;cursor:pointer;transition:transform 160ms cubic-bezier(0.23,1,0.32,1),background-color 200ms ease}.ds-btn:active{transform:scale(0.97)}.ds-btn:focus-visible{outline:3px solid var(--signal,#FF5A1F);outline-offset:3px}.ds-btn-ink{background:var(--navy,#0B1B33);color:var(--on-navy,#F3F5F4)}.ds-btn-ink:hover{background:var(--navy-2,#142A4B)}"
+    },
+    {
+      "name": "Line Button",
+      "kind": "button",
+      "refersTo": "button-line",
+      "description": "Secondary route; header project link.",
+      "html": "<button class=\"ds-btn ds-btn-line\">Starta ett projekt</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 22px;border-radius:var(--r-m,12px);border:2px solid transparent;font-family:var(--f-sans,Archivo,system-ui,sans-serif);font-weight:700;font-stretch:108%;font-size:1rem;cursor:pointer;transition:transform 160ms cubic-bezier(0.23,1,0.32,1),background-color 200ms ease,color 200ms ease}.ds-btn:active{transform:scale(0.97)}.ds-btn:focus-visible{outline:3px solid var(--signal,#FF5A1F);outline-offset:3px}.ds-btn-line{background:transparent;border-color:var(--navy,#0B1B33);color:var(--navy,#0B1B33)}.ds-btn-line:hover{background:var(--navy,#0B1B33);color:var(--on-navy,#F3F5F4)}"
+    },
+    {
+      "name": "Scan Bar",
+      "kind": "input",
+      "refersTo": "scan-bar",
+      "description": "Large URL field in a navy signage slab with the orange analysis CTA.",
+      "html": "<div class=\"ds-scan\"><input class=\"ds-scan-input\" placeholder=\"dittforetag.se\" aria-label=\"Din webbplats\"><button class=\"ds-scan-btn\">Analysera min webbplats</button></div>",
+      "css": ".ds-scan{display:flex;flex-wrap:wrap;gap:8px;padding:8px;border-radius:var(--r-l,18px);background:var(--navy,#0B1B33);box-shadow:0 1px 2px rgba(11,27,51,0.06),0 12px 32px -12px rgba(11,27,51,0.22);transition:box-shadow 200ms ease;max-width:720px}.ds-scan:focus-within{box-shadow:0 0 0 4px rgba(255,90,31,0.35),0 1px 2px rgba(11,27,51,0.06),0 12px 32px -12px rgba(11,27,51,0.22)}.ds-scan-input{flex:1 1 240px;min-width:0;min-height:60px;padding:0 16px;border:0;outline:0;background:transparent;color:var(--on-navy,#F3F5F4);font-family:var(--f-sans,Archivo,system-ui,sans-serif);font-size:1.5rem;font-weight:600;font-stretch:104%;caret-color:var(--signal,#FF5A1F)}.ds-scan-input::placeholder{color:#B7C3D4}.ds-scan-btn{flex:1 1 auto;min-height:60px;padding:0 24px;border:0;border-radius:12px;background:var(--signal,#FF5A1F);color:var(--navy,#0B1B33);font-family:var(--f-sans,Archivo,system-ui,sans-serif);font-weight:700;font-stretch:108%;font-size:1.05rem;cursor:pointer}.ds-scan-btn:hover{background:var(--signal-hover,#FF7440)}.ds-scan-btn:focus-visible{outline:3px solid var(--signal,#FF5A1F);outline-offset:3px}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Form field on light grounds.",
+      "html": "<label class=\"ds-field\"><span>E-post</span><input type=\"email\" placeholder=\"namn@foretag.se\"></label>",
+      "css": ".ds-field{display:grid;gap:8px;max-width:360px;font-family:var(--f-sans,Archivo,system-ui,sans-serif)}.ds-field span{font-weight:700;font-stretch:104%;font-size:0.95rem;color:var(--ink,#0B1B33)}.ds-field input{min-height:50px;padding:12px 14px;border-radius:var(--r-m,12px);border:1.5px solid var(--rule-strong,rgba(11,27,51,0.28));background:var(--white,#FFFFFF);color:var(--ink,#0B1B33);font:inherit;font-size:1rem;transition:border-color 160ms ease,box-shadow 160ms ease}.ds-field input:focus-visible{outline:none;border-color:var(--navy,#0B1B33);box-shadow:0 0 0 4px rgba(255,90,31,0.3)}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Logo with orange full stop, links with drawn orange underline, line-button CTA.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-logo\" href=\"#\">Wimco<span>.</span></a><ul><li><a href=\"#\">Tjänster</a></li><li><a href=\"#\" aria-current=\"page\">Wimco Score</a></li><li><a href=\"#\">Guider</a></li><li><a class=\"ds-nav-cta\" href=\"#\">Starta ett projekt</a></li></ul></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:84px;font-family:var(--f-sans,Archivo,system-ui,sans-serif)}.ds-logo{font-size:1.6rem;font-weight:830;font-stretch:118%;letter-spacing:-0.03em;text-decoration:none;color:var(--ink,#0B1B33)}.ds-logo span{color:var(--signal,#FF5A1F)}.ds-nav ul{display:flex;align-items:center;gap:24px;list-style:none;margin:0;padding:0}.ds-nav a:not(.ds-nav-cta):not(.ds-logo){display:inline-flex;align-items:center;min-height:44px;font-weight:620;font-stretch:106%;text-decoration:none;color:var(--ink-2,#33425A);background:linear-gradient(var(--signal,#FF5A1F),var(--signal,#FF5A1F)) 0 calc(100% - 8px)/0 2px no-repeat;transition:background-size 240ms cubic-bezier(0.23,1,0.32,1),color 200ms ease}.ds-nav a:not(.ds-nav-cta):not(.ds-logo):hover,.ds-nav a[aria-current=page]{background-size:100% 2px;color:var(--ink,#0B1B33)}.ds-nav a:focus-visible{outline:3px solid var(--signal,#FF5A1F);outline-offset:3px;border-radius:4px}.ds-nav-cta{display:inline-flex;align-items:center;min-height:50px;padding:0 22px;border-radius:12px;border:2px solid var(--navy,#0B1B33);color:var(--navy,#0B1B33);font-weight:700;font-stretch:108%;text-decoration:none;transition:background-color 200ms ease,color 200ms ease}.ds-nav-cta:hover{background:var(--navy,#0B1B33);color:var(--on-navy,#F3F5F4)}"
+    },
+    {
+      "name": "Line Badges",
+      "kind": "chip",
+      "refersTo": "badge-h",
+      "description": "Square letter badges naming the four service lines.",
+      "html": "<div class=\"ds-badges\"><span class=\"ds-badge ds-h\">H</span><span class=\"ds-badge ds-w\">W</span><span class=\"ds-badge ds-a\">A</span><span class=\"ds-badge ds-o\">O</span></div>",
+      "css": ".ds-badges{display:flex;gap:10px;font-size:1.4rem}.ds-badge{display:inline-grid;place-items:center;width:1.7em;height:1.7em;border-radius:var(--r-s,6px);font-family:var(--f-sans,Archivo,system-ui,sans-serif);font-size:0.82em;font-weight:820;line-height:1;color:#fff}.ds-h{background:var(--line-h,#1F5FD1)}.ds-w{background:var(--line-w,#0A7A55)}.ds-a{background:var(--line-a,#F5B700);color:var(--navy,#0B1B33)}.ds-o{background:var(--signal,#FF5A1F);color:var(--navy,#0B1B33)}"
+    },
+    {
+      "name": "Status Tag and Source Chips",
+      "kind": "chip",
+      "refersTo": "status-tag",
+      "description": "Navy pill with orange dot for mode; outlined pills for data source.",
+      "html": "<div class=\"ds-chips\"><span class=\"ds-tag\">Exempel</span><span class=\"ds-src ds-src-m\">Uppmätt</span><span class=\"ds-src ds-src-r\">Regelkontroll</span><span class=\"ds-src ds-src-ai\">AI-bedömning</span></div>",
+      "css": ".ds-chips{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-family:var(--f-sans,Archivo,system-ui,sans-serif)}.ds-tag{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;background:var(--navy,#0B1B33);color:var(--on-navy,#F3F5F4);font-size:0.8rem;font-weight:650;font-stretch:104%}.ds-tag::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--signal,#FF5A1F)}.ds-src{display:inline-flex;padding:2px 9px;border-radius:999px;border:1.5px solid currentColor;font-size:0.76rem;font-weight:700;font-stretch:104%}.ds-src-m{color:var(--line-h,#1F5FD1)}.ds-src-r{color:var(--ink-2,#33425A)}.ds-src-ai{color:var(--pass-ink,#0A7550)}"
+    },
+    {
+      "name": "Station Line",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Signature: 8px track through ringed stations; done stations fill orange, active one rings orange.",
+      "html": "<ol class=\"ds-line\"><li class=\"done\"><i></i>Struktur</li><li class=\"done\"><i></i>SEO</li><li class=\"active\"><i></i>Prestanda</li><li><i></i>Mobil</li><li><i></i>Förbättringar</li></ol>",
+      "css": ".ds-line{position:relative;display:grid;grid-template-columns:repeat(5,1fr);list-style:none;margin:0;padding:0;font-family:var(--f-sans,Archivo,system-ui,sans-serif);font-weight:740;font-stretch:106%;color:var(--ink,#0B1B33);max-width:760px}.ds-line::before{content:'';position:absolute;left:13px;right:0;top:9px;height:8px;border-radius:8px;background:linear-gradient(90deg,var(--signal,#FF5A1F) 45%,rgba(11,27,51,0.28) 45%)}.ds-line li{position:relative;display:grid;gap:10px;padding-right:12px}.ds-line i{display:block;width:26px;height:26px;border-radius:50%;background:var(--paper,#F3F5F4);border:6px solid var(--navy,#0B1B33);box-sizing:border-box;transition:transform 240ms cubic-bezier(0.23,1,0.32,1)}.ds-line .done i{background:var(--signal,#FF5A1F)}.ds-line .active i{border-color:var(--signal,#FF5A1F);transform:scale(1.08)}"
+    },
+    {
+      "name": "Service Switch",
+      "kind": "custom",
+      "refersTo": "switch-tab",
+      "description": "Badge tabs; selected is a navy slab; panel has a rail in the line colour.",
+      "html": "<div class=\"ds-sw\"><div class=\"ds-sw-tabs\"><button class=\"ds-sw-tab\" aria-selected=\"true\"><span class=\"ds-b\" style=\"background:#1F5FD1\">H</span>Hemsidor</button><button class=\"ds-sw-tab\" aria-selected=\"false\"><span class=\"ds-b\" style=\"background:#0A7A55\">W</span>Webbutveckling</button></div><div class=\"ds-sw-panel\">Hemsidor som gör jobbet</div></div>",
+      "css": ".ds-sw{font-family:var(--f-sans,Archivo,system-ui,sans-serif);max-width:720px}.ds-sw-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}.ds-sw-tab{display:inline-flex;align-items:center;gap:12px;min-height:56px;padding:0 20px 0 12px;border-radius:12px;border:2px solid var(--rule-strong,rgba(11,27,51,0.28));background:transparent;color:var(--ink,#0B1B33);font:inherit;font-weight:720;font-stretch:108%;font-size:1.05rem;cursor:pointer;transition:border-color 200ms ease,background-color 200ms ease,transform 160ms cubic-bezier(0.23,1,0.32,1)}.ds-sw-tab:hover{border-color:var(--navy,#0B1B33)}.ds-sw-tab:active{transform:scale(0.97)}.ds-sw-tab:focus-visible{outline:3px solid var(--signal,#FF5A1F);outline-offset:3px}.ds-sw-tab[aria-selected=true]{background:var(--navy,#0B1B33);border-color:var(--navy,#0B1B33);color:var(--on-navy,#F3F5F4)}.ds-b{display:inline-grid;place-items:center;width:1.7em;height:1.7em;border-radius:6px;color:#fff;font-weight:820}.ds-sw-panel{position:relative;padding:40px;border-radius:18px;background:var(--white,#FFFFFF);font-size:1.5rem;font-weight:740;font-stretch:108%}.ds-sw-panel::before{content:'';position:absolute;left:40px;right:40px;top:-5px;height:10px;border-radius:5px;background:var(--line-h,#1F5FD1)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Line Network",
+    "overview": "Wimco is drawn as a transit system. The free analysis is a trunk line whose stations light up as real measurement steps complete; every problem station is an interchange where the visitor can change to a service line: Hemsidor (H), Webbutveckling (W), Automation (A) and Optimering/Analys (O). The grammar is platform signage and a metro map: cold platform-white ground, signage-navy slabs, 8px coloured tracks, ringed station dots, square letter badges and a wide, heavy grotesque that reads like a sign across a platform.\n\nThe surface is calm and dense rather than decorative. Colour does not decorate; it names. Each hue is a line with one meaning, and orange is the analysis line and the action colour at once. Depth comes from navy slabs placed on paper and from white panels, not from stacked shadows. Motion is mechanical and purposeful: a train that travels, a progress fill that grows along the track, a station ring that pings while it is being measured.\n\nThe same world runs from the home page through the report page, the guides and the generated Open Graph images (navy ground, orange track, paper and soft-navy labels, Archivo), so a shared report link looks like a sign from the same network.",
+    "keyCharacteristics": [
+      "Transit-map grammar: tracks (8px), ringed stations (6px navy ring), interchanges, letter badges.",
+      "Four named line colours, each bound to one service; orange doubles as the single action colour.",
+      "Archivo variable, pushed wide (104–118% width) and heavy (620–850) for signage; JetBrains Mono for measured values.",
+      "Paper, white and navy surfaces alternate section by section; navy slabs carry the most important inputs.",
+      "Status is always colour plus shape plus text, never colour alone."
+    ],
+    "rules": [
+      {
+        "name": "The One Line, One Meaning Rule",
+        "body": "H is blue, W is green, A is yellow, O is orange, everywhere: badges, branches, panel rails, guide asides and form chips. A line colour never appears as decoration detached from its service.",
+        "section": "colors"
+      },
+      {
+        "name": "The Navy On Signal Rule",
+        "body": "Every orange or yellow fill carries navy text or a navy glyph; white text sits only on blue and green badges and on navy.",
+        "section": "colors"
+      },
+      {
+        "name": "The Shape Carries State Rule",
+        "body": "Pass, warn and fail each have a distinct mark (ring with tick, half-filled ring, filled disc with bar) and a text label; colour alone never reports a result.",
+        "section": "colors"
+      },
+      {
+        "name": "The Signage Width Rule",
+        "body": "The heavier and larger the text, the wider it is set: body 102%, labels 104–108%, titles 108–112%, display 114–118%. Headings are always balanced (text-wrap: balance) and tightly tracked.",
+        "section": "typography"
+      },
+      {
+        "name": "The Instrument Voice Rule",
+        "body": "JetBrains Mono is reserved for numbers and machine-like values; never set headings or paragraph copy in it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Line Turns Rule",
+        "body": "A line never wraps into rows; on narrow screens it rotates to vertical or scrolls along its own axis.",
+        "section": "layout"
+      },
+      {
+        "name": "The Slab Not Shadow Rule",
+        "body": "Emphasis comes from a navy slab or a 2px navy border, not from a heavier shadow; there is only one shadow and it signals \"floating\".",
+        "section": "elevation"
+      },
+      {
+        "name": "The Ring And Track Rule",
+        "body": "Any sequence (analysis steps, process, route lists, value chain, automation flow, \"what you get\") is drawn as an 8px track threaded through ringed stations, not as numbered cards.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** bind every colour to its line: H blue (#1F5FD1), W green (#0A7A55), A yellow (#F5B700), O/analysis orange (#FF5A1F).",
+      "**Do** draw sequences as an 8px track through 6px-ringed station circles, and turn the line vertical below about 860px.",
+      "**Do** put navy text on orange and yellow fills.",
+      "**Do** set headings in Archivo at 108–118% width and 740–850 weight; keep body at 102% width and 52–70ch.",
+      "**Do** use JetBrains Mono with tabular numerals for scores, weights, counts and timestamps.",
+      "**Do** pair every state colour with a shape and a text label, and keep touch targets at 44px or more.",
+      "**Do** give every animation a reduced-motion equivalent (the train fades instead of travelling, progress jumps, pings hold still)."
+    ],
+    "donts": [
+      "**Don't** use orange as a general accent: it means analysis or the primary action.",
+      "**Don't** introduce a second shadow or lift panels with heavier shadows; use a navy slab or border.",
+      "**Don't** lay out services or steps as a grid of equal cards; they are lines and stations.",
+      "**Don't** show development or sample data unmarked: sample runs carry the \"Exempel\" status tag and development data the hatched warning banner."
+    ]
+  }
+}

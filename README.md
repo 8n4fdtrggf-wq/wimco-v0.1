@@ -1,34 +1,35 @@
-# Wimco Landningssida
+# wimco.se
 
-En modern, snabb och konverteringsoptimerad landningssida för Wimco, byggd med ren HTML, CSS och JavaScript. Designen är inspirerad av moderna Awwwards-trender (Bento-grid, subtila animationer, generöst whitespace) men håller fokus på tydlighet och förtroende för småföretagare.
+Wimcos webbplats: en digital studio för hemsidor, webbutveckling och automation – med **Wimco Score**, en gratis analys av besökarens egen webbplats, som huvudsaklig ingång.
 
-## 📁 Filstruktur
+## Struktur
 
-- `index.html`: Huvudstrukturen med all copy och semantisk HTML.
-- `css/styles.css`: All styling, inklusive CSS-variabler för enkel färgändring.
-- `js/main.js`: Hanterar scroll-animationer, sticky header och FAQ-accordion.
-- `assets/favicon.svg`: En minimalistisk SVG-favicon.
-- `robots.txt` & `sitemap.xml`: SEO-grundläggande filer.
+| Katalog | Innehåll |
+|---|---|
+| `public/` | Allt som publiceras: sidor, CSS, JS, typsnitt, bilder, `_headers`, `_redirects`, `sitemap.xml` |
+| `public/assets/js/scanner.js` | Heron: linjekartan, analysflödet och förhandsvisningen av Wimco Score |
+| `public/assets/js/report.js` | Rapportsidan `/r/:id` |
+| `public/assets/js/site.js` | Navigation, samtycke och analytics, formulär, flikar, Turnstile |
+| `functions/` | Cloudflare Pages Functions (tunna adaptrar) |
+| `lib/net/` | SSRF-skydd: URL-validering, IP-klassning, säker hämtning med redirect-, tids- och storleksgränser |
+| `lib/analysis/` | HTML-analys, Lighthouse via PageSpeed Insights, valfri AI-bedömning, kontroller och poäng |
+| `lib/router.js` | API: `/api/analyze` (NDJSON-ström), `/api/report/:id`, `/api/lead`, `/r/:id`, `/og/:id.png` |
+| `server/dev.mjs` | Lokal server som kör samma router |
+| `tools/` | Byggskript för undersidor, delningsbilder, typsnitt och skärmdumpar |
+| `test/` | Node-tester (`npm test`) |
 
-## 🚀 Komma igång
+## Kom igång
 
-1. Öppna `index.html` i din webbläsare för att förhandsgranska lokalt.
-2. För produktion, ladda upp alla filer till ditt webbhotell (t.ex. via FTP eller en tjänst som Vercel/Netlify).
-3. Uppdatera kontaktuppgifterna i footern och CTA-sektionen (mejl och telefonnummer).
-4. Byt ut platshållarcitat i "Social Proof"-sektionen mot riktiga kundomdömen när de finns tillgängliga.
+```sh
+cp .dev.vars.example .dev.vars
+npm run dev     # http://localhost:8788
+npm test
+```
 
-## 🎨 Anpassa designen
+Inga npm-beroenden behövs. Driftsättning, nycklar och vad som återstår: se [docs/SETUP.md](docs/SETUP.md).
 
-Alla färger och typsnitt styrs av CSS-variabler i toppen av `css/styles.css`:
-- `--accent`: Ändra `#E86A33` för att byta primär accentfärg (knappar, ikoner).
-- `--text-primary`: Ändra `#0F172A` för att justera den mörka textfärgen.
+## Hur Wimco Score räknas
 
-## ⚡ Prestanda & SEO
+Sex kategorier vägs ihop till 0–100: Prestanda 20 %, Mobilupplevelse 15 %, Tillgänglighet 15 %, SEO och teknisk grund 20 %, Visuell tydlighet 15 %, Konverteringsförmåga 15 %. Varje kontroll märks med sin källa – *Uppmätt* (Google Lighthouse), *Regelkontroll* (sidans kod) eller *Bedömning* (fasta regler, eller AI om det är aktiverat). Detaljer: `/wimco-score/` och `lib/analysis/score.js`.
 
-- Typsnitt laddas via `preconnect` för snabbare rendering.
-- JavaScript laddas med `defer` för att inte blockera renderingen.
-- Semantiska HTML5-taggar (`<main>`, `<section>`, `<article>`) används för bästa tillgänglighet och SEO.
-- Meta-beskrivningar och Open Graph-taggar är förifyllda.
-
----
-*Skapad: September 2026*
+Designsystemet är dokumenterat i [DESIGN.md](DESIGN.md) och produktfakta i [PRODUCT.md](PRODUCT.md).
