@@ -8,7 +8,7 @@ compatibility_flags = ["nodejs_compat"]
 # Skapa med: npx wrangler kv namespace create WIMCO_KV  – och klistra in id nedan.
 [[kv_namespaces]]
 binding = "WIMCO_KV"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "7e4fc6ecf8154a40814a32114f63d920"
 
 [vars]
 SITE_URL = "https://wimco.se"
