@@ -1,0 +1,16 @@
+# Cloudflare Pages-konfiguration. Pages läser denna fil vid Git-baserade byggen.
+name = "wimco"
+pages_build_output_dir = "./public"
+compatibility_date = "2026-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+# KV för rapporter, leads, rate limiting och cachade delningsbilder.
+# Skapa med: npx wrangler kv namespace create WIMCO_KV  – och klistra in id nedan.
+[[kv_namespaces]]
+binding = "WIMCO_KV"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+[vars]
+SITE_URL = "https://wimco.se"
+LEAD_TO_EMAIL = "hej@wimco.se"
+MAIL_FROM = "Wimco <hej@wimco.se>"

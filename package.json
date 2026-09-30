@@ -1,0 +1,18 @@
+{
+  "name": "wimco-se",
+  "private": true,
+  "version": "2.0.0",
+  "description": "wimco.se – digital studio med Wimco Score-analys",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node server/dev.mjs",
+    "test": "node --test test/*.test.mjs",
+    "build:og": "python3 tools/build-og-assets.py",
+    "build:fonts": "sh tools/build-fonts.sh",
+    "deploy": "wrangler pages deploy",
+    "build:pages": "node tools/build-pages.mjs"
+  }
+}

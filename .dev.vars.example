@@ -1,0 +1,22 @@
+# Kopiera till .dev.vars för lokal utveckling. Hemliga värden sätts i Cloudflare som "Secrets".
+SITE_URL=http://localhost:8788
+# Google PageSpeed Insights API-nyckel (Lighthouse-mätningar). https://developers.google.com/speed/docs/insights/v5/get-started
+PSI_API_KEY=
+# Resend för e-post (leads, rapport via e-post, påminnelser). https://resend.com
+RESEND_API_KEY=
+LEAD_TO_EMAIL=hej@wimco.se
+MAIL_FROM=Wimco <hej@wimco.se>
+# Cloudflare Turnstile (valfritt botskydd)
+TURNSTILE_SITE_KEY=
+TURNSTILE_SECRET_KEY=
+# Valfri AI-bedömning av visuell tydlighet och konvertering
+ANTHROPIC_API_KEY=
+ANTHROPIC_MODEL=claude-sonnet-5-5
+# Salt för anonymiserade IP-nycklar i rate limiting
+IP_HASH_SALT=byt-mig
+# Hemlighet för schemalagd påminnelse-endpoint
+CRON_SECRET=
+# Endast lokalt: 1 = tydligt märkt utvecklingsdata i stället för PSI
+DEV_FIXTURES=0
+# Endast lokalt: 1 = gå via HTTPS_PROXY (sandlådor)
+DEV_USE_PROXY=0
