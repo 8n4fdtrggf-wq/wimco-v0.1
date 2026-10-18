@@ -1,0 +1,78 @@
+.analysis { display: grid; gap: 14px; }
+
+.field {
+  min-width: 0;
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 999px;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--rule);
+  transition: box-shadow 150ms ease;
+}
+.field:focus-within { box-shadow: inset 0 0 0 2px var(--line-w); }
+.field input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  padding: 0 14px;
+  background: transparent;
+  color: var(--ink);
+  font: 400 16px/1.4 var(--f-body); /* 16px: no iOS zoom on focus */
+  outline: none;
+}
+.field input::placeholder { color: var(--muted); }
+.field input:disabled { color: var(--muted); }
+.honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.hint { margin: 10px 4px 0; font-size: 13.5px; color: var(--line-o); }
+
+.status:empty { display: none; }
+.error { margin: 0 4px; font-size: 14px; color: var(--poor); }
+
+/* Live progress: the analysis steps as stations on a line */
+.progress { display: grid; gap: 12px; padding: 18px 18px 16px; border-radius: 18px; background: var(--bg); }
+.progressTitle { margin: 0; font: 600 15px/1.3 var(--f-display); }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; position: relative; }
+.steps::before { content: ''; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 2px; background: var(--rule); }
+.steps li { position: relative; display: grid; grid-template-columns: 12px 1fr; column-gap: 12px; align-items: baseline; font-size: 14px; }
+.stepDot {
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 2px var(--rule);
+  transition: box-shadow 250ms ease, background-color 250ms ease;
+}
+.stepLabel { color: var(--muted); transition: color 200ms ease; }
+.stepNote { grid-column: 2; font-size: 12.5px; color: var(--muted); overflow-wrap: anywhere; }
+.steps li[data-status='running'] .stepLabel,
+.steps li[data-status='done'] .stepLabel,
+.steps li[data-status='limited'] .stepLabel { color: var(--ink); }
+.steps li[data-status='running'] .stepDot { box-shadow: inset 0 0 0 2px var(--line-o); animation: pulse 1.2s var(--ease-in-out) infinite; }
+.steps li[data-status='done'] .stepDot { background: var(--line-o); box-shadow: none; }
+.steps li[data-status='limited'] .stepDot { background: var(--avg); box-shadow: none; }
+/* A loading indicator: the one place constant motion is the point */
+@keyframes pulse { 50% { box-shadow: inset 0 0 0 2px var(--line-o), 0 0 0 5px color-mix(in oklab, var(--line-o) 18%, transparent); } }
+
+/* Result */
+.result { display: grid; gap: 14px; padding: 20px; border-radius: 18px; background: var(--bg); outline: none; animation: arrive 420ms var(--ease-out) both; }
+@keyframes arrive { from { opacity: 0; transform: translateY(8px); } }
+.score { display: grid; gap: 4px; }
+.scoreLabel { font: 500 12px/1 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.score b { font: 700 clamp(3rem, 7vw, 4.4rem)/1 var(--f-display); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; color: var(--line-o); }
+.scoreOf { font-size: 14px; color: var(--muted); overflow-wrap: anywhere; }
+.previous { margin: 0; font-size: 14px; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+@media (max-width: 480px) {
+  .field { flex-direction: column; padding: 8px; border-radius: 22px; }
+  .field input { height: 48px; }
+  .field button { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .steps li[data-status='running'] .stepDot { animation: none; }
+  .result { animation: none; }
+}

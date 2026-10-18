@@ -227,7 +227,8 @@ export function createServer({ env = loadEnv(), kvFile = path.join(ROOT, '.data'
         res.end();
         return;
       }
-      if (url.pathname.startsWith('/_') || /^\/(lib|functions|server|test|tools)\//.test(url.pathname)) {
+      // Dölj _headers/_redirects som Pages gör, men servera startsidans byggfiler under /_next/.
+      if ((url.pathname.startsWith('/_') && !url.pathname.startsWith('/_next/')) || /^\/(lib|functions|server|test|tools)\//.test(url.pathname)) {
         res.writeHead(404); res.end('Not found'); return;
       }
       const file = resolveStatic(url.pathname);

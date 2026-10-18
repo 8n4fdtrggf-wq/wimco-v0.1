@@ -1,0 +1,185 @@
+/* ============================================================
+   Design tokens
+   Layout concept: a transit journey read top to bottom. Four lines (H W A O) carry the
+   reader station to station; one loud moment per stop, everything else quiet.
+   ============================================================ */
+:root {
+  /* Surfaces & text */
+  --bg: #f3f5f4;
+  --surface: #ffffff;
+  --ink: #0f1513;
+  --muted: #58645f;
+  --rule: #dce2df;
+  --tint: #e9edeb;
+  --nav: rgba(243, 245, 244, 0.74);
+  --on-line: #ffffff;
+
+  /* Transit lines */
+  --line-h: #0f7a5f;
+  --line-w: #2c5bd8;
+  --line-a: #c24e17;
+  --line-o: #9440bd;
+
+  /* Semantic (Lighthouse bands) — separate from the line colours */
+  --good: #0c8a4f;
+  --avg: #b86a00;
+  --poor: #c62f2f;
+
+  /* Inverted band */
+  --band: #0f1513;
+  --band-fg: #e9efec;
+  --band-muted: #9aa7a2;
+  --band-rule: #27322e;
+
+  /* Type */
+  --f-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-body: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'Geist Mono Variable', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --dur-press: 140ms;
+  --dur-ui: 220ms;
+  --dur-state: 380ms;
+  --dur-reveal: 900ms;
+
+  /* Layout */
+  --nav-h: 64px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --gutter: max(20px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+  --radius-card: 28px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0c1110; --surface: #141b19; --ink: #e7edea; --muted: #97a49f; --rule: #24302c; --tint: #1a2320;
+    --nav: rgba(12, 17, 16, 0.72); --on-line: #0c1110;
+    --line-h: #3cc79e; --line-w: #86a2ff; --line-a: #ff8c52; --line-o: #cf92ee;
+    --good: #4cd38c; --avg: #f2a93b; --poor: #ff6b6b;
+    --band: #121917; --band-fg: #e7edea; --band-muted: #97a49f; --band-rule: #2a3632;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --bg: #0c1110; --surface: #141b19; --ink: #e7edea; --muted: #97a49f; --rule: #24302c; --tint: #1a2320;
+  --nav: rgba(12, 17, 16, 0.72); --on-line: #0c1110;
+  --line-h: #3cc79e; --line-w: #86a2ff; --line-a: #ff8c52; --line-o: #cf92ee;
+  --good: #4cd38c; --avg: #f2a93b; --poor: #ff6b6b;
+  --band: #121917; --band-fg: #e7edea; --band-muted: #97a49f; --band-rule: #2a3632;
+  color-scheme: dark;
+}
+
+/* ============================================================
+   Base (mobile-native baseline)
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--nav-h) + 24px);
+}
+/* In-page links glide to their section (spatial: you see where you went). Instant under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 1.0625rem/1.55 var(--f-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+/* Paint the band under the status bar so nothing scrolls visibly beneath it */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0 0 auto;
+  height: var(--safe-top);
+  z-index: 30;
+  background: var(--bg);
+}
+a { color: inherit; }
+img { max-width: 100%; }
+input, textarea, select { font-size: 16px; }
+button { font: inherit; }
+button, a, [role='button'] { touch-action: manipulation; }
+:focus-visible { outline: 2px solid var(--line-w); outline-offset: 3px; border-radius: 8px; }
+
+[hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip {
+  position: fixed; left: 16px; top: 12px; z-index: 50;
+  padding: 10px 14px; border-radius: 999px; background: var(--ink); color: var(--bg);
+  font-size: 14px; text-decoration: none; transform: translateY(-160%);
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+.skip:focus-visible { transform: none; }
+
+.wrap {
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter-r);
+}
+
+/* ============================================================
+   Type scale
+   ============================================================ */
+.display {
+  font-family: var(--f-display);
+  font-optical-sizing: auto;
+  font-weight: 700;
+  letter-spacing: -0.038em;
+  line-height: 0.98;
+  text-wrap: balance;
+  margin: 0;
+}
+.title {
+  font-family: var(--f-display);
+  font-weight: 650;
+  font-size: clamp(2rem, 4.4vw, 3.5rem);
+  line-height: 1.03;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  margin: 0;
+}
+h3 { font-family: var(--f-display); font-weight: 620; letter-spacing: -0.02em; line-height: 1.1; margin: 0; }
+.lede {
+  color: var(--muted);
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+  line-height: 1.5;
+  max-width: 40ch;
+  margin: 0;
+  text-wrap: pretty;
+}
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   Motion primitives (CSS side)
+   ============================================================ */
+
+/* Entrance on first paint, staggered by --i. Runs once; ease-out, no scale(0). */
+.rise { animation: rise 700ms var(--ease-out) both; animation-delay: calc(var(--i, 0) * 70ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } }
+
+/* <Reveal variant="heading">: the line segment draws from its badge, the title settles up.
+   Content is never hidden: only transform moves, and only once JS is running. */
+[data-reveal='heading'] .title { transition: transform var(--dur-reveal) var(--ease-out); }
+[data-reveal='heading'] [data-seg] { transition: transform 700ms var(--ease-out) 120ms; }
+.js [data-reveal='heading']:not([data-in]) .title { transform: translateY(28px); }
+.js [data-reveal='heading']:not([data-in]) [data-seg] { transform: scaleX(0); }
+
+/* <Reveal variant="stagger">: direct children settle in order, using their --i. */
+[data-reveal='stagger'] > * { transition: transform 800ms var(--ease-out); transition-delay: calc(var(--i, 0) * 60ms); }
+.js [data-reveal='stagger']:not([data-in]) > * { transform: translateY(22px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .rise { animation: fade 200ms ease both; animation-delay: 0ms; }
+  .js [data-reveal]:not([data-in]) .title,
+  .js [data-reveal]:not([data-in]) [data-seg],
+  .js [data-reveal]:not([data-in]) > * { transform: none; }
+  @keyframes fade { from { opacity: 0; } }
+}

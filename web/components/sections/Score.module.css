@@ -1,0 +1,60 @@
+.score { padding-block: clamp(88px, 12vw, 160px); }
+
+.stack { display: flex; height: 24px; margin-bottom: 40px; gap: 3px; border-radius: 999px; overflow: hidden; }
+.stack i { display: block; height: 100%; background: var(--c); transform-origin: 0 50%; transform: scaleX(0); transition: opacity 200ms ease; }
+.score[data-focus] .stack i:not([data-on]) { opacity: 0.18; }
+
+.weights { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); }
+.weights li {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  min-width: 0;
+  padding: 28px 28px 32px 0;
+  border-top: 1px solid var(--rule);
+  outline-offset: -2px;
+}
+.weights li:not(:nth-child(3n + 1)) { padding-left: 28px; border-left: 1px solid var(--rule); }
+/* opacity on an inner layer so it never fights the reveal transform on <li> */
+.weights li > * { transition: opacity 200ms ease; }
+.score[data-focus] .weights li:not([data-on]) > * { opacity: 0.42; }
+.weights li::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 2px;
+  background: var(--c);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 260ms var(--ease-out);
+}
+.weights li[data-on]::after { transform: scaleX(1); }
+.weights strong { font: 620 19px/1.2 var(--f-display); letter-spacing: -0.01em; }
+.weights p { margin: 0; color: var(--muted); font-size: 15px; }
+.pct { display: flex; align-items: center; gap: 12px; font: 500 34px/1 var(--f-mono); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.pct::before { content: ''; width: 12px; height: 12px; border-radius: 50%; background: var(--c); }
+.source {
+  justify-self: start;
+  padding: 6px 9px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--rule);
+  font: 500 11px/1 var(--f-mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 48px; }
+
+@media (max-width: 900px) {
+  .weights { grid-template-columns: 1fr 1fr; }
+  .weights li:not(:nth-child(3n + 1)) { padding-left: 0; border-left: 0; }
+  .weights li:nth-child(even) { padding-left: 24px; border-left: 1px solid var(--rule); }
+}
+@media (max-width: 520px) {
+  .weights { grid-template-columns: 1fr; }
+  .weights li,
+  .weights li:nth-child(even) { padding: 24px 0; border-left: 0; }
+}

@@ -7,7 +7,8 @@ Wimcos webbplats: en digital studio för hemsidor, webbutveckling och automation
 | Katalog | Innehåll |
 |---|---|
 | `public/` | Allt som publiceras: sidor, CSS, JS, typsnitt, bilder, `_headers`, `_redirects`, `sitemap.xml` |
-| `public/assets/js/scanner.js` | Heron: linjekartan, analysflödet och förhandsvisningen av Wimco Score |
+| `web/` | Källkoden till startsidan (Next.js, statisk export). Byggs in i `public/index.html` + `public/_next/` med `npm run build:home` |
+| `public/assets/js/scanner.js` | Den tidigare startsidans analysflöde (används inte längre av startsidan, ligger kvar orörd) |
 | `public/assets/js/report.js` | Rapportsidan `/r/:id` |
 | `public/assets/js/site.js` | Navigation, samtycke och analytics, formulär, flikar, Turnstile |
 | `functions/` | Cloudflare Pages Functions (tunna adaptrar) |
@@ -27,6 +28,32 @@ npm test
 ```
 
 Inga npm-beroenden behövs. Driftsättning, nycklar och vad som återstår: se [docs/SETUP.md](docs/SETUP.md).
+
+## Startsidan (`web/`)
+
+Startsidan är ett Next.js-projekt med statisk export. Inget byggsteg behövs i Cloudflare: den byggda sidan är incheckad i `public/`, precis som resten av sajten.
+
+```sh
+npm run build:home   # installerar web/, bygger och publicerar till public/
+npm run dev          # testa allt tillsammans med API:t på http://localhost:8788
+```
+
+`web/scripts/publish.mjs` gör tre saker:
+
+1. Kopierar `index.html`, `index.txt` och `_next/` till `public/`.
+2. Räknar fram sha256-hashar för sidans inline-skript och stilattribut.
+3. Skriver ett genererat block sist i `public/_headers` för `/`. Blocket utgår från den globala CSP:n och lägger bara till de hasharna, inte `unsafe-inline`.
+
+Kör alltid `build:home` efter ändringar i `web/`, annars stämmer inte hasharna.
+
+Startsidan använder samma API och delade klientkod som resten av sajten:
+
+- `/api/analyze` (NDJSON-ström) och `/r/:id` för Wimco Score.
+- `/api/lead` med `kind: "project"` för projektförfrågningar.
+- `/assets/js/site.js` för samtycke, Google Analytics, Turnstile och `/api/config`.
+- Samma analytics-händelser: `analysis_start`, `analysis_complete`, `analysis_error`, `analysis_cancel` och `generate_lead`.
+
+Texter ändras i `web/content/site.ts`. Mer om komponenter och rörelse i `web/README.md`.
 
 ## Hur Wimco Score räknas
 
