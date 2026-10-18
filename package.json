@@ -13,6 +13,7 @@
     "build:og": "python3 tools/build-og-assets.py",
     "build:fonts": "sh tools/build-fonts.sh",
     "deploy": "wrangler pages deploy",
-    "build:pages": "node tools/build-pages.mjs"
+    "build:pages": "node tools/build-pages.mjs",
+    "build:home": "npm --prefix web ci && npm --prefix web run publish"
   }
 }

@@ -4,3 +4,10 @@ node_modules/
 .wrangler/
 .impeccable/review/
 *.log
+
+# Startsidan (Next.js-källa i web/)
+web/node_modules
+web/.next
+web/out
+web/next-env.d.ts
+web/*.tsbuildinfo

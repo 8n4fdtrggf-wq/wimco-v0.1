@@ -1,0 +1,158 @@
+/* State visuals for the four lines. Each root receives [data-active] when its line is current.
+   Transitions (not keyframes) so a quick scroll back reverses them from wherever they are. */
+
+/* ---------- H: wireframe → design ---------- */
+.site { height: 100%; display: grid; grid-template-rows: auto 1fr auto; gap: 14px; padding-bottom: 22px; }
+.siteNav { display: flex; align-items: center; gap: 10px; }
+.siteHero { display: grid; align-content: center; gap: 10px; padding: 20px; border-radius: 14px; }
+.siteCards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.blk {
+  display: block;
+  border-radius: 7px;
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--rule);
+  transform: translateY(6px);
+  transition:
+    background-color var(--dur-state) ease,
+    box-shadow var(--dur-state) ease,
+    transform 520ms var(--ease-out);
+}
+.bLogo { width: 58px; height: 12px; }
+.bLink { width: 34px; height: 8px; }
+.bBtn { margin-left: auto; width: 72px; height: 24px; border-radius: 999px; }
+.bL1 { width: 80%; height: 22px; }
+.bL2 { width: 54%; height: 22px; }
+.bCta { width: 124px; height: 32px; border-radius: 999px; margin-top: 6px; }
+.bCard { height: 72px; border-radius: 12px; }
+.site[data-active] .blk { box-shadow: inset 0 0 0 1.5px transparent; transform: none; transition-delay: calc(var(--d, 0) * 70ms); }
+.site[data-active] .siteHero { background: color-mix(in oklab, var(--line-h) 13%, var(--surface)); box-shadow: none; }
+.site[data-active] .bLogo,
+.site[data-active] .bL1,
+.site[data-active] .bL2,
+.site[data-active] .bBtn { background: var(--ink); }
+.site[data-active] .bLink,
+.site[data-active] .bCard { background: var(--tint); }
+.site[data-active] .bCta { background: var(--line-h); }
+
+/* ---------- W: portal rows settle, statuses resolve ---------- */
+.portal { height: 100%; display: grid; grid-template-columns: 22% 1fr; gap: 14px; }
+.aside { display: grid; align-content: start; gap: 10px; padding: 14px; border-radius: 14px; background: var(--bg); }
+.aside i { display: block; height: 9px; border-radius: 5px; background: var(--rule); }
+.aside i:first-child { width: 70%; background: var(--line-w); }
+.table { display: grid; align-content: start; gap: 6px; font-size: 13.5px; min-width: 0; }
+.row {
+  display: grid;
+  grid-template-columns: 1.1fr 1.2fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 11px 12px;
+  border-radius: 10px;
+  background: var(--bg);
+  opacity: 0.35;
+  transform: translateX(10px);
+  transition: transform 520ms var(--ease-out), opacity 400ms ease-out;
+}
+.row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rowHead {
+  background: transparent;
+  opacity: 1;
+  transform: none;
+  padding-block: 4px;
+  font: 500 11px/1 var(--f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.portal[data-active] .row { opacity: 1; transform: none; transition-delay: calc(var(--d, 0) * 80ms); }
+.status { display: grid; justify-items: end; }
+.status em { grid-area: 1 / 1; font: 500 11px/1 var(--f-mono); font-style: normal; padding: 5px 8px; border-radius: 999px; transition: opacity 260ms ease, filter 260ms ease; }
+.statusFrom { background: color-mix(in oklab, var(--line-w) 16%, var(--surface)); color: var(--line-w); }
+.statusTo { background: color-mix(in oklab, var(--good) 16%, var(--surface)); color: var(--good); opacity: 0; filter: blur(3px); }
+.portal[data-active] .swap .statusFrom { opacity: 0; filter: blur(3px); transition-delay: var(--sd); }
+.portal[data-active] .swap .statusTo { opacity: 1; filter: none; transition-delay: var(--sd); }
+
+/* ---------- A: flow lights in order ---------- */
+.flow { position: relative; height: 100%; display: grid; align-content: center; gap: 10px; padding: 0 0 22px 34px; }
+.wire { position: absolute; left: 11px; top: 22px; bottom: 44px; width: 2px; background: var(--rule); overflow: hidden; }
+.wire i { position: absolute; inset: 0; background: var(--line-a); transform-origin: 50% 0; transform: scaleY(0); transition: transform 300ms var(--ease-out); }
+.flow[data-active] .wire i { transform: scaleY(1); transition: transform 1500ms var(--ease-in-out) 150ms; }
+.node {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 2px 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1.5px var(--rule);
+  transition: box-shadow 300ms ease;
+}
+.node::before {
+  content: '';
+  position: absolute;
+  left: -29px;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 2.5px var(--rule);
+  transition: box-shadow 300ms ease, background-color 300ms ease;
+}
+.node time { grid-row: 1 / span 2; font: 500 12px/20px var(--f-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.node b { font-weight: 600; font-size: 14.5px; }
+.node span { font-size: 13px; color: var(--muted); }
+.flow[data-active] .node { box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--line-a) 55%, var(--rule)); transition-delay: calc(150ms + var(--d, 0) * 380ms); }
+.flow[data-active] .node::before {
+  background: var(--line-a);
+  box-shadow: inset 0 0 0 2.5px var(--line-a), 0 0 0 4px color-mix(in oklab, var(--line-a) 18%, transparent);
+  transition-delay: calc(150ms + var(--d, 0) * 380ms);
+}
+
+/* ---------- O: Lighthouse rings ---------- */
+.rings { position: relative; height: 100%; display: grid; align-content: center; padding-bottom: 22px; }
+.ringGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.ring { --rc: var(--poor); display: grid; justify-items: center; gap: 8px; padding: 14px 8px; border-radius: 16px; background: var(--bg); }
+.ring[data-tone='avg'] { --rc: var(--avg); }
+.ring[data-tone='good'] { --rc: var(--good); }
+.ringDial { position: relative; width: 84px; height: 84px; }
+.ringDial svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ringTrack { fill: none; stroke: color-mix(in oklab, var(--rc) 16%, transparent); stroke-width: 7; transition: stroke 300ms ease; }
+.ringArc { fill: none; stroke: var(--rc); stroke-width: 7; stroke-linecap: round; transition: stroke 300ms ease; }
+.ringNum {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font: 500 24px/1 var(--f-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--rc);
+  transition: color 300ms ease;
+}
+.ringLabel { font-size: 13px; color: var(--muted); }
+.legend { position: absolute; left: 0; bottom: 0; display: flex; gap: 12px; font: 500 11px/1 var(--f-mono); color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.legend span::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--k); }
+
+/* ---------- Carousel cards (phones / short screens) ---------- */
+@media (max-width: 960px), (max-height: 639px) {
+  .row,
+  .node,
+  .ring,
+  .aside { background: var(--surface); }
+  .portal { grid-template-columns: 1fr; }
+  .aside { display: none; }
+  .row { grid-template-columns: 1fr auto; }
+  .row > :nth-child(2) { display: none; }
+  .ringDial { width: 64px; height: 64px; }
+  .ringNum { font-size: 19px; }
+  .ring { padding: 8px 4px; gap: 4px; }
+  .legend { left: 0; bottom: -2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blk,
+  .row { transform: none !important; }
+  .wire i { transition-duration: 200ms !important; }
+}

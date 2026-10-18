@@ -1,0 +1,62 @@
+.wrap { position: relative; }
+.map { display: block; width: 100%; height: auto; overflow: visible; }
+.layer { will-change: transform; }
+.dot { fill: var(--rule); }
+
+/* Routes draw once on load (explanation: four lines converge on one station). */
+.route {
+  fill: none;
+  stroke: var(--c);
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  cursor: pointer;
+  transition: opacity var(--dur-ui) ease;
+}
+.draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1400ms var(--ease-in-out) forwards;
+  animation-delay: calc(200ms + var(--i, 0) * 140ms);
+}
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+.stopGroup { transition: opacity var(--dur-ui) ease; }
+.stop { fill: var(--bg); stroke: var(--c); stroke-width: 3; }
+.label { font: 500 12px var(--f-mono); fill: var(--muted); }
+.destination { font: 650 17px var(--f-display); letter-spacing: -0.01em; fill: var(--ink); }
+.station { fill: var(--surface); stroke: var(--ink); stroke-width: 3.5; }
+
+.pop { animation: pop 520ms var(--ease-out) both; animation-delay: calc(900ms + var(--i, 0) * 90ms); }
+@keyframes pop { from { opacity: 0; } }
+
+/* Focus state: the chosen line stays, the rest step back */
+.map[data-focus] .route:not([data-on]) { opacity: 0.14; }
+.map[data-focus] .stopGroup:not([data-on]) { opacity: 0.2; }
+
+.badge { cursor: pointer; outline: none; transform-box: fill-box; transform-origin: center; transition: transform var(--dur-ui) var(--ease-out); }
+.badge[data-on] { transform: scale(1.16); }
+.badge:active { transform: scale(1.04); }
+.badgeFill { fill: var(--c); }
+.badgeText { font: 600 14px var(--f-mono); fill: var(--on-line); pointer-events: none; }
+.focusRing { fill: none; stroke: var(--c); stroke-width: 2; opacity: 0; transition: opacity 150ms ease; }
+.badge:focus-visible .focusRing { opacity: 1; }
+
+.hint {
+  margin: 8px 0 0;
+  text-align: right;
+  font: 500 12px/1 var(--f-mono);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  transition: opacity 200ms ease;
+}
+.hint[data-hidden] { opacity: 0; }
+
+@media (max-width: 960px) {
+  .hint { text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .draw { animation: none; stroke-dashoffset: 0; }
+  .pop { animation: fade 200ms ease both; }
+  @keyframes fade { from { opacity: 0; } }
+}

@@ -1,0 +1,75 @@
+.form { display: grid; gap: 18px; }
+
+/* Type chips: native radios, styled labels */
+.types { border: 0; margin: 0; padding: 0; min-width: 0; }
+.legend { padding: 0; margin-bottom: 10px; font-size: 13.5px; font-weight: 500; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px 0 10px;
+  border-radius: 999px;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--rule);
+  font-size: 14.5px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: box-shadow 180ms ease, background-color 180ms ease, transform var(--dur-press) var(--ease-out);
+}
+.chip:active { transform: scale(0.97); }
+.chip input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.chip:has(input:checked) { background: var(--surface); box-shadow: inset 0 0 0 2px var(--ink); }
+.chip:has(input:focus-visible) { outline: 2px solid var(--line-w); outline-offset: 3px; }
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover { box-shadow: inset 0 0 0 1px var(--muted); }
+  .chip:has(input:checked):hover { box-shadow: inset 0 0 0 2px var(--ink); }
+}
+
+/* Fields */
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.field { display: grid; gap: 7px; min-width: 0; }
+.field label { font-size: 13.5px; font-weight: 500; }
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--bg);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--rule);
+  font: 400 16px/1.4 var(--f-body); /* 16px: no iOS zoom on focus */
+  outline: none;
+  transition: box-shadow 150ms ease;
+}
+.field textarea { resize: vertical; min-height: 112px; }
+.field select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(-45deg, transparent 50%, var(--muted) 50%); background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 36px; }
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible { box-shadow: inset 0 0 0 2px var(--line-w); }
+.field[data-invalid] input,
+.field[data-invalid] textarea { box-shadow: inset 0 0 0 2px var(--poor); }
+.error { font-size: 13px; color: var(--poor); }
+
+.honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+.footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+.privacy { margin: 0; font-size: 13.5px; color: var(--muted); }
+.privacy a { color: var(--ink); text-underline-offset: 3px; }
+.status p { margin: 0; font-size: 14px; color: var(--poor); }
+.status a { color: var(--ink); text-underline-offset: 3px; }
+.done { display: grid; gap: 8px; padding: 22px; border-radius: 18px; background: color-mix(in oklab, var(--line-h) 10%, var(--surface)); outline: none; animation: arrive 420ms var(--ease-out) both; }
+.done h4 { margin: 0; font: 620 20px/1.2 var(--f-display); letter-spacing: -0.01em; }
+.done p { margin: 0; color: var(--muted); }
+@keyframes arrive { from { opacity: 0; transform: translateY(8px); } }
+@media (prefers-reduced-motion: reduce) { .done { animation: none; } }
+
+@media (max-width: 520px) {
+  .row { grid-template-columns: 1fr; }
+  .footer :global(button) { width: 100%; }
+}
