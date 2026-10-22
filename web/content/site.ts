@@ -1,42 +1,32 @@
 import type {
-  CompareContent,
+  AutomationContent,
+  BuildContent,
   ConsentContent,
   ContactContent,
-  FactsContent,
   FaqContent,
   FooterContent,
   HeroContent,
-  LineId,
-  LineInfo,
-  ManifestoContent,
   MetaContent,
   NavContent,
   ProcessContent,
-  ScoreContent,
-  ServicesContent,
+  RepairContent,
+  Station,
+  StationsContent,
 } from './types';
 
 /** All copy for wimco.se. Edit here; components only render it. */
-
-export const lines: Record<LineId, LineInfo> = {
-  h: { letter: 'H', name: 'Hemsidor' },
-  w: { letter: 'W', name: 'Webbutveckling' },
-  a: { letter: 'A', name: 'AI och automation' },
-  o: { letter: 'O', name: 'Optimering' },
-};
 
 export const meta: MetaContent = {
   siteUrl: 'https://wimco.se',
   siteName: 'Wimco',
   locale: 'sv_SE',
-  title: 'Wimco – hemsidor, webbverktyg och automation | Gratis analys av din webbplats',
+  title: 'Wimco – gratis analys av din webbplats | Hemsidor, webbutveckling och automation',
   description:
-    'Wimco designar hemsidor, bygger digitala verktyg och automatiserar tidskrävande arbete. Testa din webbplats gratis med Wimco Score och se var potentialen finns.',
-  ogTitle: 'Wimco – digitala upplevelser som presterar',
-  ogDescription: 'Hemsidor, webbutveckling och automation. Testa din webbplats gratis med Wimco Score.',
+    'Testa din webbplats gratis med Wimco Score och se vad som håller den tillbaka. Wimco designar hemsidor, bygger webbverktyg och automatiserar tidskrävande arbete.',
+  ogTitle: 'Wimco Score: se vad som håller din sajt tillbaka',
+  ogDescription: 'Gratis analys på en minut. Sen bygger vi det som löser det: hemsidor, webbverktyg och automation.',
   ogImage: '/assets/og-default.png',
-  themeLight: '#F3F5F4',
-  themeDark: '#0C1110',
+  themeColor: '#F4F6F4',
 };
 
 export const nav: NavContent = {
@@ -44,212 +34,238 @@ export const nav: NavContent = {
   homeLabel: 'Wimco, till toppen',
   label: 'Huvudmeny',
   links: [
-    { id: 'tjanster', label: 'Tjänster', href: '#tjanster', line: 'h' },
-    { id: 'score', label: 'Wimco Score', href: '#score', line: 'w' },
-    { id: 'arbetssatt', label: 'Arbetssätt', href: '#arbetssatt', line: 'a' },
-    { label: 'Guider', href: '/guider/', line: 'o' },
-    { id: 'faq', label: 'Frågor', href: '#faq', line: 'h' },
+    { id: 'stationer', label: 'Så mäts det', href: '#stationer' },
+    { id: 'atgarda', label: 'Åtgärder', href: '#atgarda' },
+    { id: 'automation', label: 'Automation', href: '#automation' },
+    { id: 'tjanster', label: 'Tjänster', href: '#tjanster' },
+    { label: 'Guider', href: '/guider/' },
+    { id: 'faq', label: 'Frågor', href: '#faq' },
   ],
-  cta: { label: 'Starta ett projekt', href: '#starta' },
+  cta: { label: 'Starta ett projekt', href: '#projekt' },
   menu: { open: 'Meny', close: 'Stäng' },
+  dock: {
+    label: 'Wimco Score just nu: {score} av 100, för exempelföretaget. Gå till analysen.',
+    example: 'Exempel',
+    handover: 'Din sajt?',
+    handoverLabel: 'Analysera din egen sajt',
+  },
+};
+
+/**
+ * The six Wimco Score categories. Name, weight and source are the real ones (see /wimco-score/).
+ * before/after, finding and fix describe a made-up company ("Ekdahls Bygg") and are labelled
+ * as an example wherever they are shown.
+ */
+export const stations: Station[] = [
+  {
+    name: 'Prestanda',
+    weight: 20,
+    source: 'Uppmätt',
+    measures: 'Hur snabbt sidan laddar och blir användbar på mobil.',
+    before: 38,
+    after: 94,
+    finding: 'Startbilden väger 4,2 MB och laddas före allt annat.',
+    fix: 'Komprimerad till 180 kB och laddas först när den syns.',
+    service: 'optimering',
+  },
+  {
+    name: 'Mobil',
+    weight: 15,
+    source: 'Regelkontroll',
+    measures: 'Skärmanpassning, zoom och klickytor som går att träffa med tummen.',
+    before: 52,
+    after: 96,
+    finding: 'Menyknappar på 28 px. Svåra att träffa med tummen.',
+    fix: 'Klickytor på 44 px och en meny som får plats.',
+    service: 'hemsidor',
+  },
+  {
+    name: 'Tillgänglighet',
+    weight: 15,
+    source: 'Uppmätt',
+    measures: 'Kontrast, alt-texter och struktur som fungerar med skärmläsare.',
+    before: 61,
+    after: 98,
+    finding: 'Grå text på grå botten. Kontrast 2,1:1.',
+    fix: 'Kontrast 7:1. Läsbar även i solljus.',
+    service: 'optimering',
+  },
+  {
+    name: 'SEO och teknik',
+    weight: 20,
+    source: 'Uppmätt och regelkontroll',
+    measures: 'Titel, metadata, rubriker och länkar som sökmotorer kan läsa.',
+    before: 55,
+    after: 92,
+    finding: 'Sidtiteln är bara ”Hem”. Ingen huvudrubrik.',
+    fix: 'En titel som säger vad och var, och en riktig H1.',
+    service: 'optimering',
+  },
+  {
+    name: 'Visuell tydlighet',
+    weight: 15,
+    source: 'Bedömning',
+    measures: 'Om besökaren förstår erbjudandet inom några sekunder.',
+    before: 40,
+    after: 88,
+    finding: '”Välkommen till vår hemsida!” säger ingenting.',
+    fix: 'Erbjudandet på första raden: badrum klara på tre veckor.',
+    service: 'hemsidor',
+  },
+  {
+    name: 'Konvertering',
+    weight: 15,
+    source: 'Bedömning',
+    measures: 'Hur lätt det är att ta nästa steg och höra av sig.',
+    before: 30,
+    after: 90,
+    finding: 'Kontaktuppgifterna finns bara i sidfoten.',
+    fix: 'Offertknapp överst. Kunden får svar automatiskt direkt.',
+    service: 'automation',
+  },
+];
+
+export const serviceNames: Record<Station['service'], string> = {
+  hemsidor: 'Hemsida',
+  webbutveckling: 'Webbutveckling',
+  automation: 'Automation',
+  optimering: 'Optimering',
 };
 
 export const hero: HeroContent = {
-  label: 'Introduktion',
-  eyebrow: 'Design- och teknikpartner för små och medelstora företag',
-  headline: [
-    { text: 'Hemsidor', line: 'h' },
-    { text: ', ' },
-    { text: 'webbverktyg', line: 'w' },
-    { text: ' och ' },
-    { text: 'automation', line: 'a' },
-    { text: ' som ' },
-    { text: 'presterar', line: 'o' },
-    { text: '.' },
-  ],
-  lede: 'Wimco designar hemsidor, utvecklar digitala verktyg och automatiserar tidskrävande arbete. Du pratar direkt med den som bygger.',
-  primary: { label: 'Analysera min webbplats', href: '#analys' },
-  secondary: { label: 'Starta ett projekt', href: '#starta' },
-  map: {
-    ariaLabel:
-      'Linjekarta: Hemsidor, Webbutveckling, Automation och Optimering möts i stationen Fler kunder',
-    stops: { h: 'Strategi', w: 'Kundportal', a: 'Leads', o: 'Laddtid' },
-    destination: 'Fler kunder',
-    destinationSub: 'mindre manuellt arbete',
-  },
-  hint: { fine: 'Peka på en linje', coarse: 'Tryck på en linje' },
-  cue: 'Scrolla',
-};
-
-export const manifesto: ManifestoContent = {
-  label: 'Vad Wimco gör',
-  segments: [
-    { text: 'Vi bygger ' },
-    { text: 'hemsidor', line: 'h' },
-    { text: ' som får besökare att höra av sig, ' },
-    { text: 'verktyg', line: 'w' },
-    { text: ' som ett färdigt tema inte klarar och ' },
-    { text: 'automationer', line: 'a' },
-    { text: ' som gör jobbet medan du gör ditt. Allt mätt, allt ' },
-    { text: 'snabbt', line: 'o' },
-    { text: '.' },
-  ],
-  byline: { initial: 'W', text: 'Willem, grundare av Wimco' },
-};
-
-export const facts: FactsContent = {
-  label: 'Så är det att jobba med Wimco',
-  items: [
-    { title: 'Du pratar direkt med Willem', body: 'som designar och bygger det du beställer.' },
-    { title: 'Första samtalet är gratis', body: '20 minuter, utan förpliktelser.' },
-    { title: 'Ny hemsida på 3–6 veckor', body: 'En enklare uppdatering kan vara klar på en vecka.' },
-    { title: 'Mätt med Google Lighthouse', body: 'Googles eget verktyg för att mäta webbsidor.' },
-  ],
-};
-
-export const services: ServicesContent = {
-  label: 'Tjänster',
-  eyebrow: 'Fyra linjer',
-  title: 'Fyra linjer. Samma riktning.',
-  stepperLabel: 'Välj linje',
-  urlPrefix: 'wimco.se / linje-',
-  lineLabel: 'Linje',
-  steps: [
-    {
-      line: 'h',
-      title: 'Hemsidor som gör besökare till kunder.',
-      body: 'En hemsida ska få rätt personer att förstå vad du erbjuder och våga höra av sig. Vi börjar i strategin och slutar inte vid lansering.',
-      stops: ['Strategi och struktur', 'Unik visuell design', 'Konvertering', 'SEO-grund'],
-      visual: 'site',
-      caption: 'Struktur → design',
-    },
-    {
-      line: 'w',
-      title: 'Webbverktyg som ett färdigt tema inte klarar.',
-      body: 'När standardlösningen tar slut bygger vi det du faktiskt behöver, kopplat till systemen du redan använder.',
-      stops: ['Kundportaler', 'Interna verktyg', 'Integrationer och API:er', 'Webbapplikationer'],
-      visual: 'portal',
-      caption: 'Kundportal · exempeldata',
-    },
-    {
-      line: 'a',
-      title: 'Automationer som gör jobbet medan du gör ditt.',
-      body: 'En förfrågan som kommer in en söndagskväll ska inte vänta till måndag. Systemen pratar med varandra och du får sammanfattningen.',
-      stops: ['Leadhantering', 'Kopplingar mellan system', 'Rapporter', 'AI-assistenter'],
-      visual: 'flow',
-      caption: 'Exempel på leadflöde',
-    },
-    {
-      line: 'o',
-      title: 'Vässa det du redan har.',
-      body: 'Ofta behövs ingen ny sajt. Laddtid, tydlighet och kontaktvägar avgör om besökaren stannar.',
-      stops: ['Core Web Vitals', 'Tydlighet och budskap', 'Teknisk SEO', 'Tillgänglighet'],
-      visual: 'rings',
-      caption: 'Lighthouse, mobil · exempel',
-    },
-  ],
-  portal: {
-    head: ['Kund', 'Ärende', 'Status'],
-    rows: [
-      { customer: 'Ekdahls Bygg', matter: 'Offert, badrum', status: 'Ny', resolvesTo: 'Klar', delayMs: 900 },
-      { customer: 'Norrvik Café', matter: 'Bokning, lokal', status: 'Pågår' },
-      { customer: 'Lindqvist Revision', matter: 'Uppladdade underlag', status: 'Ny', resolvesTo: 'Klar', delayMs: 1300 },
-      { customer: 'Sjöberg Fastighet', matter: 'Felanmälan', status: 'Pågår' },
+  title: 'Se vad som håller din sajt tillbaka.',
+  lede: 'Gratis analys på en minut. Sen bygger vi hemsidan, verktyget eller automationen som löser det.',
+  proof: ['Uppmätt med Google Lighthouse', 'Ingen registrering', 'Svar från Willem, inte en säljare'],
+  example: {
+    host: 'ekdahls-bygg.exempel',
+    tag: 'Exempel · påhittat företag',
+    ringLabel: 'Wimco Score för exempelföretaget Ekdahls Bygg: {score} av 100.',
+    caption: 'av 100',
+    log: [
+      'Lighthouse, mobil',
+      'Skärm, zoom och klickytor',
+      'Kontrast och struktur',
+      'Titel, rubriker och länkar',
+      'Budskap ovanför vecket',
+      'Kontaktvägar',
     ],
-  },
-  flow: [
-    { time: '08:14', title: 'En förfrågan kommer in', body: 'Via formuläret på din sajt' },
-    { time: '08:14', title: 'Den sorteras och sparas', body: 'Rätt tjänst, direkt i kundregistret' },
-    { time: '08:14', title: 'Kunden får svar direkt', body: 'Med en länk för att boka tid' },
-    { time: '08:30', title: 'Du får en sammanfattning', body: 'Det viktigaste först' },
-  ],
-  rings: {
-    items: [
-      { label: 'Prestanda', from: 54, to: 96 },
-      { label: 'Tillgänglighet', from: 78, to: 98 },
-      { label: 'Bästa praxis', from: 74, to: 100 },
-      { label: 'SEO', from: 82, to: 100 },
-    ],
-    bands: [
-      { label: '0–49', tone: 'poor' },
-      { label: '50–89', tone: 'avg' },
-      { label: '90–100', tone: 'good' },
-    ],
+    running: 'Analyserar {host}',
+    done: 'Klar · 6 av 6 kontroller',
+    chips: ['LCP 4,8 s', 'Kontrast 2,1:1', 'Titel: ”Hem”'],
+    siteHeadline: 'Välkommen till vår hemsida!',
   },
 };
 
-export const compare: CompareContent = {
-  label: 'Före och efter',
-  line: 'o',
-  eyebrow: 'Optimering',
-  title: 'Samma sajt. Dra och se skillnaden.',
-  lede: 'En optimering ändrar sällan vad företaget erbjuder. Den ändrar hur snabbt och tydligt besökaren förstår det.',
-  slider: {
-    label: 'Jämför före och efter',
-    valueText: '{before} % före, {after} % efter',
-    before: 'Före',
-    after: 'Efter',
-    snaps: [0.06, 0.5, 0.94],
-  },
-  before: {
+export const stationsSection: StationsContent = {
+  title: 'Sex saker avgör om besökaren stannar.',
+  lede: 'Wimco Score väger ihop dem till ett betyg mellan 0 och 100. Varje siffra visar var den kommer ifrån.',
+  sourcesNote: 'Uppmätt betyder Google Lighthouse. Regelkontroll betyder att sidans kod granskas mot fasta regler. Bedömning görs enligt fasta kriterier.',
+  link: { label: 'Så räknas poängen', href: '/wimco-score/' },
+};
+
+export const repair: RepairContent = {
+  pause: 'Ett betyg är bara början. Så här ser det ut när vi åtgärdar det.',
+  title: 'Sex fynd. Sex åtgärder.',
+  lede: 'Scrolla och se exempelsajten lagas, ett fynd i taget.',
+  note: 'Påhittat företag. Fynd och poäng är illustrativa, men räknade med Wimco Scores riktiga vikter.',
+  ringLabel: 'Exempelföretagets Wimco Score under åtgärderna.',
+  serviceLabel: 'Åtgärdas med',
+  findingLabel: 'Fynd',
+  fixLabel: 'Åtgärd',
+  site: {
+    host: 'ekdahls-bygg.exempel',
+    tabBefore: 'Hem',
+    tabAfter: 'Badrum i Stockholm · Ekdahls Bygg',
     company: 'Ekdahls Bygg AB',
-    welcome: 'Välkommen till vår hemsida!',
-    body: 'Vi utför alla typer av byggtjänster i Stockholmsområdet sedan 1998. Kontakta oss gärna för mer information om våra tjänster.',
+    navBefore: ['Hem', 'Om oss', 'Tjänster', 'Galleri', 'Länkar', 'Kontakt'],
+    navAfter: ['Badrum', 'Kök', 'Om oss'],
+    headlineBefore: 'Välkommen till vår hemsida!',
+    headlineAfter: 'Badrum klara på 3 veckor.',
+    bodyBefore: 'Vi utför alla typer av byggtjänster i Stockholmsområdet sedan 1998. Kontakta oss gärna för mer information.',
+    bodyAfter: 'Fast pris och ROT-avdraget direkt på fakturan.',
+    imageWeight: '4,2 MB',
     cookie: 'Denna webbplats använder cookies för att förbättra din upplevelse.',
     cookieButton: 'OK',
-    score: 41,
-    scoreLabel: 'Prestanda',
+    cta: 'Få offert inom 24 h',
+    toast: 'Ny förfrågan · svar skickat',
   },
-  after: {
-    company: 'Ekdahls',
-    nav: ['Badrum', 'Kök', 'Om oss'],
-    navCta: 'Boka besök',
-    headline: 'Badrum klara på 3 veckor.',
-    sub: 'Fast pris och ROT-avdrag direkt på fakturan.',
-    cta: 'Få offert inom 24 h →',
-    score: 96,
-    scoreLabel: 'Prestanda',
-  },
-  metricsHead: ['Mätpunkt', 'Före', 'Efter'],
-  metrics: [
-    { label: 'Prestanda (Lighthouse, mobil)', before: '41', after: '96' },
-    { label: 'Största innehållet laddat (LCP)', before: '4,8 s', after: '1,1 s' },
-    { label: 'Layoutskift (CLS)', before: '0,31', after: '0,01' },
-    { label: 'Kontaktväg synlig utan scroll', before: 'Nej', after: 'Ja' },
-  ],
-  note: 'Exempel på en optimering för ett påhittat företag. Värdena är illustrativa.',
 };
 
-export const score: ScoreContent = {
-  eyebrow: 'Wimco Score · 0–100',
-  title: 'Sex stationer. En ärlig poäng.',
-  lede: 'Wimco Score väger ihop sex delar av din digitala närvaro till ett betyg. Varje siffra visar var den kommer ifrån: uppmätt, regelkontroll eller bedömning.',
-  stackLabel: 'Viktning av Wimco Score',
-  weights: [
-    { name: 'Prestanda', pct: 20, line: 'h', source: 'Uppmätt · Lighthouse', body: 'Hur snabbt sidan laddar och blir användbar på mobil: LCP, CLS och TBT.' },
-    { name: 'Mobil', pct: 15, line: 'w', source: 'Regelkontroll', body: 'Skärmanpassning, zoom och klickytor som går att träffa med tummen.' },
-    { name: 'Tillgänglighet', pct: 15, line: 'a', source: 'Uppmätt · Lighthouse', body: 'Kontrast, alt-texter och struktur som fungerar med skärmläsare.' },
-    { name: 'SEO och teknik', pct: 20, line: 'o', source: 'Uppmätt + regelkontroll', body: 'Titel, metadata, rubriker och länkar som sökmotorer kan läsa.' },
-    { name: 'Visuell tydlighet', pct: 15, line: 'h', muted: true, source: 'Bedömning', body: 'Om besökaren förstår erbjudandet inom några sekunder.' },
-    { name: 'Konvertering', pct: 15, line: 'w', muted: true, source: 'Bedömning', body: 'Hur lätt det är att ta nästa steg och höra av sig.' },
+export const automation: AutomationContent = {
+  title: 'Och sen sköter sig resten.',
+  lede: 'En förfrågan som kommer in en söndagskväll ska inte vänta till måndag. Tryck på knappen och se vad som händer.',
+  run: 'Skicka en testförfrågan',
+  rerun: 'Skicka en till',
+  demoNote: 'Demo i din webbläsare. Inget skickas någonstans.',
+  form: { name: 'Sara Lind', message: 'Hej! Vi vill renovera badrummet i höst. Vad kostar det ungefär?', service: 'Badrum' },
+  steps: [
+    { title: 'Förfrågan kommer in', body: 'Via offertformuläret på sajten.' },
+    { title: 'Sorteras och sparas', body: 'Rätt tjänst, direkt i kundregistret.' },
+    { title: 'Kunden får svar', body: 'Ett personligt mejl med en länk för att boka hembesök.' },
+    { title: 'Du får en sammanfattning', body: 'Det viktigaste först, i mobilen.' },
   ],
-  primary: { label: 'Analysera min webbplats', href: '#analys' },
-  secondary: { label: 'Så räknas poängen', href: '/wimco-score/' },
+  surface: {
+    formTitle: 'Offertförfrågan',
+    crmHead: ['Kund', 'Tjänst', 'Status'],
+    crmStatus: 'Ny',
+    replySubject: 'Tack Sara, vi har fått din förfrågan',
+    replyBody: 'Välj en tid för hembesök så tittar vi på badrummet tillsammans.',
+    summary: '1 ny förfrågan · badrum · svar skickat',
+  },
+  more: {
+    title: 'Annat vi ofta automatiserar',
+    items: ['Bokningsbekräftelser', 'Uppföljningsmejl', 'Rapporter som skriver sig själva', 'Kopplingar mellan system', 'AI-assistent för vanliga frågor'],
+  },
+};
+
+export const build: BuildContent = {
+  title: 'Det här bygger vi.',
+  lede: 'Samma studio som hittar felen bygger lösningen. Du pratar direkt med den som gör jobbet.',
+  head: { name: 'Tjänst', what: 'Vad det är', time: 'Tid' },
+  items: [
+    {
+      service: 'hemsidor',
+      name: 'Hemsidor',
+      what: 'Strategi, struktur, design och text som får rätt besökare att höra av sig.',
+      examples: ['Ny sajt', 'Omdesign', 'Landningssidor'],
+      time: 'Oftast 3–6 veckor',
+    },
+    {
+      service: 'webbutveckling',
+      name: 'Webbutveckling',
+      what: 'Det ett färdigt tema inte klarar, kopplat till systemen du redan har.',
+      examples: ['Kundportaler', 'Interna verktyg', 'Integrationer och API:er'],
+      time: 'Efter omfattning',
+    },
+    {
+      service: 'automation',
+      name: 'AI och automation',
+      what: 'System som pratar med varandra, så att jobbet blir gjort medan du gör ditt.',
+      examples: ['Leadhantering', 'Rapporter', 'AI-assistenter'],
+      time: 'Ofta några dagar',
+    },
+    {
+      service: 'optimering',
+      name: 'Optimering',
+      what: 'Vässa det du redan har. Laddtid, tydlighet och kontaktvägar avgör om besökaren stannar.',
+      examples: ['Core Web Vitals', 'Teknisk SEO', 'Tillgänglighet'],
+      time: 'Ofta en vecka',
+    },
+  ],
+  cta: { label: 'Starta ett projekt', href: '#projekt' },
 };
 
 export const process: ProcessContent = {
-  eyebrow: 'Arbetssätt',
   title: 'Så jobbar vi.',
   steps: [
-    { label: 'STEG 1', title: 'Kostnadsfritt samtal', body: '20 minuter om dina mål och vad som skaver i dag. Du får ett ärligt svar, även om det är att behålla det du har.' },
-    { label: 'STEG 2', title: 'Förslag och prioritering', body: 'En konkret plan som utgår från din budget och börjar med det som ger mest effekt.' },
-    { label: 'STEG 3', title: 'Genomförande', body: 'Vi bygger och sätter upp. Du ser och godkänner längs vägen.' },
-    { label: 'STEG 4', title: 'Uppföljning', body: 'Vi mäter resultaten och fortsätter förbättra. Vi försvinner inte efter leverans.' },
+    { title: 'Kostnadsfritt samtal', body: '20 minuter om dina mål och vad som skaver. Du får ett ärligt svar, även om det är att behålla det du har.' },
+    { title: 'Förslag', body: 'En konkret plan utifrån din budget, som börjar med det som ger mest effekt.' },
+    { title: 'Bygge', body: 'Du ser och godkänner längs vägen.' },
+    { title: 'Uppföljning', body: 'Vi mäter resultatet och fortsätter förbättra. Vi försvinner inte efter lansering.' },
   ],
 };
 
 export const faq: FaqContent = {
-  eyebrow: 'Frågor',
   title: 'Vanliga frågor.',
   items: [
     {
@@ -292,12 +308,11 @@ export const faq: FaqContent = {
 };
 
 export const contact: ContactContent = {
-  eyebrow: 'Nästa station',
-  title: 'Var står du i dag?',
+  title: 'Din tur.',
+  lede: 'Resten av sidan handlade om ett påhittat byggföretag. Nu gäller det din sajt.',
   analyse: {
-    id: 'analys',
-    line: 'o',
-    eyebrow: 'Jag har redan en webbplats',
+    id: 'din-sajt',
+    eyebrow: 'Jag har en webbplats',
     title: 'Se vad som håller den tillbaka.',
     body: 'Analysen tar ungefär en minut. Gratis, och ingen registrering krävs.',
     inputLabel: 'Webbadress',
@@ -327,16 +342,15 @@ export const contact: ContactContent = {
   },
   project: {
     id: 'projekt',
-    line: 'h',
     eyebrow: 'Jag vill bygga något nytt',
     title: 'Berätta vad du behöver.',
     body: 'Du får svar från Willem med förslag på nästa steg.',
     typeLegend: 'Vad gäller det?',
     types: [
-      { line: 'h', label: 'Hemsida', service: 'hemsidor' },
-      { line: 'w', label: 'Webblösning', service: 'webbutveckling' },
-      { line: 'a', label: 'Automation', service: 'automation' },
-      { line: 'o', label: 'Förbättra befintlig', service: 'optimering' },
+      { label: 'Hemsida', service: 'hemsidor' },
+      { label: 'Webblösning', service: 'webbutveckling' },
+      { label: 'Automation', service: 'automation' },
+      { label: 'Förbättra befintlig', service: 'optimering' },
     ],
     fields: {
       name: 'Namn',

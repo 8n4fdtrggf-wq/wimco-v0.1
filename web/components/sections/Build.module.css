@@ -1,0 +1,49 @@
+.build { border-top: 1px solid var(--rule); }
+.head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px clamp(32px, 6vw, 96px); align-items: end; margin-bottom: clamp(32px, 5vw, 56px); }
+.title { margin: 0; font: 700 clamp(2rem, 4.2vw, 3.6rem)/1.02 var(--f-display); letter-spacing: -0.04em; }
+.lede { margin: 0; max-width: 42ch; color: var(--muted); font-size: clamp(1.02rem, 1.3vw, 1.15rem); }
+
+.list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule-strong); }
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr) minmax(0, 1fr) 150px;
+  gap: 24px;
+  align-items: baseline;
+  padding: clamp(22px, 3vw, 34px) 0;
+  border-bottom: 1px solid var(--rule);
+  transition: background-color 200ms ease;
+}
+.name { font: 700 clamp(1.4rem, 2.4vw, 2rem)/1.05 var(--f-display); letter-spacing: -0.03em; }
+.what { margin: 0; color: var(--muted); max-width: 46ch; }
+.examples { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.examples li { padding: 6px 10px; border-radius: 8px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--rule); font-size: 13.5px; }
+.time { margin: 0; justify-self: end; font: 500 12.5px/1.3 var(--f-mono); color: var(--muted); text-align: right; }
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 32px;
+  height: 52px;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--surface);
+  text-decoration: none;
+  font-weight: 500;
+  transition: transform var(--dur-press) var(--ease-out), background-color 160ms ease;
+}
+.cta:active { transform: scale(0.97); }
+.cta span { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover { background: color-mix(in oklab, var(--ink) 82%, var(--accent)); }
+  .cta:hover span { transform: translateX(3px); }
+}
+
+@media (max-width: 960px) {
+  .head { grid-template-columns: 1fr; }
+  .row { grid-template-columns: 1fr auto; gap: 10px 16px; }
+  .what,
+  .examples { grid-column: 1 / -1; }
+  .time { grid-row: 1; grid-column: 2; }
+}

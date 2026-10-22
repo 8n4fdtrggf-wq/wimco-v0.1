@@ -1,5 +1,4 @@
 import type { FaqContent } from '@/content/types';
-import { SectionHeading } from '@/components/ui/SectionHeading';
 import { cx } from '@/lib/css';
 import styles from './Faq.module.css';
 
@@ -9,9 +8,11 @@ import styles from './Faq.module.css';
  */
 export function Faq({ content }: { content: FaqContent }) {
   return (
-    <section id="faq" className={cx('wrap', styles.faq)}>
-      <div className={styles.grid}>
-        <SectionHeading eyebrow={content.eyebrow} title={content.title} segment="o" className={styles.head} />
+    <section id="faq" className={cx('section', styles.faq)} aria-label="Vanliga frågor">
+      <div className={cx('wrap', styles.grid)}>
+        <h2 className={styles.head} data-rise="">
+          {content.title}
+        </h2>
         <div className={styles.list}>
           {content.items.map((item) => (
             <details key={item.question} className={styles.item} name="faq">

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Button } from '@/components/ui/Button';
-import { LineBadge } from '@/components/ui/LineBadge';
+import { ScoreRing } from '@/components/score/ScoreRing';
 
 export const metadata: Metadata = {
   title: 'Sidan finns inte – Wimco',
@@ -10,16 +10,13 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <main className="wrap" style={{ minHeight: '100svh', display: 'grid', alignContent: 'center', gap: 24, paddingBlock: 64 }}>
-      <p style={{ display: 'flex', gap: 6, margin: 0 }}>
-        <LineBadge line="h" />
-        <LineBadge line="w" />
-        <LineBadge line="a" />
-        <LineBadge line="o" />
-      </p>
+      <div style={{ width: 120 }}>
+        <ScoreRing size="md" label="" scores={[0, 0, 0, 0, 0, 0]} />
+      </div>
       <h1 className="display" style={{ fontSize: 'clamp(2.4rem, 7vw, 5rem)' }}>
-        Den här stationen finns inte.
+        Den här sidan finns inte.
       </h1>
-      <p className="lede">Länken kan vara gammal eller felstavad. Startsidan har allt om hemsidor, webbverktyg och automation.</p>
+      <p className="lede">Länken kan vara gammal eller felstavad. På startsidan kan du analysera din webbplats gratis.</p>
       <div>
         <Button href="/" arrow>
           Till startsidan

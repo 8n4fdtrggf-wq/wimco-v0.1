@@ -1,6 +1,6 @@
-.faq { padding-bottom: clamp(88px, 12vw, 160px); }
+.faq { border-top: 1px solid var(--rule); }
 .grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
-.head { position: sticky; top: calc(var(--safe-top) + var(--nav-h) + 32px); }
+.head { position: sticky; top: calc(var(--safe-top) + var(--nav-h) + 32px); margin: 0; font: 700 clamp(2rem, 4.2vw, 3.6rem)/1.02 var(--f-display); letter-spacing: -0.04em; }
 .list { border-top: 1px solid var(--rule); }
 
 .item { border-bottom: 1px solid var(--rule); interpolate-size: allow-keywords; }

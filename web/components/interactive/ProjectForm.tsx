@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import type { ProjectContent } from '@/content/types';
 import { Button } from '@/components/ui/Button';
-import { LineBadge } from '@/components/ui/LineBadge';
 import { format } from '@/lib/css';
 import { shake } from '@/lib/motion';
 import { track, turnstileToken } from '@/lib/site';
@@ -130,7 +129,7 @@ export function ProjectForm({ content, email }: { content: ProjectContent; email
           {content.types.map((t, i) => (
             <label key={t.service} className={styles.chip}>
               <input type="radio" name="service" value={t.service} defaultChecked={i === 0} />
-              <LineBadge line={t.line} size="sm" />
+              <span className={styles.radio} aria-hidden="true" />
               <span>{t.label}</span>
             </label>
           ))}

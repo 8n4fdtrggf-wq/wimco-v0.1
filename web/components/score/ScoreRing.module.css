@@ -1,0 +1,33 @@
+.ring { position: relative; aspect-ratio: 1; width: 100%; }
+.lg { max-width: 300px; }
+.md { max-width: 220px; }
+.sm { width: 34px; }
+.ring svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+.track { stroke: var(--rule); }
+.value { stroke: var(--rule); transition: stroke 260ms ease; }
+.value[data-band='poor'] { stroke: var(--poor); }
+.value[data-band='avg'] { stroke: var(--avg); }
+.value[data-band='good'] { stroke: var(--good); }
+
+.center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 2px;
+  text-align: center;
+}
+.center b {
+  font: 700 clamp(3.4rem, 7vw, 5.2rem)/0.9 var(--f-display);
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.md .center b { font-size: clamp(2.8rem, 5vw, 3.8rem); }
+.center span { font: 500 11.5px/1 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+/* Dock size: thin ring, number sits beside it (rendered by the dock), not inside */
+.sm svg circle { stroke-width: 22px; }
+.sm .center { display: none; }

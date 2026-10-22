@@ -1,14 +1,14 @@
 import * as content from '@/content/site';
 import { SiteNav } from '@/components/nav/SiteNav';
+import { Motion } from '@/components/motion/Motion';
 import { Hero } from '@/components/sections/Hero';
-import { Manifesto } from '@/components/sections/Manifesto';
-import { Facts } from '@/components/sections/Facts';
-import { Services } from '@/components/sections/Services';
-import { Compare } from '@/components/sections/Compare';
-import { Score } from '@/components/sections/Score';
-import { Process } from '@/components/sections/Process';
+import { Stations } from '@/components/sections/Stations';
+import { Repair } from '@/components/sections/Repair';
+import { Automation } from '@/components/sections/Automation';
+import { Build } from '@/components/sections/Build';
+import { Willem } from '@/components/sections/Willem';
 import { Faq } from '@/components/sections/Faq';
-import { Contact } from '@/components/sections/Contact';
+import { Close } from '@/components/sections/Close';
 import { Footer } from '@/components/sections/Footer';
 import { ConsentBanner } from '@/components/sections/ConsentBanner';
 
@@ -41,7 +41,14 @@ function StructuredData() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
 }
 
+/**
+ * The start page reads as one running Wimco Score report (docs/redesign/BRIEF.md):
+ * a scan in progress → what is measured → the repair (the peak) → automation you run yourself
+ * → what we build → Willem → questions → your turn.
+ */
 export default function Page() {
+  const { stations, contact } = content;
+  const heroAnalyse = { ...contact.analyse, id: 'analys' };
   return (
     <>
       <StructuredData />
@@ -50,18 +57,18 @@ export default function Page() {
       </a>
       <SiteNav content={content.nav} />
       <main id="main">
-        <Hero content={content.hero} />
-        <Manifesto content={content.manifesto} />
-        <Facts content={content.facts} />
-        <Services content={content.services} lines={content.lines} />
-        <Compare content={content.compare} />
-        <Score content={content.score} />
-        <Process content={content.process} />
+        <Hero content={content.hero} stations={stations} analyse={heroAnalyse} />
+        <Stations content={content.stationsSection} stations={stations} />
+        <Repair content={content.repair} stations={stations} serviceNames={content.serviceNames} />
+        <Automation content={content.automation} />
+        <Build content={content.build} />
+        <Willem willem={contact.willem} process={content.process} />
         <Faq content={content.faq} />
-        <Contact content={content.contact} />
+        <Close content={contact} stations={stations} />
       </main>
       <Footer content={content.footer} />
       <ConsentBanner content={content.consent} />
+      <Motion />
     </>
   );
 }

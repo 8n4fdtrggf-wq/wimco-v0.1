@@ -22,6 +22,8 @@
 .chip:active { transform: scale(0.97); }
 .chip input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
 .chip:has(input:checked) { background: var(--surface); box-shadow: inset 0 0 0 2px var(--ink); }
+.radio { width: 14px; height: 14px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--rule-strong); transition: box-shadow 160ms ease; }
+.chip:has(input:checked) .radio { box-shadow: inset 0 0 0 4.5px var(--accent); }
 .chip:has(input:focus-visible) { outline: 2px solid var(--line-w); outline-offset: 3px; }
 @media (hover: hover) and (pointer: fine) {
   .chip:hover { box-shadow: inset 0 0 0 1px var(--muted); }

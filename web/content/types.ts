@@ -5,24 +5,13 @@
  * Strings with {placeholders} are formatted in the component that uses them.
  */
 
-export type LineId = 'h' | 'w' | 'a' | 'o';
-export type Tone = 'poor' | 'avg' | 'good';
+/** The four things Wimco builds. `service` keys match the lead API (lib/analysis/catalog.js). */
+export type ServiceKey = 'hemsidor' | 'webbutveckling' | 'automation' | 'optimering';
 
 export interface LinkItem {
   label: string;
   href: string;
   external?: boolean;
-}
-
-/** A run of text; when `line` is set the run belongs to that transit line and can be emphasised. */
-export interface Segment {
-  text: string;
-  line?: LineId;
-}
-
-export interface LineInfo {
-  letter: string;
-  name: string;
 }
 
 export interface MetaContent {
@@ -34,171 +23,139 @@ export interface MetaContent {
   ogTitle: string;
   ogDescription: string;
   ogImage: string;
-  themeLight: string;
-  themeDark: string;
+  themeColor: string;
 }
 
 export interface NavContent {
   skip: string;
   homeLabel: string;
   label: string;
-  /** `id` marks an on-page section (gets the active pill); links without it go to other pages. */
-  links: (LinkItem & { id?: string; line: LineId })[];
+  /** `id` marks an on-page section (gets the active state); links without it go to other pages. */
+  links: (LinkItem & { id?: string })[];
   cta: LinkItem;
   menu: { open: string; close: string };
+  /** The score dock in the bar. "{score}" is replaced. */
+  dock: { label: string; example: string; handover: string; handoverLabel: string };
+}
+
+/** One of the six Wimco Score categories, with the example company's finding and fix. */
+export interface Station {
+  name: string;
+  weight: number;
+  source: string;
+  measures: string;
+  before: number;
+  after: number;
+  finding: string;
+  fix: string;
+  service: ServiceKey;
 }
 
 export interface HeroContent {
-  label: string;
-  eyebrow: string;
-  headline: Segment[];
-  lede: string;
-  primary: LinkItem;
-  secondary: LinkItem;
-  map: {
-    ariaLabel: string;
-    stops: Record<LineId, string>;
-    destination: string;
-    destinationSub: string;
-  };
-  hint: { fine: string; coarse: string };
-  cue: string;
-}
-
-export interface ManifestoContent {
-  label: string;
-  segments: Segment[];
-  byline: { initial: string; text: string };
-}
-
-export interface FactsContent {
-  label: string;
-  items: { title: string; body: string }[];
-}
-
-export type VisualKind = 'site' | 'portal' | 'flow' | 'rings';
-
-export interface ServiceStep {
-  line: LineId;
-  title: string;
-  body: string;
-  stops: string[];
-  visual: VisualKind;
-  caption: string;
-}
-
-export interface PortalRow {
-  customer: string;
-  matter: string;
-  status: string;
-  /** When set, the status resolves to this value once the visual becomes active. */
-  resolvesTo?: string;
-  delayMs?: number;
-}
-
-export interface FlowNode {
-  time: string;
-  title: string;
-  body: string;
-}
-
-export interface RingItem {
-  label: string;
-  from: number;
-  to: number;
-}
-
-export interface ServicesContent {
-  label: string;
-  eyebrow: string;
-  title: string;
-  stepperLabel: string;
-  urlPrefix: string;
-  lineLabel: string;
-  steps: ServiceStep[];
-  portal: { head: [string, string, string]; rows: PortalRow[] };
-  flow: FlowNode[];
-  rings: { items: RingItem[]; bands: { label: string; tone: Tone }[] };
-}
-
-export interface BeforeShotContent {
-  company: string;
-  welcome: string;
-  body: string;
-  cookie: string;
-  cookieButton: string;
-  score: number;
-  scoreLabel: string;
-}
-
-export interface AfterShotContent {
-  company: string;
-  nav: string[];
-  navCta: string;
-  headline: string;
-  sub: string;
-  cta: string;
-  score: number;
-  scoreLabel: string;
-}
-
-export interface CompareContent {
-  label: string;
-  line: LineId;
-  eyebrow: string;
   title: string;
   lede: string;
-  slider: {
-    label: string;
-    /** e.g. "{before} % före, {after} % efter" */
-    valueText: string;
-    before: string;
-    after: string;
-    /** Resting points a flick can land on, as fractions of the width. */
-    snaps: number[];
+  proof: string[];
+  example: {
+    host: string;
+    tag: string;
+    ringLabel: string;
+    caption: string;
+    log: string[];
+    running: string;
+    done: string;
+    chips: string[];
+    siteHeadline: string;
   };
-  before: BeforeShotContent;
-  after: AfterShotContent;
-  metricsHead: [string, string, string];
-  metrics: { label: string; before: string; after: string }[];
+}
+
+export interface StationsContent {
+  title: string;
+  lede: string;
+  sourcesNote: string;
+  link: LinkItem;
+}
+
+export interface RepairContent {
+  pause: string;
+  title: string;
+  lede: string;
   note: string;
+  ringLabel: string;
+  serviceLabel: string;
+  findingLabel: string;
+  fixLabel: string;
+  site: {
+    host: string;
+    tabBefore: string;
+    tabAfter: string;
+    company: string;
+    navBefore: string[];
+    navAfter: string[];
+    headlineBefore: string;
+    headlineAfter: string;
+    bodyBefore: string;
+    bodyAfter: string;
+    imageWeight: string;
+    cookie: string;
+    cookieButton: string;
+    cta: string;
+    toast: string;
+  };
 }
 
-export interface ScoreWeight {
-  name: string;
-  pct: number;
-  body: string;
-  source: string;
-  line: LineId;
-  /** A lighter tint of the line colour, for the 5th and 6th stations. */
-  muted?: boolean;
-}
-
-export interface ScoreContent {
-  eyebrow: string;
+export interface AutomationContent {
   title: string;
   lede: string;
-  stackLabel: string;
-  weights: ScoreWeight[];
-  primary: LinkItem;
-  secondary: LinkItem;
+  run: string;
+  rerun: string;
+  demoNote: string;
+  form: { name: string; message: string; service: string };
+  steps: { title: string; body: string }[];
+  surface: {
+    formTitle: string;
+    crmHead: string[];
+    crmStatus: string;
+    replySubject: string;
+    replyBody: string;
+    summary: string;
+  };
+  more: { title: string; items: string[] };
+}
+
+export interface BuildContent {
+  title: string;
+  lede: string;
+  head: { name: string; what: string; time: string };
+  items: { service: ServiceKey; name: string; what: string; examples: string[]; time: string }[];
+  cta: LinkItem;
+}
+
+export interface WillemContent {
+  initial: string;
+  title: string;
+  body: string;
+  email: string;
+  phone: string;
+  /** E.164, for the tel: link. */
+  phoneHref: string;
+  copy: string;
+  copied: string;
+  copyEmailLabel: string;
+  copyPhoneLabel: string;
 }
 
 export interface ProcessContent {
-  eyebrow: string;
   title: string;
-  steps: { label: string; title: string; body: string }[];
+  steps: { title: string; body: string }[];
 }
 
 export interface FaqContent {
-  eyebrow: string;
   title: string;
   items: { question: string; answer: string; link?: LinkItem }[];
 }
 
 export interface AnalyseContent {
   id: string;
-  line: LineId;
   eyebrow: string;
   title: string;
   body: string;
@@ -228,13 +185,12 @@ export interface AnalyseContent {
 
 export interface ProjectContent {
   id: string;
-  line: LineId;
   eyebrow: string;
   title: string;
   body: string;
   typeLegend: string;
   /** `service` is the key the lead API expects (lib/analysis/catalog.js in the repo root). */
-  types: { line: LineId; label: string; service: string }[];
+  types: { label: string; service: ServiceKey }[];
   fields: { name: string; email: string; company: string; budget: string; message: string; honeypot: string };
   budgets: string[];
   privacy: { text: string; link: LinkItem };
@@ -250,23 +206,9 @@ export interface ProjectContent {
   errors: { name: string; email: string; message: string };
 }
 
-export interface WillemContent {
-  initial: string;
-  title: string;
-  body: string;
-  email: string;
-  phone: string;
-  /** E.164, for the tel: link. */
-  phoneHref: string;
-  copy: string;
-  copied: string;
-  copyEmailLabel: string;
-  copyPhoneLabel: string;
-}
-
 export interface ContactContent {
-  eyebrow: string;
   title: string;
+  lede: string;
   analyse: AnalyseContent;
   project: ProjectContent;
   willem: WillemContent;
