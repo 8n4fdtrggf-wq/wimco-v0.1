@@ -168,7 +168,8 @@ export interface OwnershipContent {
   promises: { title: string; usual: string; body: string }[];
 }
 
-export interface WillemContent {
+/** The company section: who Wimco is and how to reach it. */
+export interface CompanyContent {
   initial: string;
   title: string;
   body: string;
@@ -249,7 +250,7 @@ export interface ContactContent {
   lede: string;
   analyse: AnalyseContent;
   project: ProjectContent;
-  willem: WillemContent;
+  company: CompanyContent;
 }
 
 export interface FooterContent {

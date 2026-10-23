@@ -309,7 +309,7 @@ export const ownership: OwnershipContent = {
     {
       title: 'Vi finns kvar',
       usual: 'Lansering, faktura och sedan tystnad.',
-      body: 'Vi mäter, följer upp och hjälper dig när du kör fast. Du når Willem direkt.',
+      body: 'Vi mäter, följer upp och hjälper dig när du kör fast. Du når oss direkt.',
     },
   ],
 };
@@ -413,7 +413,7 @@ export const contact: ContactContent = {
     id: 'projekt',
     eyebrow: 'Jag vill bygga något nytt',
     title: 'Berätta vad du behöver.',
-    body: 'Du får svar från Willem med förslag på nästa steg.',
+    body: 'Vi svarar med förslag på nästa steg.',
     typeLegend: 'Vad gäller det?',
     types: [
       { label: 'Hemsida', service: 'hemsidor' },
@@ -434,8 +434,8 @@ export const contact: ContactContent = {
     submit: 'Skicka förfrågan',
     sending: 'Skickar…',
     successTitle: 'Tack, förfrågan är skickad.',
-    successBody: 'Willem återkommer till {email} så snart som möjligt. Vill du prata direkt? Ring 070-094 54 80.',
-    failure: 'Det gick inte att skicka just nu. Mejla {email} så svarar Willem därifrån.',
+    successBody: 'Vi återkommer till {email} så snart som möjligt. Vill du prata direkt? Ring 070-094 54 80.',
+    failure: 'Det gick inte att skicka just nu. Mejla {email} så svarar vi därifrån.',
     mailLink: 'Skriv mejlet i stället',
     mailSubject: 'Projektförfrågan',
     errors: {
@@ -444,10 +444,10 @@ export const contact: ContactContent = {
       message: 'Beskriv kort vad du vill ha hjälp med (minst 10 tecken).',
     },
   },
-  willem: {
+  company: {
     initial: 'W',
-    title: 'Hej, jag är Willem.',
-    body: 'Jag startade Wimco för att alltför många duktiga företagare kämpar med teknik som borde vara enkel. Första samtalet är gratis: 20 minuter, utan förpliktelser.',
+    title: 'Hej, vi är Wimco.',
+    body: 'En digital studio för små och medelstora företag. Vi finns för att teknik som borde vara enkel ska vara det: hemsidor, webbverktyg och automationer som håller. Första samtalet är gratis: 20 minuter, utan förpliktelser.',
     email: 'hej@wimco.se',
     phone: '070-094 54 80',
     phoneHref: '+46700945480',
@@ -465,7 +465,7 @@ export const footer: FooterContent = {
       title: 'Kontakt',
       links: [
         { label: 'hej@wimco.se', href: 'mailto:hej@wimco.se' },
-        { label: '+46 70 094 54 80', href: 'tel:+46700945480' },
+        { label: '070-094 54 80', href: 'tel:+46700945480' },
       ],
     },
     {

@@ -27,8 +27,8 @@ interface Props {
 }
 
 /**
- * Order → POST /api/lead with kind "a11y_order". The API mails Willem the order (with the test result
- * when there is one) and sends the customer a confirmation. Nothing is binding until Willem's written
+ * Order → POST /api/lead with kind "a11y_order". The API mails Wimco the order (with the test result
+ * when there is one) and sends the customer a confirmation. Nothing is binding until Wimco's written
  * confirmation has been approved, and the form says so twice.
  * Listens for a finished check (prefills address, platform and attaches the result) and for package
  * picks from the package cards and the result's call to action.

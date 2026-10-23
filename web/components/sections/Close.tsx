@@ -13,12 +13,12 @@ import styles from './Close.module.css';
 /**
  * The hand-over. The instrument that followed the visitor down the page empties
  * ("?" in the bar and here), and the page ends on two real inputs: analyse your site,
- * or tell Willem what you want built.
+ * or tell us what you want built.
  */
 export function Close({ content, stations }: { content: ContactContent; stations: Station[] }) {
   const root = useRef<HTMLElement>(null);
   const after = stations.map((s) => s.after);
-  const { analyse, project, willem } = content;
+  const { analyse, project, company } = content;
 
   useGSAP(
     () => {
@@ -64,7 +64,7 @@ export function Close({ content, stations }: { content: ContactContent; stations
             <p className="tag">{project.eyebrow}</p>
             <h3 className={styles.panelTitle}>{project.title}</h3>
             <p className={styles.body}>{project.body}</p>
-            <ProjectForm content={project} email={willem.email} />
+            <ProjectForm content={project} email={company.email} />
           </div>
         </div>
       </div>

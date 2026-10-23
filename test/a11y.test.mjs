@@ -122,7 +122,7 @@ test('API: rate limit efter tre tester på tio minuter', async () => {
   assert.deepEqual(statuses, [400, 400, 400, 429]);
 });
 
-test('beställning: valideras, sparas, mejlar Willem och bekräftar till kunden', async () => {
+test('beställning: valideras, sparas, mejlar Wimco och bekräftar till kunden', async () => {
   const kv = memoryKv(null);
   const sent = [];
   const platform = testPlatform({ kv });
@@ -148,16 +148,16 @@ test('beställning: valideras, sparas, mejlar Willem och bekräftar till kunden'
   assert.equal(ok.status, 200);
   assert.equal((await ok.json()).mailed, true);
   assert.equal(sent.length, 2);
-  const [toCustomer, toWillem] = sent;
+  const [toCustomer, toWimco] = sent;
   assert.deepEqual(toCustomer.to, ['anna@butik.se']);
   assert.match(toCustomer.subject, /Granskning och åtgärd/);
   assert.match(toCustomer.text, /Inget är bindande/);
   assert.match(toCustomer.text, new RegExp(`/tillganglighet/\\?r=${a11yId}`));
-  assert.deepEqual(toWillem.to, ['hej@wimco.se']);
-  assert.equal(toWillem.reply_to, 'anna@butik.se');
-  assert.match(toWillem.subject, /Beställning: Granskning och åtgärd – Testbutiken AB/);
-  assert.match(toWillem.text, /Plattform: Shopify/);
-  assert.match(toWillem.text, /overlay: UserWay/);
+  assert.deepEqual(toWimco.to, ['hej@wimco.se']);
+  assert.equal(toWimco.reply_to, 'anna@butik.se');
+  assert.match(toWimco.subject, /Beställning: Granskning och åtgärd – Testbutiken AB/);
+  assert.match(toWimco.text, /Plattform: Shopify/);
+  assert.match(toWimco.text, /overlay: UserWay/);
   const stored = (await kv.list({ prefix: 'lead:' })).keys;
   assert.equal(stored.length, 1);
 });

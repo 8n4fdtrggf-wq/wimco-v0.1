@@ -82,7 +82,7 @@ function article({ slug, file, title, h1, description, lead, updated = TODAY, bo
     jsonLd: {
       '@context': 'https://schema.org', '@type': 'Article', headline: h1, description,
       datePublished: updated, dateModified: updated, inLanguage: 'sv-SE',
-      author: { '@type': 'Person', name: 'Willem' },
+      author: { '@type': 'Organization', name: 'Wimco', url: SITE },
       publisher: { '@type': 'Organization', name: 'Wimco', url: SITE, logo: { '@type': 'ImageObject', url: `${SITE}/assets/favicon.svg` } },
       mainEntityOfPage: canonical,
     },
@@ -91,7 +91,7 @@ function article({ slug, file, title, h1, description, lead, updated = TODAY, bo
     <p class="crumbs"><a href="/">Wimco</a> <span aria-hidden="true">/</span> <a href="/guider/">Guider</a></p>
     <h1 class="display">${h1}</h1>
     <p class="lead">${lead}</p>
-    <p class="crumbs">Uppdaterad <time datetime="${updated}">${new Date(updated).toLocaleDateString('sv-SE', { dateStyle: 'long' })}</time> · Willem, Wimco</p>
+    <p class="crumbs">Uppdaterad <time datetime="${updated}">${new Date(updated).toLocaleDateString('sv-SE', { dateStyle: 'long' })}</time> · Wimco</p>
   </header>
   <div class="guide-layout">
     <article class="prose">

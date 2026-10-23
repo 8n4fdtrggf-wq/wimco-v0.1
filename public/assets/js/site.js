@@ -334,7 +334,7 @@ function showDone(form, body) {
   const h = document.createElement('h4');
   h.textContent = 'Tack – förfrågan är skickad.';
   const p = document.createElement('p');
-  p.textContent = `Willem återkommer till ${body.email} så snart som möjligt. Vill du prata direkt? Ring 070-094 54 80.`;
+  p.textContent = `Vi återkommer till ${body.email} så snart som möjligt. Vill du prata direkt? Ring 070-094 54 80.`;
   done.append(h, p);
   form.replaceWith(done);
   done.focus();

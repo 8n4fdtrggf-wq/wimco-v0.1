@@ -19,7 +19,7 @@ Static HTML/CSS/vanilla JS (incumbent, kept for speed and simple hosting). Serve
 
 ## Product Purpose
 
-Wimco is a one-person-led digital studio (founder: Willem) that designs and builds websites, advanced web solutions, digital tools/web applications and AI/business automations, and optimises existing sites. The free Wimco Score analysis is the interactive way in: it proves competence, attracts traffic and turns visitors into qualified leads for those services. Success = qualified project enquiries and booked calls.
+Wimco is a digital studio that designs and builds websites, advanced web solutions, digital tools/web applications and AI/business automations, and optimises existing sites. The free Wimco Score analysis is the interactive way in: it proves competence, attracts traffic and turns visitors into qualified leads for those services. Success = qualified project enquiries and booked calls.
 
 ## Positioning
 
@@ -42,14 +42,13 @@ Wimco is a one-person-led digital studio (founder: Willem) that designs and buil
 ## Brand Commitments
 
 - Name: Wimco (logo written "Wimco." with a dot).
-- Voice: rak, personlig, ingen teknisk jargong, inga byråfloskler. Speaks as "vi"/"jag (Willem)".
+- Voice: rak, personlig, ingen teknisk jargong, inga byråfloskler. Speaks as "vi" (Wimco, the company). No personal names on the site.
 - Wants to feel: skarp, intelligent, visuellt progressiv, personlig, tekniskt kompetent, affärsorienterad, premium.
 - Must not feel like a traditional ad agency, a generic freelance portfolio or an automated SEO tool.
 
 ## Evidence on Hand
 
-- Contact: hej@wimco.se, +46 70 094 54 80 (footer of live site).
-- Founder intro text ("Hej, jag är Willem!").
+- Contact: hej@wimco.se, 070-094 54 80 (tel:+46700945480). These are the only contact details used anywhere on the site.
 - Guide: `blogg/hur-mycket-kostar-en-hemsida.html`.
 - Own experiment: `playground/` – interactive typography & motion study.
 - GA4 property G-B7VWYC02LZ.

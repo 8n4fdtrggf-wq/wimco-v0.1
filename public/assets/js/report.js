@@ -233,7 +233,7 @@ function initActions(report, host) {
               el('p', { text: data.mailed ? `Kolla inkorgen för ${sent.email}.` : 'E-post är inte aktiverat just nu – spara länken under ”Dela rapporten” så länge.' }),
               data.remindOn ? el('p', { text: `Vi påminner dig ${new Date(data.remindOn).toLocaleDateString('sv-SE', { dateStyle: 'long' })}.` }) : null);
           } else {
-            done.append(el('h4', { text: 'Tack – det är skickat.' }), el('p', { text: `Willem återkommer till ${sent.email} så snart som möjligt.` }));
+            done.append(el('h4', { text: 'Tack – det är skickat.' }), el('p', { text: `Vi återkommer till ${sent.email} så snart som möjligt.` }));
           }
           f.replaceWith(done);
           done.focus();
