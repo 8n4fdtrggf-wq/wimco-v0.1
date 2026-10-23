@@ -432,7 +432,7 @@ export const contact: ContactContent = {
     submit: 'Skicka förfrågan',
     sending: 'Skickar…',
     successTitle: 'Tack, förfrågan är skickad.',
-    successBody: 'Willem återkommer till {email} så snart som möjligt. Vill du prata direkt? Ring 072-218 05 09.',
+    successBody: 'Willem återkommer till {email} så snart som möjligt. Vill du prata direkt? Ring 070-094 54 80.',
     failure: 'Det gick inte att skicka just nu. Mejla {email} så svarar Willem därifrån.',
     mailLink: 'Skriv mejlet i stället',
     mailSubject: 'Projektförfrågan',
@@ -447,8 +447,8 @@ export const contact: ContactContent = {
     title: 'Hej, jag är Willem.',
     body: 'Jag startade Wimco för att alltför många duktiga företagare kämpar med teknik som borde vara enkel. Första samtalet är gratis: 20 minuter, utan förpliktelser.',
     email: 'hej@wimco.se',
-    phone: '072-218 05 09',
-    phoneHref: '+46722180509',
+    phone: '070-094 54 80',
+    phoneHref: '+46700945480',
     copy: 'Kopiera',
     copied: 'Kopierad',
     copyEmailLabel: 'Kopiera e-postadressen',
@@ -463,7 +463,7 @@ export const footer: FooterContent = {
       title: 'Kontakt',
       links: [
         { label: 'hej@wimco.se', href: 'mailto:hej@wimco.se' },
-        { label: '+46 72 218 05 09', href: 'tel:+46722180509' },
+        { label: '+46 70 094 54 80', href: 'tel:+46700945480' },
       ],
     },
     {

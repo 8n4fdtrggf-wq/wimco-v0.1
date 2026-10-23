@@ -48,7 +48,7 @@ Wimco is a one-person-led digital studio (founder: Willem) that designs and buil
 
 ## Evidence on Hand
 
-- Contact: hej@wimco.se, +46 72 218 05 09 (footer of live site).
+- Contact: hej@wimco.se, +46 70 094 54 80 (footer of live site).
 - Founder intro text ("Hej, jag är Willem!").
 - Guide: `blogg/hur-mycket-kostar-en-hemsida.html`.
 - Own experiment: `playground/` – interactive typography & motion study.
