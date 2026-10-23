@@ -14,7 +14,9 @@ import styles from './SiteNav.module.css';
  * follows the score as sections publish it (lib/score.ts), and in the closing section
  * turns into "Din sajt?", the hand-over to the visitor's own analysis.
  */
-export function SiteNav({ content }: { content: NavContent }) {
+export function SiteNav({ content, home = true }: { content: NavContent; home?: boolean }) {
+  // On other pages, section links point back to the start page and the score dock is left out.
+  const href = (h: string) => (!home && h.startsWith('#') ? `/${h}` : h);
   const root = useRef<HTMLElement>(null);
   const dock = useRef<HTMLAnchorElement>(null);
   const [open, setOpen] = useState(false);
@@ -94,27 +96,34 @@ export function SiteNav({ content }: { content: NavContent }) {
   return (
     <header ref={root} className={styles.nav} data-open={open || undefined}>
       <div className={cx('wrap', styles.inner)}>
-        <a className={styles.logo} href="#top" aria-label={content.homeLabel}>
+        <a className={styles.logo} href={home ? '#top' : '/'} aria-label={home ? content.homeLabel : content.homePageLabel}>
           Wimco<i>.</i>
         </a>
 
         <nav aria-label={content.label} className={styles.links}>
           {content.links.map((l) => (
-            <a key={l.href} href={l.href} data-section-link={l.id}>
+            <a
+              key={l.href}
+              href={href(l.href)}
+              data-section-link={home ? l.id : undefined}
+              aria-current={!home && l.page ? 'page' : undefined}
+            >
               {l.label}
             </a>
           ))}
         </nav>
 
         <div className={styles.right}>
-          <a ref={dock} className={styles.dock} href="#din-sajt" data-handover="false">
-            <ScoreRing size="sm" label="" className={styles.dockRing} />
-            <span className={styles.dockText} aria-hidden="true">
-              <b data-dock-num="">0</b>
-              <small data-dock-sub="">{content.dock.example}</small>
-            </span>
-          </a>
-          <a className={styles.cta} href={content.cta.href}>
+          {home && (
+            <a ref={dock} className={styles.dock} href="#din-sajt" data-handover="false">
+              <ScoreRing size="sm" label="" className={styles.dockRing} />
+              <span className={styles.dockText} aria-hidden="true">
+                <b data-dock-num="">0</b>
+                <small data-dock-sub="">{content.dock.example}</small>
+              </span>
+            </a>
+          )}
+          <a className={styles.cta} href={href(content.cta.href)}>
             {content.cta.label}
           </a>
           <button
@@ -132,11 +141,11 @@ export function SiteNav({ content }: { content: NavContent }) {
       <div id="mobilmeny" className={styles.sheet} hidden={!open}>
         <nav aria-label={content.label} className="wrap">
           {content.links.map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)}>
+            <a key={l.href} href={href(l.href)} onClick={() => setOpen(false)} aria-current={!home && l.page ? 'page' : undefined}>
               {l.label}
             </a>
           ))}
-          <a className={styles.sheetCta} href={content.cta.href} onClick={() => setOpen(false)}>
+          <a className={styles.sheetCta} href={href(content.cta.href)} onClick={() => setOpen(false)}>
             {content.cta.label}
           </a>
         </nav>

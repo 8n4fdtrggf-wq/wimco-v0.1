@@ -1,10 +1,10 @@
-// Publishes the exported start page into ../public, the directory Cloudflare Pages serves.
+// Publishes the exported pages into ../public, the directory Cloudflare Pages serves.
 //
-//   web/out/index.html  → public/index.html
-//   web/out/index.txt   → public/index.txt
-//   web/out/_next/      → public/_next/   (replaced)
+//   web/out/index.html                  → public/index.html
+//   web/out/tillganglighet/index.html   → public/tillganglighet/index.html
+//   web/out/_next/                      → public/_next/   (replaced)
 //
-// Then it writes a generated block at the end of public/_headers for the path "/":
+// Then it writes a generated block at the end of public/_headers for each page path:
 // the site's global Content-Security-Policy (taken from the "/*" rule, so it stays in sync) plus
 // sha256 hashes for exactly the inline scripts and style attributes this build produced.
 // Nothing is loosened with 'unsafe-inline'.
@@ -28,15 +28,24 @@ if (!fs.existsSync(path.join(OUT, 'index.html'))) {
   process.exit(1);
 }
 
+// Pages built by Next.js: directory under out/ → public path.
+const PAGES = [
+  { dir: '', path: '/' },
+  { dir: 'tillganglighet', path: '/tillganglighet/' },
+];
+
 // 1. Copy the build
 fs.rmSync(path.join(PUB, '_next'), { recursive: true, force: true });
 fs.cpSync(path.join(OUT, '_next'), path.join(PUB, '_next'), { recursive: true });
-for (const file of ['index.html', 'index.txt']) {
-  if (fs.existsSync(path.join(OUT, file))) fs.copyFileSync(path.join(OUT, file), path.join(PUB, file));
+for (const page of PAGES) {
+  fs.mkdirSync(path.join(PUB, page.dir), { recursive: true });
+  for (const file of ['index.html', 'index.txt']) {
+    const from = path.join(OUT, page.dir, file);
+    if (fs.existsSync(from)) fs.copyFileSync(from, path.join(PUB, page.dir, file));
+  }
 }
 
-// 2. Hash everything inline
-const html = fs.readFileSync(path.join(OUT, 'index.html'), 'utf8');
+// 2. Hash everything inline, per page
 const sha = (s) => `'sha256-${crypto.createHash('sha256').update(s, 'utf8').digest('base64')}'`;
 const decode = (s) =>
   s
@@ -46,14 +55,17 @@ const decode = (s) =>
     .replace(/&gt;/g, '>')
     .replace(/&amp;/g, '&');
 
-const inlineScripts = [...html.matchAll(/<script(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>/g)]
-  .filter((m) => !/type="application\/ld\+json"/.test(m[1])) // data, never executed
-  .map((m) => m[2]);
-const styleTags = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1]);
-const styleAttrs = [...new Set([...html.matchAll(/\sstyle="([^"]*)"/g)].map((m) => decode(m[1])))];
-
-const scriptHashes = [...new Set(inlineScripts.map(sha))];
-const styleHashes = [...new Set([...styleTags, ...styleAttrs].map(sha))];
+function hashesFor(html) {
+  const inlineScripts = [...html.matchAll(/<script(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>/g)]
+    .filter((m) => !/type="application\/ld\+json"/.test(m[1])) // data, never executed
+    .map((m) => m[2]);
+  const styleTags = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1]);
+  const styleAttrs = [...new Set([...html.matchAll(/\sstyle="([^"]*)"/g)].map((m) => decode(m[1])))];
+  return {
+    scriptHashes: [...new Set(inlineScripts.map(sha))],
+    styleHashes: [...new Set([...styleTags, ...styleAttrs].map(sha))],
+  };
+}
 
 // 3. Build the policy from the site-wide one
 const headers = fs.readFileSync(HEADERS, 'utf8');
@@ -63,35 +75,35 @@ if (!globalCsp) {
   console.error('Could not find the site-wide Content-Security-Policy in public/_headers.');
   process.exit(1);
 }
-const directives = new Map(
-  globalCsp
-    .split(';')
-    .map((d) => d.trim())
-    .filter(Boolean)
-    .map((d) => {
-      const [name, ...values] = d.split(/\s+/);
-      return [name, values];
-    }),
-);
-const add = (name, values) => directives.set(name, [...(directives.get(name) ?? ["'self'"]), ...values]);
-add('script-src', scriptHashes);
-add('style-src', styleHashes.length ? ["'unsafe-hashes'", ...styleHashes] : []);
-const csp = [...directives].map(([name, values]) => [name, ...values].join(' ')).join('; ');
+const parse = () =>
+  new Map(
+    globalCsp
+      .split(';')
+      .map((d) => d.trim())
+      .filter(Boolean)
+      .map((d) => {
+        const [name, ...values] = d.split(/\s+/);
+        return [name, values];
+      }),
+  );
 
-const block = [
-  BEGIN,
-  '/',
-  '  ! Content-Security-Policy',
-  `  Content-Security-Policy: ${csp}`,
-  '',
-  '/_next/static/*',
-  '  Cache-Control: public, max-age=31536000, immutable',
-  END,
-].join('\n');
+const lines = [BEGIN];
+const report = [];
+for (const page of PAGES) {
+  const html = fs.readFileSync(path.join(OUT, page.dir, 'index.html'), 'utf8');
+  const { scriptHashes, styleHashes } = hashesFor(html);
+  const directives = parse();
+  const add = (name, values) => directives.set(name, [...(directives.get(name) ?? ["'self'"]), ...values]);
+  add('script-src', scriptHashes);
+  add('style-src', styleHashes.length ? ["'unsafe-hashes'", ...styleHashes] : []);
+  const csp = [...directives].map(([name, values]) => [name, ...values].join(' ')).join('; ');
+  lines.push(page.path, '  ! Content-Security-Policy', `  Content-Security-Policy: ${csp}`, '');
+  report.push(`${page.path}: ${scriptHashes.length} script / ${styleHashes.length} style hashes`);
+}
+lines.push('/_next/static/*', '  Cache-Control: public, max-age=31536000, immutable', END);
+const block = lines.join('\n');
 
 fs.writeFileSync(HEADERS, `${withoutBlock}\n\n${block}\n`);
 
 const files = fs.readdirSync(path.join(PUB, '_next'), { recursive: true }).length;
-console.log(
-  `Published start page: index.html + _next/ (${files} entries). CSP for "/": ${scriptHashes.length} script hashes, ${styleHashes.length} style hashes.`,
-);
+console.log(`Published ${PAGES.length} pages + _next/ (${files} entries). CSP: ${report.join('; ')}.`);

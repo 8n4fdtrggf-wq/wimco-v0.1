@@ -27,6 +27,7 @@ function mark(status) {
 }
 
 let openAction = null;
+let currentHost = null;
 
 function finding(c) {
   const d = el('details', { class: 'finding', id: `f-${c.id}` });
@@ -132,6 +133,11 @@ function catBlock(cat, checks) {
     const btn = el('button', { class: 'btn btn-ink', type: 'button', text: cat.cta });
     btn.addEventListener('click', () => { track('service_interest', { service: cat.service, from: 'category' }); openAction?.('review', { service: cat.service, context: `${cat.cta} (${cat.name})` }); });
     b.append(el('div', { class: 'cat-cta' }, btn));
+  }
+  if (cat.id === 'accessibility' && currentHost) {
+    // E-handel: testa även produktsida och sök, de sidor PTS granskar (/tillganglighet/).
+    b.append(el('p', { class: 'cat-expl' }, 'Säljer ni till konsumenter på nätet? ',
+      el('a', { href: `/tillganglighet/?url=${encodeURIComponent(currentHost)}`, 'data-track': 'a11y_from_report', text: 'Testa startsida, produktsida och sök mot tillgänglighetslagen' }), '.'));
   }
   const list = el('ul', {}, checks.map((c) => el('li', {}, mark(c.status), el('span', {}, c.title, c.value ? el('span', { class: 'f-meta mono', text: ` ${c.value}` }) : null), srcChip(c.source))));
   b.append(el('details', { class: 'cat-checks' }, el('summary', { text: `Alla ${checks.length} kontroller` }), list));
@@ -284,6 +290,7 @@ function initActions(report, host) {
 
 /* ---------- Render ---------- */
 function render(report, root) {
+  currentHost = report.url || report.host;
   const byId = Object.fromEntries(report.checks.map((c) => [c.id, c]));
   root.replaceChildren();
   document.title = `${report.host}: ${report.score.total}/100 i Wimco Score | Wimco`;

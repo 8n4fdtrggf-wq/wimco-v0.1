@@ -33,11 +33,13 @@ export const meta: MetaContent = {
 export const nav: NavContent = {
   skip: 'Hoppa till innehållet',
   homeLabel: 'Wimco, till toppen',
+  homePageLabel: 'Wimco, till startsidan',
   label: 'Huvudmeny',
   links: [
     { id: 'stationer', label: 'Wimco Score', href: '#stationer' },
     { id: 'tjanster', label: 'Tjänster', href: '#tjanster' },
     { id: 'eget', label: 'Därför Wimco', href: '#eget' },
+    { label: 'Tillgänglighet', href: '/tillganglighet/', page: 'tillganglighet' },
     { label: 'Guider', href: '/guider/' },
     { id: 'faq', label: 'Frågor', href: '#faq' },
   ],
@@ -469,6 +471,7 @@ export const footer: FooterContent = {
     {
       title: 'Läs mer',
       links: [
+        { label: 'Tillgänglighet för e-handel', href: '/tillganglighet/' },
         { label: 'Guider', href: '/guider/' },
         { label: 'Så fungerar Wimco Score', href: '/wimco-score/' },
         { label: 'Playground', href: '/playground/' },

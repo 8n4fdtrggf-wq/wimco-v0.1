@@ -14,7 +14,8 @@ Wimcos webbplats: en digital studio för hemsidor, webbutveckling och automation
 | `functions/` | Cloudflare Pages Functions (tunna adaptrar) |
 | `lib/net/` | SSRF-skydd: URL-validering, IP-klassning, säker hämtning med redirect-, tids- och storleksgränser |
 | `lib/analysis/` | HTML-analys, Lighthouse via PageSpeed Insights, valfri AI-bedömning, kontroller och poäng |
-| `lib/router.js` | API: `/api/analyze` (NDJSON-ström), `/api/report/:id`, `/api/lead`, `/r/:id`, `/og/:id.png` |
+| `lib/router.js` | API: `/api/analyze` (NDJSON-ström), `/api/report/:id`, `/api/a11y` (NDJSON-ström), `/api/a11y/:id`, `/api/lead`, `/r/:id`, `/og/:id.png` |
+| `lib/a11y/` | Tillgänglighetstestet för e-handel (`check.js`), WCAG-koppling (`catalog.js`) och paketen med priser (`packages.js`) |
 | `server/dev.mjs` | Lokal server som kör samma router |
 | `tools/` | Byggskript för undersidor, delningsbilder, typsnitt och skärmdumpar |
 | `test/` | Node-tester (`npm test`) |
@@ -54,6 +55,14 @@ Startsidan använder samma API och delade klientkod som resten av sajten:
 - Samma analytics-händelser: `analysis_start`, `analysis_complete`, `analysis_error`, `analysis_cancel` och `generate_lead`.
 
 Texter ändras i `web/content/site.ts`. Mer om komponenter och rörelse i `web/README.md`.
+
+## Tillgänglighet för e-handel (`/tillganglighet/`)
+
+Sidan byggs i `web/app/tillganglighet/` och publiceras med `npm run build:home`. Den har tre delar:
+
+- **Gratistestet** (`POST /api/a11y`): läser startsidan, letar upp en produktsida och sökformuläret och kör Lighthouse-kategorin *accessibility* (axe-core) via PageSpeed Insights på alla tre, alltså de sidtyper PTS börjar med i sin tillsyn. Varje test kostar tre PSI-anrop. Resultatet sparas i 180 dagar och öppnas igen med `/tillganglighet/?r=<id>`. `/tillganglighet/?url=<adress>` startar ett test direkt (används från Wimco Score-rapporten).
+- **Paketen**: namn, priser och innehåll står i `lib/a11y/packages.js`. Samma fil används av sidan och av API:t, så ändra bara där och kör `npm run build:home`.
+- **Beställning** (`/api/lead` med `kind: "a11y_order"`): Willem får ett mejl med paket, kunduppgifter och länk till testresultatet. Kunden får en bekräftelse om att inget är bindande förrän Wimcos skriftliga bekräftelse godkänts. Kräver `RESEND_API_KEY`.
 
 ## Hur Wimco Score räknas
 

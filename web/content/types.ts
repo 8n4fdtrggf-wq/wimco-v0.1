@@ -29,9 +29,12 @@ export interface MetaContent {
 export interface NavContent {
   skip: string;
   homeLabel: string;
+  /** Logo label on pages other than the start page. */
+  homePageLabel: string;
   label: string;
-  /** `id` marks an on-page section (gets the active state); links without it go to other pages. */
-  links: (LinkItem & { id?: string })[];
+  /** `id` marks an on-page section (gets the active state); links without it go to other pages.
+   *  `page` marks the link to the page being shown, on pages other than the start page. */
+  links: (LinkItem & { id?: string; page?: string })[];
   cta: LinkItem;
   menu: { open: string; close: string };
   /** The score dock in the bar. "{score}" is replaced. */

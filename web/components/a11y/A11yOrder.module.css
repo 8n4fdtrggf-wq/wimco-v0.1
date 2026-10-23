@@ -1,0 +1,10 @@
+.price { margin-left: 2px; font: 500 12px/1 var(--f-mono); color: var(--muted); }
+
+.attached { display: flex; align-items: center; gap: 10px; margin: 0; padding: 12px 14px; border-radius: 14px; background: var(--accent-soft); color: var(--accent); font-size: 14px; font-weight: 500; }
+.attached i { width: 8px; height: 8px; flex: none; border-radius: 50%; background: var(--accent); }
+
+.terms { display: grid; gap: 7px; }
+.terms label { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 12px; align-items: start; font-size: 14px; line-height: 1.5; color: var(--muted); cursor: pointer; }
+.terms input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--accent); cursor: pointer; }
+.terms[data-invalid] label { color: var(--ink); }
+.terms[data-invalid] input { outline: 2px solid var(--poor); outline-offset: 2px; border-radius: 4px; }

@@ -10,9 +10,10 @@ const PUB = path.join(ROOT, 'public');
 const SITE = 'https://wimco.se';
 const TODAY = '2026-09-30';
 
-const index = fs.readFileSync(path.join(PUB, 'index.html'), 'utf8');
-const HEADER = index.slice(index.indexOf('<a class="skip"'), index.indexOf('<main id="main">'));
-const FOOTER = index.slice(index.indexOf('<footer class="site-footer">'), index.indexOf('</body>'));
+// Startsidan byggs numera av Next.js (web/), så undersidornas gemensamma header och footer
+// ligger som egna filer i tools/partials/.
+const HEADER = fs.readFileSync(path.join(ROOT, 'tools/partials/header.html'), 'utf8');
+const FOOTER = fs.readFileSync(path.join(ROOT, 'tools/partials/footer.html'), 'utf8');
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -181,8 +182,8 @@ ${cta('Hur ser din SEO-grund ut?', 'Wimco Score kontrollerar titlar, metadata, i
     h1: 'Tillgänglighet som gör sajten bättre för alla',
     description: 'Vad webbtillgänglighet innebär, vad lagen säger, och de åtgärder som gör störst skillnad: kontrast, alt-texter, etiketter, tangentbord och zoom.',
     lead: 'En tillgänglig sajt fungerar för fler människor – och nästan alltid bättre för alla andra också.',
-    asideText: 'Wimco designar och utvecklar enligt WCAG 2.1 AA och kan granska och åtgärda befintliga sajter.',
-    asideBtn: 'Få hjälp med tillgänglighet', asideHref: '/#starta',
+    asideText: 'Driver ni e-handel? Testa gratis sidorna PTS granskar och beställ granskning och åtgärd till fast pris.',
+    asideBtn: 'Testa er e-handel', asideHref: '/tillganglighet/',
     body: `<p>Tillgänglighet handlar om att personer med olika förutsättningar ska kunna läsa och använda sajten: den som ser dåligt, använder skärmläsare, navigerar med tangentbord, har en tillfälligt skadad arm eller bara läser på en mobil i starkt solljus.</p>
 <h2>Vad säger lagen?</h2>
 <p>Offentlig sektor har sedan länge krav på digital tillgänglighet. Sedan den 28 juni 2025 gäller dessutom lagen om vissa produkters och tjänsters tillgänglighet, den svenska versionen av EU:s tillgänglighetsdirektiv. Den omfattar bland annat e-handel riktad till konsumenter. Mikroföretag som tillhandahåller tjänster är undantagna, men kraven är ändå en bra måttstock. Kontrollera vad som gäller för just er verksamhet.</p>
@@ -413,6 +414,8 @@ page({
     <h2>När du kontaktar oss</h2>
     <p>När du skickar ett formulär sparar vi det du fyller i – till exempel namn, e-post, företag och meddelande – för att kunna svara och hantera din förfrågan. Rättslig grund är vårt berättigade intresse av att besvara förfrågningar, eller förberedelser inför ett avtal. Uppgifterna sparas i högst 24 månader om det inte uppstår ett kundförhållande.</p>
     <p>Ber du om rapporten via e-post eller en påminnelse om ny analys använder vi din e-postadress bara till det. En påminnelse skickas en gång och raderas sedan.</p>
+    <h2>När du testar tillgängligheten eller beställer</h2>
+    <p>Tillgänglighetstestet på <a href="/tillganglighet/">/tillganglighet/</a> fungerar som analysen ovan: vi sparar adresserna som testas och resultatet i 180 dagar, och adresserna skickas till Google PageSpeed Insights för mätning. När du beställer sparar vi uppgifterna i formuläret och skickar en bekräftelse till din e-post. Rättslig grund är förberedelser inför ett avtal.</p>
     <h2>Cookies och statistik</h2>
     <p>Sajten fungerar utan cookies. Med ditt samtycke använder vi Google Analytics för att förstå hur sajten används, till exempel hur många som startar och slutför en analys. Google Analytics sätter då cookies. Du kan ändra ditt val när som helst via <em>Cookieinställningar</em> i sidfoten.</p>
     <h2>Tjänster vi använder</h2>
@@ -460,13 +463,13 @@ page({
 
 /* ---------------- Sitemap ---------------- */
 const urls = [
-  ['/', '1.0'], ['/wimco-score/', '0.8'], ['/guider/', '0.7'],
+  ['/', '1.0'], ['/tillganglighet/', '0.9'], ['/wimco-score/', '0.8'], ['/guider/', '0.7'],
   ...GUIDES.map((g) => [g.slug, '0.6']), ['/blogg/hur-mycket-kostar-en-hemsida.html', '0.6'],
   ['/playground/', '0.4'], ['/integritet/', '0.2'],
 ];
 fs.writeFileSync(path.join(PUB, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(([u, p]) => `  <url><loc>${SITE}${u}</loc><lastmod>${u.includes('kostar') ? '2026-09-29' : TODAY}</lastmod><priority>${p}</priority></url>`).join('\n')}
+${urls.map(([u, p]) => `  <url><loc>${SITE}${u}</loc><lastmod>${u.includes('kostar') ? '2026-09-29' : u === '/tillganglighet/' ? '2026-10-23' : TODAY}</lastmod><priority>${p}</priority></url>`).join('\n')}
 </urlset>
 `);
 console.log('Sidor genererade.');
