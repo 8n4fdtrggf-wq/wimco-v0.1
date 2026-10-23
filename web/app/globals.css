@@ -1,35 +1,44 @@
 /* ============================================================
    Design tokens
-   Layout concept: a transit journey read top to bottom. Four lines (H W A O) carry the
-   reader station to station; one loud moment per stop, everything else quiet.
+   Concept: the page is a running Wimco Score report. Light, cool paper; one accent,
+   Wimco green, which is also the "good" band of the score. Red and amber appear only
+   as score bands, never as decoration.
    ============================================================ */
 :root {
+  color-scheme: light;
+
   /* Surfaces & text */
-  --bg: #f3f5f4;
+  --bg: #f4f6f4;
   --surface: #ffffff;
-  --ink: #0f1513;
-  --muted: #58645f;
-  --rule: #dce2df;
-  --tint: #e9edeb;
-  --nav: rgba(243, 245, 244, 0.74);
-  --on-line: #ffffff;
+  --ink: #0f1a16;
+  --muted: #52605a;
+  --rule: #dce3df;
+  --rule-strong: #c3ccc7;
+  --tint: #e9eeeb;
+  --nav: rgba(244, 246, 244, 0.8);
 
-  /* Transit lines */
-  --line-h: #0f7a5f;
-  --line-w: #2c5bd8;
-  --line-a: #c24e17;
-  --line-o: #9440bd;
+  /* One accent */
+  --accent: #0b7a5c;
+  --accent-ink: #ffffff;
+  --accent-soft: #e2f1ec;
 
-  /* Semantic (Lighthouse bands) — separate from the line colours */
-  --good: #0c8a4f;
-  --avg: #b86a00;
-  --poor: #c62f2f;
+  /* Score bands (Lighthouse convention) */
+  --good: #0b7a5c;
+  --avg: #9a5b00;
+  --poor: #c8372d;
 
-  /* Inverted band */
-  --band: #0f1513;
-  --band-fg: #e9efec;
-  --band-muted: #9aa7a2;
-  --band-rule: #27322e;
+  /* Legacy aliases, kept so shared component CSS keeps working */
+  --line-h: var(--accent);
+  --line-w: var(--accent);
+  --line-a: var(--accent);
+  --line-o: var(--accent);
+  --on-line: var(--accent-ink);
+
+  /* Depth: shadows tinted to the canvas, three steps only */
+  --e1: 0 1px 2px rgba(15, 40, 30, 0.06), 0 2px 6px rgba(15, 40, 30, 0.04);
+  --e2: 0 2px 4px rgba(15, 40, 30, 0.05), 0 12px 28px -8px rgba(15, 40, 30, 0.14);
+  --e3: 0 4px 10px rgba(15, 40, 30, 0.06), 0 30px 60px -18px rgba(15, 40, 30, 0.22);
+  --edge: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 
   /* Type */
   --f-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -49,27 +58,12 @@
   --safe-top: env(safe-area-inset-top, 0px);
   --gutter: max(20px, env(safe-area-inset-left, 0px));
   --gutter-r: max(20px, env(safe-area-inset-right, 0px));
-  --radius-card: 28px;
+  --section: clamp(88px, 11vw, 168px);
+  --radius-card: 24px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --bg: #0c1110; --surface: #141b19; --ink: #e7edea; --muted: #97a49f; --rule: #24302c; --tint: #1a2320;
-    --nav: rgba(12, 17, 16, 0.72); --on-line: #0c1110;
-    --line-h: #3cc79e; --line-w: #86a2ff; --line-a: #ff8c52; --line-o: #cf92ee;
-    --good: #4cd38c; --avg: #f2a93b; --poor: #ff6b6b;
-    --band: #121917; --band-fg: #e7edea; --band-muted: #97a49f; --band-rule: #2a3632;
-    color-scheme: dark;
-  }
-}
-:root[data-theme='dark'] {
-  --bg: #0c1110; --surface: #141b19; --ink: #e7edea; --muted: #97a49f; --rule: #24302c; --tint: #1a2320;
-  --nav: rgba(12, 17, 16, 0.72); --on-line: #0c1110;
-  --line-h: #3cc79e; --line-w: #86a2ff; --line-a: #ff8c52; --line-o: #cf92ee;
-  --good: #4cd38c; --avg: #f2a93b; --poor: #ff6b6b;
-  --band: #121917; --band-fg: #e7edea; --band-muted: #97a49f; --band-rule: #2a3632;
-  color-scheme: dark;
-}
+::selection { background: color-mix(in oklab, var(--accent) 22%, transparent); }
+html { caret-color: var(--accent); accent-color: var(--accent); }
 
 /* ============================================================
    Base (mobile-native baseline)
@@ -80,10 +74,8 @@ html {
   -webkit-text-size-adjust: 100%;
   scroll-padding-top: calc(var(--nav-h) + 24px);
 }
-/* In-page links glide to their section (spatial: you see where you went). Instant under reduced motion. */
-@media (prefers-reduced-motion: no-preference) {
-  html { scroll-behavior: smooth; }
-}
+/* In-page links glide via GSAP ScrollToPlugin (components/motion/Motion.tsx), so CSS smooth
+   scrolling stays off: it would fight ScrollTrigger's own scroll restoration on refresh. */
 body {
   margin: 0;
   background: var(--bg);
@@ -106,7 +98,7 @@ img { max-width: 100%; }
 input, textarea, select { font-size: 16px; }
 button { font: inherit; }
 button, a, [role='button'] { touch-action: manipulation; }
-:focus-visible { outline: 2px solid var(--line-w); outline-offset: 3px; border-radius: 8px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
 
 [hidden] { display: none !important; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -182,4 +174,35 @@ h3 { font-family: var(--f-display); font-weight: 620; letter-spacing: -0.02em; l
   .js [data-reveal]:not([data-in]) [data-seg],
   .js [data-reveal]:not([data-in]) > * { transform: none; }
   @keyframes fade { from { opacity: 0; } }
+}
+
+/* ============================================================
+   Shared bits for the report-style sections
+   ============================================================ */
+.section { padding-block: var(--section); }
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 500 11.5px/1 var(--f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.6; }
+.link {
+  color: var(--ink);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--rule-strong);
+  transition: text-decoration-color 160ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .link:hover { text-decoration-color: var(--accent); }
+}
+/* GSAP-driven entrances are prepared only when JS runs and motion is allowed */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-rise] { opacity: 0; transform: translateY(18px); }
 }

@@ -1,6 +1,6 @@
 # Wimco · startsida
 
-Source of the start page of **wimco.se**. Next.js 15 (App Router), React 19, TypeScript, CSS Modules on shared design tokens. No UI or animation libraries.
+Source of the start page of **wimco.se**. Next.js 15 (App Router), React 19, TypeScript, CSS Modules on shared design tokens. Scroll and timeline motion use GSAP (ScrollTrigger, ScrollToPlugin) through `lib/gsap.ts`. The page concept, feeling curve and score are in `../docs/redesign/BRIEF.md`.
 
 ```bash
 npm install
@@ -38,7 +38,8 @@ content/
   site.ts               every string on the page: edit copy here
 lib/
   css.ts                vars(), cx(), format(), NAV_HEIGHT
-  lines.ts              line order and colour tokens
+  score.ts              Wimco Score weights, totals, ring painting, and the score store the nav dock listens to
+  gsap.ts               registers GSAP plugins once, shared media queries
   site.ts               bridge to /assets/js/site.js (track, Turnstile, report owner token)
 scripts/
   publish.mjs           copies the export into ../public and writes the CSP block
@@ -46,9 +47,10 @@ scripts/
 components/
   ui/                   Button, LineBadge, Eyebrow, Reveal, SectionHeading
   nav/                  SiteNav (sliding active pill, progress line, mobile menu)
-  sections/             Hero, Manifesto, Facts, Services, Compare, Score, Process, Faq, Contact, Footer
-  interactive/          LineMap, CompareSlider + Shots, EnterScale, SpotlightCard, UrlForm, ProjectForm, CopyButton
-  visuals/              SiteMock, PortalMock, FlowMock, RingsMock, StepVisual (registry)
+  score/                ScoreRing: the six weighted arcs, painted imperatively by lib/score.ts
+  motion/               Motion: page-wide reveals, in-page link scrolling, refresh after fonts
+  sections/             Hero, Stations, Repair (pinned peak), Automation, Build, Willem, Faq, Close, Footer
+  interactive/          AnalysisForm, ProjectForm, CopyButton
 ```
 
 Sections are layout and composition. Interaction components own one behaviour each. Content never lives in a component: copy, labels, aria strings and example data come from `content/site.ts`. Templates use `{placeholders}` (formatted with `format()`), because content crosses from server to client components and must stay serialisable.

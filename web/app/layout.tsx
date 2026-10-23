@@ -36,11 +36,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: 'cover',
   interactiveWidget: 'resizes-content',
-  colorScheme: 'light dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: meta.themeLight },
-    { media: '(prefers-color-scheme: dark)', color: meta.themeDark },
-  ],
+  colorScheme: 'light',
+  themeColor: meta.themeColor,
 };
 
 /** Adds `js` before first paint; CSS uses it to prepare reveals only when JS runs. Hashed into the CSP by scripts/publish.mjs. */

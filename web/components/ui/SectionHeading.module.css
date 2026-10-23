@@ -1,7 +1,0 @@
-.head {
-  display: grid;
-  gap: 20px;
-  max-width: 760px;
-  margin-bottom: clamp(44px, 6vw, 72px);
-}
-.inverseLede { color: var(--band-muted); }

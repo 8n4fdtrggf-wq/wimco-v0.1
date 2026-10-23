@@ -1,155 +1,150 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { NavContent } from '@/content/types';
-import { Button } from '@/components/ui/Button';
-import { LineBadge } from '@/components/ui/LineBadge';
-import { clamp, setStyle, useActiveSection, useScrollFrame } from '@/lib/motion';
+import { ScoreRing } from '@/components/score/ScoreRing';
+import { gsap, ScrollTrigger, useGSAP, MQ } from '@/lib/gsap';
+import { cx, format } from '@/lib/css';
+import { paintRing, subscribe, total } from '@/lib/score';
 import styles from './SiteNav.module.css';
 
 /**
- * Translucent sticky nav.
- * - The active-section pill slides between links (spatial feedback for "where am I").
- * - A 2px line under the bar fills with page progress, in the four line colours.
- * - Below 900px the links move into a menu that scales from its trigger (top right).
+ * The bar. Wordmark, section links with the active one marked, and the score dock:
+ * the hero's instrument in miniature. It appears once the hero ring has scrolled away,
+ * follows the score as sections publish it (lib/score.ts), and in the closing section
+ * turns into "Din sajt?", the hand-over to the visitor's own analysis.
  */
 export function SiteNav({ content }: { content: NavContent }) {
+  const root = useRef<HTMLElement>(null);
+  const dock = useRef<HTMLAnchorElement>(null);
   const [open, setOpen] = useState(false);
-  const [ready, setReady] = useState(false);
-  const sectionIds = content.links.flatMap((l) => (l.id ? [l.id] : []));
-  const active = useActiveSection(['top', 'manifest', ...sectionIds, 'optimering', 'starta']);
 
-  const linksRef = useRef<HTMLElement>(null);
-  const pillRef = useRef<HTMLSpanElement>(null);
-  const progressRef = useRef<HTMLElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-
-  const movePill = useCallback(() => {
-    const nav = linksRef.current;
-    const pill = pillRef.current;
-    if (!nav || !pill) return;
-    const link = nav.querySelector<HTMLAnchorElement>(`a[data-sec="${active}"]`);
-    if (!link) {
-      pill.removeAttribute('data-on');
-      return;
-    }
-    pill.style.width = `${link.offsetWidth}px`;
-    pill.style.transform = `translateX(${link.offsetLeft}px)`;
-    pill.setAttribute('data-on', '');
-  }, [active]);
-
+  // Dock: repaint on every published score. Writes to the DOM directly; no React render per frame.
   useEffect(() => {
-    movePill();
-    window.addEventListener('resize', movePill);
-    document.fonts?.ready.then(movePill);
-    return () => window.removeEventListener('resize', movePill);
-  }, [movePill]);
-
-  // Let the pill take its first position without sliding in from 0.
-  useEffect(() => {
-    let inner = 0;
-    const outer = requestAnimationFrame(() => {
-      inner = requestAnimationFrame(() => setReady(true));
+    const el = dock.current;
+    if (!el) return;
+    const ring = el.querySelector('[data-ring]');
+    const num = el.querySelector<HTMLElement>('[data-dock-num]');
+    const sub = el.querySelector<HTMLElement>('[data-dock-sub]');
+    return subscribe((scores) => {
+      paintRing(ring, scores);
+      const handover = scores === null;
+      el.dataset.handover = handover ? 'true' : 'false';
+      if (num) num.textContent = handover ? content.dock.handover : String(total(scores));
+      if (sub) sub.textContent = handover ? '' : content.dock.example;
+      el.setAttribute(
+        'aria-label',
+        handover ? content.dock.handoverLabel : format(content.dock.label, { score: total(scores) }),
+      );
     });
-    return () => {
-      cancelAnimationFrame(outer);
-      cancelAnimationFrame(inner);
-    };
-  }, []);
+  }, [content.dock]);
 
-  useScrollFrame(
-    () => {},
-    (ctx) => {
-      const p = clamp(ctx.scrollY / Math.max(1, ctx.docHeight - ctx.vh));
-      setStyle(progressRef.current, 'transform', `scaleX(${p.toFixed(4)})`);
+  useGSAP(
+    () => {
+      // Dock shows once the hero instrument is out of view.
+      const heroRing = document.getElementById('hero-ring');
+      if (heroRing) ScrollTrigger.create({
+        trigger: heroRing,
+        start: 'bottom top+=64',
+        onEnter: () => root.current?.setAttribute('data-dock', 'on'),
+        onLeaveBack: () => root.current?.removeAttribute('data-dock'),
+      });
+
+      // Active section in the links. Measured from live rects on scroll rather than per-section
+      // triggers, so it stays right whatever pinning further down does to the layout.
+      const links = gsap.utils.toArray<HTMLAnchorElement>('[data-section-link]', root.current);
+      const tracked = links
+        .map((a) => ({ a, el: document.getElementById(a.dataset.sectionLink ?? '') }))
+        .filter((t): t is { a: HTMLAnchorElement; el: HTMLElement } => !!t.el);
+      let activeId = '';
+      const mark = () => {
+        const line = window.innerHeight * 0.45;
+        let next = '';
+        for (const { el } of tracked) {
+          const r = el.getBoundingClientRect();
+          if (r.top <= line && r.bottom > line) next = el.id;
+        }
+        if (next === activeId) return;
+        activeId = next;
+        tracked.forEach(({ a, el }) => (el.id === next ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current')));
+      };
+      ScrollTrigger.create({ start: 0, end: 'max', onUpdate: mark, onRefresh: mark });
+
+      // Reading progress: a hairline under the bar, scrubbed by the whole page.
+      const mm = gsap.matchMedia();
+      mm.add(MQ.motion, () => {
+        gsap.fromTo(
+          '[data-progress]',
+          { scaleX: 0 },
+          { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } },
+        );
+      });
     },
+    { scope: root },
   );
 
-  // Menu: Escape closes and returns focus; tapping outside closes.
+  // Close the mobile menu on Escape or when a link inside it is used.
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setOpen(false);
-        buttonRef.current?.focus();
-      }
-    };
-    const onDown = (e: PointerEvent) => {
-      const t = e.target as Node;
-      if (!menuRef.current?.contains(t) && !buttonRef.current?.contains(t)) setOpen(false);
-    };
-    document.addEventListener('keydown', onKey);
-    document.addEventListener('pointerdown', onDown);
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.removeEventListener('pointerdown', onDown);
-    };
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, [open]);
 
   return (
-    <header className={styles.nav}>
-      <div className={`wrap ${styles.inner}`}>
+    <header ref={root} className={styles.nav} data-open={open || undefined}>
+      <div className={cx('wrap', styles.inner)}>
         <a className={styles.logo} href="#top" aria-label={content.homeLabel}>
           Wimco<i>.</i>
         </a>
-        <nav ref={linksRef} className={styles.links} aria-label={content.label} data-ready={ready ? '' : undefined}>
-          <span ref={pillRef} className={styles.pill} aria-hidden="true" />
+
+        <nav aria-label={content.label} className={styles.links}>
           {content.links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              data-sec={l.id}
-              aria-current={l.id && active === l.id ? 'true' : undefined}
-            >
+            <a key={l.href} href={l.href} data-section-link={l.id}>
               {l.label}
             </a>
           ))}
         </nav>
 
-        <Button href={content.cta.href} size="sm" className={styles.cta}>
-          {content.cta.label}
-        </Button>
+        <div className={styles.right}>
+          <a ref={dock} className={styles.dock} href="#din-sajt" data-handover="false">
+            <ScoreRing size="sm" label="" className={styles.dockRing} />
+            <span className={styles.dockText} aria-hidden="true">
+              <b data-dock-num="">0</b>
+              <small data-dock-sub="">{content.dock.example}</small>
+            </span>
+          </a>
+          <a className={styles.cta} href={content.cta.href}>
+            {content.cta.label}
+          </a>
+          <button
+            type="button"
+            className={styles.menuButton}
+            aria-expanded={open}
+            aria-controls="mobilmeny"
+            onClick={() => setOpen((o) => !o)}
+          >
+            {open ? content.menu.close : content.menu.open}
+          </button>
+        </div>
+      </div>
 
-        <button
-          ref={buttonRef}
-          type="button"
-          className={styles.menuButton}
-          aria-expanded={open}
-          aria-controls="site-menu"
-          data-open={open ? '' : undefined}
-          onClick={() => setOpen((o) => !o)}
-        >
-          <span className={styles.labelOpen}>{content.menu.open}</span>
-          <span className={styles.labelClose} aria-hidden="true">
-            {content.menu.close}
-          </span>
-        </button>
-
-        <div
-          id="site-menu"
-          ref={menuRef}
-          className={styles.menu}
-          data-open={open ? '' : undefined}
-          inert={!open}
-          onClick={(e) => {
-            if ((e.target as Element).closest('a')) setOpen(false);
-          }}
-        >
+      <div id="mobilmeny" className={styles.sheet} hidden={!open}>
+        <nav aria-label={content.label} className="wrap">
           {content.links.map((l) => (
-            <a key={l.href} className={styles.menuItem} href={l.href}>
-              <LineBadge line={l.line} />
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)}>
               {l.label}
             </a>
           ))}
-          <Button href={content.cta.href} block className={styles.menuCta}>
+          <a className={styles.sheetCta} href={content.cta.href} onClick={() => setOpen(false)}>
             {content.cta.label}
-          </Button>
-        </div>
+          </a>
+        </nav>
       </div>
-      <div className={styles.progress} aria-hidden="true">
-        <i ref={progressRef} />
-      </div>
+
+      <span className={styles.progress} aria-hidden="true">
+        <i data-progress="" />
+      </span>
     </header>
   );
 }
