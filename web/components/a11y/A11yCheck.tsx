@@ -18,6 +18,7 @@ interface PageResult {
   url: string | null;
   source: 'found' | 'given' | 'guess' | 'missing';
   ok: boolean;
+  method: 'lighthouse' | 'rules' | null;
   score: number | null;
   reason: string | null;
   manual: number | null;
@@ -37,6 +38,7 @@ interface Issue {
 }
 export interface A11yReport {
   id: string;
+  url: string;
   createdAt: string;
   host: string;
   devData: boolean;
@@ -45,7 +47,7 @@ export interface A11yReport {
   statement: { found: boolean; url: string | null };
   pages: PageResult[];
   issues: Issue[];
-  summary: { pagesTested: number; score: number | null; critical: number; serious: number; moderate: number; total: number; instances: number };
+  summary: { method: 'lighthouse' | 'rules' | 'mixed' | null; pagesTested: number; score: number | null; critical: number; serious: number; moderate: number; total: number; instances: number };
   verdict: string;
 }
 
@@ -373,7 +375,7 @@ export function A11yCheck({ hero, copy, text }: Props) {
       {report && (
         <section ref={resultRef} className={styles.result} aria-labelledby="a11y-result-title" tabIndex={-1}>
           <div className="wrap">
-            <Result report={report} text={text} copy={copy} avg={avg} onAgain={again} />
+            <Result report={report} text={text} copy={copy} avg={avg} onAgain={again} onRerun={() => void run(report.url, '', '')} />
           </div>
         </section>
       )}
@@ -393,7 +395,21 @@ function rowsFrom(r: A11yReport, copy: Props['copy']): Record<Kind, RowState> {
 
 /* ---------- Result ---------- */
 
-function Result({ report: r, text, copy, avg, onAgain }: { report: A11yReport; text: Props['text']; copy: Props['copy']; avg: number | null; onAgain: () => void }) {
+function Result({
+  report: r,
+  text,
+  copy,
+  avg,
+  onAgain,
+  onRerun,
+}: {
+  report: A11yReport;
+  text: Props['text'];
+  copy: Props['copy'];
+  avg: number | null;
+  onAgain: () => void;
+  onRerun: () => void;
+}) {
   const [all, setAll] = useState(false);
   const s = r.summary;
   const shown = all ? r.issues : r.issues.slice(0, 8);
@@ -409,6 +425,17 @@ function Result({ report: r, text, copy, avg, onAgain }: { report: A11yReport; t
       {r.devData && (
         <div className={styles.dev} role="note">
           <strong>{text.devTitle}</strong> {text.devBody}
+        </div>
+      )}
+
+      {s.method && s.method !== 'lighthouse' && (
+        <div className={styles.rulesNote} role="note">
+          <p>
+            <strong>{text.rulesTitle}</strong> {text.rulesBody}
+          </p>
+          <Button variant="ghost" size="sm" onClick={onRerun}>
+            {text.rulesAgain}
+          </Button>
         </div>
       )}
 
@@ -440,7 +467,10 @@ function Result({ report: r, text, copy, avg, onAgain }: { report: A11yReport; t
               <b data-band={p.ok && p.score != null ? band(p.score) : undefined}>{p.ok ? p.score : '–'}</b>
             </div>
             <p>{p.ok ? (p.issues.length ? format(text.issueTypes, { n: p.issues.length }) : text.noneOnPage) : p.reason}</p>
-            <p className={styles.pageSrc}>{text.source[p.source]}</p>
+            <p className={styles.pageSrc}>
+              {text.source[p.source]}
+              {p.ok && p.method ? ` · ${text.method[p.method]}` : ''}
+            </p>
             {p.url && (
               <a className={styles.pageUrl} href={p.url} target="_blank" rel="nofollow noopener noreferrer">
                 {p.url.replace(/^https?:\/\/(www\.)?/, '')}

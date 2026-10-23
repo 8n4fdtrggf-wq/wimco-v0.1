@@ -333,3 +333,18 @@
   .report { animation: none; }
   .issue::details-content { transition: none; }
 }
+
+.rulesNote {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--rule-strong);
+  font-size: 14.5px;
+}
+.rulesNote p { margin: 0; max-width: 80ch; color: var(--muted); }
+.rulesNote strong { color: var(--ink); font-weight: 600; }
