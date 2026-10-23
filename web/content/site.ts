@@ -8,6 +8,7 @@ import type {
   HeroContent,
   MetaContent,
   NavContent,
+  OwnershipContent,
   ProcessContent,
   RepairContent,
   Station,
@@ -22,7 +23,7 @@ export const meta: MetaContent = {
   locale: 'sv_SE',
   title: 'Wimco – gratis analys av din webbplats | Hemsidor, webbutveckling och automation',
   description:
-    'Testa din webbplats gratis med Wimco Score och se vad som håller den tillbaka. Wimco designar hemsidor, bygger webbverktyg och automatiserar tidskrävande arbete.',
+    'Testa din webbplats gratis med Wimco Score. Wimco bygger hemsidor du kan ändra själv, webbverktyg och automationer – och allt står i ditt namn.',
   ogTitle: 'Wimco Score: se vad som håller din sajt tillbaka',
   ogDescription: 'Gratis analys på en minut. Sen bygger vi det som löser det: hemsidor, webbverktyg och automation.',
   ogImage: '/assets/og-default.png',
@@ -34,10 +35,9 @@ export const nav: NavContent = {
   homeLabel: 'Wimco, till toppen',
   label: 'Huvudmeny',
   links: [
-    { id: 'stationer', label: 'Så mäts det', href: '#stationer' },
-    { id: 'atgarda', label: 'Åtgärder', href: '#atgarda' },
-    { id: 'automation', label: 'Automation', href: '#automation' },
+    { id: 'stationer', label: 'Wimco Score', href: '#stationer' },
     { id: 'tjanster', label: 'Tjänster', href: '#tjanster' },
+    { id: 'eget', label: 'Därför Wimco', href: '#eget' },
     { label: 'Guider', href: '/guider/' },
     { id: 'faq', label: 'Frågor', href: '#faq' },
   ],
@@ -135,7 +135,7 @@ export const serviceNames: Record<Station['service'], string> = {
 export const hero: HeroContent = {
   title: 'Se vad som håller din sajt tillbaka.',
   lede: 'Gratis analys på en minut. Sen bygger vi hemsidan, verktyget eller automationen som löser det.',
-  proof: ['Uppmätt med Google Lighthouse', 'Ingen registrering', 'Svar från Willem, inte en säljare'],
+  proof: ['Uppmätt med Google Lighthouse', 'Ingen registrering', 'Hemsidor du kan ändra själv'],
   example: {
     host: 'ekdahls-bygg.exempel',
     tag: 'Exempel · påhittat företag',
@@ -226,8 +226,8 @@ export const build: BuildContent = {
     {
       service: 'hemsidor',
       name: 'Hemsidor',
-      what: 'Strategi, struktur, design och text som får rätt besökare att höra av sig.',
-      examples: ['Ny sajt', 'Omdesign', 'Landningssidor'],
+      what: 'Strategi, design och text som får rätt besökare att höra av sig. Med ett redigeringsverktyg så att du kan ändra själv.',
+      examples: ['Ny sajt', 'Omdesign', 'Redigeringsverktyg ingår'],
       time: 'Oftast 3–6 veckor',
     },
     {
@@ -253,6 +253,63 @@ export const build: BuildContent = {
     },
   ],
   cta: { label: 'Starta ett projekt', href: '#projekt' },
+};
+
+export const ownership: OwnershipContent = {
+  title: 'Din sajt. Du bestämmer.',
+  lede: 'Många byråer bygger så att du måste fråga dem varje gång något ska ändras. Vi gör tvärtom. Du får ett redigeringsverktyg och ändrar text, bilder och priser själv, utan att kunna kod.',
+  editor: {
+    label: 'Prova redigeringsverktyget',
+    hint: 'Klicka på en text och skriv',
+    demoNote: 'Demo i din webbläsare. Ändringarna sparas inte.',
+    host: 'ekdahls-bygg.exempel',
+    company: 'Ekdahls Bygg',
+    nav: ['Badrum', 'Kök', 'Om oss'],
+    headline: 'Badrum klara på 3 veckor.',
+    demoHeadline: 'Badrum klara på 2 veckor.',
+    body: 'Fast pris och ROT-avdraget direkt på fakturan.',
+    price: '89 000 kr',
+    priceLabel: 'Från',
+    images: [
+      { label: 'Kakel', kind: 'tiles' },
+      { label: 'Kök', kind: 'kitchen' },
+      { label: 'Trä', kind: 'wood' },
+    ],
+    swapImage: 'Byt bild',
+    fieldLabels: { headline: 'Rubrik', body: 'Underrubrik', price: 'Pris' },
+    change: '1 ändring',
+    changes: '{count} ändringar',
+    noChanges: 'Inga ändringar än',
+    publish: 'Publicera',
+    publishing: 'Publicerar…',
+    published: 'Publicerat {time}.',
+    publishedSub: 'Inget mejl till byrån. Ingen faktura.',
+    undo: 'Återställ',
+  },
+  promisesTitle: 'Det här gäller alltid hos oss',
+  usualLabel: 'Så brukar det vara',
+  promises: [
+    {
+      title: 'Du ändrar själv',
+      usual: 'Mejla byrån och vänta på en offert för att byta en mening.',
+      body: 'Redigeringsverktyget ingår, och vi går igenom det med dig när sajten lanseras.',
+    },
+    {
+      title: 'Allt står i ditt namn',
+      usual: 'Domänen och kontona ligger hos byrån.',
+      body: 'Domän, kod och konton är dina. Vill du byta leverantör tar du med dig allt.',
+    },
+    {
+      title: 'Ingen inlåsning',
+      usual: 'Ett system bara byrån kan jobba i.',
+      body: 'Vi bygger med vanlig, dokumenterad teknik som andra utvecklare också kan ta över.',
+    },
+    {
+      title: 'Vi finns kvar',
+      usual: 'Lansering, faktura och sedan tystnad.',
+      body: 'Vi mäter, följer upp och hjälper dig när du kör fast. Du når Willem direkt.',
+    },
+  ],
 };
 
 export const process: ProcessContent = {
@@ -298,6 +355,16 @@ export const faq: FaqContent = {
       question: 'Måste jag bygga en helt ny hemsida?',
       answer:
         'Nej, ofta räcker det med att vässa det du redan har. Vi utgår från din befintliga plattform om den fungerar tekniskt och bara behöver ett lyft.',
+    },
+    {
+      question: 'Kan jag ändra på hemsidan själv?',
+      answer:
+        'Ja. Hemsidor vi bygger får ett redigeringsverktyg där du ändrar texter, bilder, priser och liknande utan att kunna kod. Vi visar hur det fungerar när sajten lanseras, och du kan alltid fråga om du kör fast.',
+    },
+    {
+      question: 'Vem äger hemsidan?',
+      answer:
+        'Du. Domän, kod och konton står i ditt namn. Om du vill byta leverantör en dag tar du med dig allt, utan att behöva be om lov.',
     },
     {
       question: 'Kan ni hjälpa till med automatisering även om jag har ett litet företag?',

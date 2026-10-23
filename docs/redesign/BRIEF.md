@@ -8,6 +8,7 @@
 - "H W A O grejen är lite för random"
 - "wimco score är superviktig. bra för företag att ta sig in på sidan till en början. och bra case att visa upp"
 - "skapa något magiskt. bra landningssida"
+- "vad wimco faktiskt säljer, något som skiljer åt andra webbyråer. hemsidor med full redigeringsverktyg, så även de kan fixa utan att kunna html ... vi är här för att hjälpa, inte bara sälja och sticka"
 
 ## De åtta frågorna (författade svar där inget sades)
 
@@ -40,9 +41,10 @@ Sidan beter sig som produkten. Hjälten är en Wimco Score-mätare som redan kö
 | 4 | **Åtgärda (topp)** | Förtjusning, lättnad | Exempelsajten repareras under din scroll, poängen klättrar 46 → 93 |
 | 5 | Automation | Kontroll | Du trycker själv på knappen och ser förfrågan hanteras |
 | 6 | Det vi bygger | Bredd, trygghet | En katalog, faktarader, ingen säljton |
-| 7 | Willem + arbetssätt | Närhet | En människa, fyra steg |
-| 8 | Frågor | Lugn | Raka svar |
-| 9 | Din tur | Beslut | Mätaren töms, fältet väntar på din adress |
+| 7 | Din sajt. Du bestämmer. | Självständighet | Besökaren ändrar själv i exempelsajten och publicerar; löftena ställs mot hur det brukar vara |
+| 8 | Willem + arbetssätt | Närhet | En människa, fyra steg |
+| 9 | Frågor | Lugn | Raka svar |
+| 10 | Din tur | Beslut | Mätaren töms, fältet väntar på din adress |
 
 **Toppen:** "Jag scrollade och såg en dålig hemsida laga sig själv medan siffran gick från 46 till 93."
 
@@ -60,6 +62,7 @@ Sidan beter sig som produkten. Hjälten är en Wimco Score-mätare som redan kö
 | Åtgärda | pin + scrub | Enda pinnade akten, största scrollytan |
 | Automation | interaktiv (knapp) + in | Besökaren styr själv |
 | Det vi bygger | flow-lista med hårlinjer | Lugnt efter interaktion |
+| Din sajt | riktig redigerare (contenteditable) + självgjord demo-ändring | Bevisar påståendet i stället för att påstå det |
 | Willem/arbetssätt | horisontell tidslinje (in) | Personligt, annat format |
 | Frågor | native details | Funktion |
 | Din tur | riktigt fält | Live surface-avslut |

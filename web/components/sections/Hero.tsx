@@ -6,7 +6,7 @@ import { AnalysisForm } from '@/components/interactive/AnalysisForm';
 import { ScoreRing } from '@/components/score/ScoreRing';
 import { gsap, MQ, useGSAP } from '@/lib/gsap';
 import { cx, format, vars } from '@/lib/css';
-import { band, paintRing, publish, total } from '@/lib/score';
+import { band, hasPublished, paintRing, publish, total } from '@/lib/score';
 import styles from './Hero.module.css';
 
 interface Props {
@@ -35,7 +35,8 @@ export function Hero({ content, stations, analyse }: Props) {
         paintRing(ring, before);
         rows.forEach((r) => r.setAttribute('data-done', ''));
         if (status) status.textContent = ex.done;
-        publish(before);
+        // A visitor who scrolled straight past the scan may already be in the repair; leave its score alone.
+        if (!hasPublished()) publish(before);
       };
 
       const mm = gsap.matchMedia();

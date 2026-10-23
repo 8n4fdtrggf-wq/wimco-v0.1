@@ -130,6 +130,41 @@ export interface BuildContent {
   cta: LinkItem;
 }
 
+/** "Din sajt. Du bestämmer." The editor you can try, and what Wimco promises. */
+export interface OwnershipContent {
+  title: string;
+  lede: string;
+  editor: {
+    label: string;
+    hint: string;
+    demoNote: string;
+    host: string;
+    company: string;
+    nav: string[];
+    headline: string;
+    /** Played once when the section arrives, unless the visitor got there first. */
+    demoHeadline: string;
+    body: string;
+    price: string;
+    priceLabel: string;
+    images: { label: string; kind: 'tiles' | 'kitchen' | 'wood' }[];
+    swapImage: string;
+    fieldLabels: { headline: string; body: string; price: string };
+    change: string;
+    changes: string;
+    noChanges: string;
+    publish: string;
+    publishing: string;
+    /** "{time}" is replaced with the visitor's clock. */
+    published: string;
+    publishedSub: string;
+    undo: string;
+  };
+  promisesTitle: string;
+  usualLabel: string;
+  promises: { title: string; usual: string; body: string }[];
+}
+
 export interface WillemContent {
   initial: string;
   title: string;

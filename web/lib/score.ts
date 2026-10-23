@@ -77,6 +77,10 @@ export function publish(scores: Scores | null) {
   current = scores;
   listeners.forEach((l) => l(scores));
 }
+/** True once any section has published a score (used so a late hero scan never overwrites the repair). */
+export function hasPublished() {
+  return current !== null;
+}
 export function subscribe(l: Listener) {
   listeners.add(l);
   l(current);

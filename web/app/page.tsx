@@ -6,6 +6,7 @@ import { Stations } from '@/components/sections/Stations';
 import { Repair } from '@/components/sections/Repair';
 import { Automation } from '@/components/sections/Automation';
 import { Build } from '@/components/sections/Build';
+import { Ownership } from '@/components/sections/Ownership';
 import { Willem } from '@/components/sections/Willem';
 import { Faq } from '@/components/sections/Faq';
 import { Close } from '@/components/sections/Close';
@@ -44,7 +45,7 @@ function StructuredData() {
 /**
  * The start page reads as one running Wimco Score report (docs/redesign/BRIEF.md):
  * a scan in progress → what is measured → the repair (the peak) → automation you run yourself
- * → what we build → Willem → questions → your turn.
+ * → what we build → yours to edit and own → Willem → questions → your turn.
  */
 export default function Page() {
   const { stations, contact } = content;
@@ -62,6 +63,7 @@ export default function Page() {
         <Repair content={content.repair} stations={stations} serviceNames={content.serviceNames} />
         <Automation content={content.automation} />
         <Build content={content.build} />
+        <Ownership content={content.ownership} />
         <Willem willem={contact.willem} process={content.process} />
         <Faq content={content.faq} />
         <Close content={contact} stations={stations} />
