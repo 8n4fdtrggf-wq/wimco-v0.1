@@ -81,6 +81,11 @@ export const result = {
   ctaCompare: 'Jämför paketen',
   again: 'Testa en annan butik',
   saved: 'Resultatet sparas privat i 180 dagar.',
+  method: { lighthouse: 'Uppmätt med Lighthouse', rules: 'Kontrollerad i koden' } as Record<string, string>,
+  rulesTitle: 'Googles mätverktyg svarade inte just nu, så vi kontrollerade sidornas kod direkt.',
+  rulesBody:
+    'Det fångar bland annat saknade etiketter, alt-texter, knappnamn och avstängd zoom, men inte kontrast eller innehåll som laddas med JavaScript. Kör testet igen om en stund för en fullständig mätning.',
+  rulesAgain: 'Kör testet igen',
   savedLink: 'Länk till resultatet',
 };
 

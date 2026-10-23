@@ -23,7 +23,7 @@ Klistra in id:t i `wrangler.toml` (`REPLACE_WITH_KV_NAMESPACE_ID`) eller koppla 
 | Namn | Typ | Krävs | Används till |
 |---|---|---|---|
 | `SITE_URL` | variabel | ja | Absoluta länkar i mejl, OG-bilder, origin-kontroll. `https://wimco.se` |
-| `PSI_API_KEY` | hemlighet | starkt rekommenderad | Google PageSpeed Insights (Lighthouse). Utan nyckel görs anrop nyckellöst med mycket låg kvot; faller det bort märks prestanda som "bedömd med regler". Skapa på https://developers.google.com/speed/docs/insights/v5/get-started |
+| `PSI_API_KEY` | hemlighet | **krävs i praktiken** | Google PageSpeed Insights (Lighthouse). Utan nyckel görs anrop nyckellöst med mycket låg kvot; faller det bort märks prestanda som "bedömd med regler". Skapa på https://developers.google.com/speed/docs/insights/v5/get-started |
 | `RESEND_API_KEY` | hemlighet | för e-post | Notiser om leads till Wimco, rapport via e-post, påminnelser. Verifiera domänen wimco.se i Resend. |
 | `LEAD_TO_EMAIL` | variabel | nej | Mottagare av leads (standard `hej@wimco.se`). |
 | `MAIL_FROM` | variabel | nej | Avsändare (standard `Wimco <hej@wimco.se>`). |

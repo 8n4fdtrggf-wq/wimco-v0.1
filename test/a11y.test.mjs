@@ -161,3 +161,64 @@ test('beställning: valideras, sparas, mejlar Wimco och bekräftar till kunden',
   const stored = (await kv.list({ prefix: 'lead:' })).keys;
   assert.equal(stored.length, 1);
 });
+
+/* ---------- Reservkontroll och omförsök ---------- */
+import { checkHtml } from '../lib/a11y/rules.js';
+
+test('regelkontrollen hittar vanliga fel i HTML och ger poäng', () => {
+  const r = checkHtml(`<!doctype html><html><head><title>Butik</title>
+    <meta name="viewport" content="width=device-width, maximum-scale=1"></head><body>
+    <header><button class="cart"><svg></svg></button><a href="/"><img src="/logo.png"></a>
+    <form><input type="search" name="q" placeholder="Sök"></form></header>
+    <h1>Butik</h1><h3>Nyheter</h3>
+    <img src="/a.jpg" alt=""><img src="/b.jpg" alt="Röd jacka">
+    <label for="e">E-post</label><input id="e" type="email">
+    <iframe src="https://chat.example"></iframe>
+    <a href="/om">Om oss</a><button aria-label="Stäng">×</button></body></html>`);
+  const ids = r.failing.map((f) => f.id).sort();
+  assert.deepEqual(ids, ['button-name', 'frame-title', 'heading-order', 'html-has-lang', 'image-alt', 'label', 'landmark-one-main', 'link-name', 'meta-viewport']);
+  assert.equal(r.method, 'rules');
+  assert.ok(r.score > 0 && r.score < 100);
+  assert.match(r.failing.find((f) => f.id === 'button-name').examples[0].snippet, /class="cart"/);
+  const clean = checkHtml('<html lang="sv"><head><title>Ok</title></head><body><main><h1>Hej</h1><a href="/x">Läs mer</a></main></body></html>');
+  assert.deepEqual(clean.failing, []);
+  assert.equal(clean.score, 100);
+});
+
+test('API: när Lighthouse inte svarar kontrolleras koden direkt och resultatet märks', async () => {
+  const kv = memoryKv(null);
+  const platform = testPlatform({ kv });
+  const env = { DEV_SITE_FIXTURES: '1', PSI_DISABLED: '1', IP_HASH_SALT: 'test', SITE_URL: 'https://wimco.se', A11Y_RETRY_MS: '1' };
+  const events = await ndjson(await handle(req('/api/a11y', { method: 'POST', body: { url: 'butik.fixtures.wimco.dev' } }), env, platform));
+  const result = events.at(-1);
+  assert.equal(result.type, 'result', JSON.stringify(events.at(-1)));
+  const r = result.report;
+  assert.equal(r.summary.method, 'rules');
+  assert.ok(r.pages.find((p) => p.kind === 'start').ok);
+  assert.equal(r.pages.find((p) => p.kind === 'start').method, 'rules');
+  assert.deepEqual(r.pages.map((p) => [p.kind, p.ok, p.method]), [['start', true, 'rules'], ['product', true, 'rules'], ['search', true, 'rules']]);
+  assert.ok(r.issues.find((i) => i.id === 'image-alt').pages.includes('product'));
+  assert.ok(r.issues.some((i) => i.id === 'select-name'), 'storleksväljaren saknar etikett');
+  assert.ok(r.issues.some((i) => i.id === 'button-name'), 'ikonknappen i sökformuläret saknar namn');
+  // Reservresultat cachas inte: nästa test ska få chansen till en riktig mätning
+  assert.equal((await kv.list({ prefix: 'a11ycache:' })).keys.length, 0);
+});
+
+test('API: 429 från PageSpeed försöks igen innan reserven används', async () => {
+  const kv = memoryKv(null);
+  const platform = testPlatform({ kv });
+  const { a11yFixture } = await import('../lib/analysis/psi-fixture.js');
+  let calls = 0;
+  platform.trustedFetch = async (url) => {
+    const u = new URL(url);
+    calls++;
+    if (calls <= 2) return new Response('quota', { status: 429 });
+    return new Response(JSON.stringify(a11yFixture(u.searchParams.get('url'))), { status: 200, headers: { 'content-type': 'application/json' } });
+  };
+  const env = { DEV_SITE_FIXTURES: '1', IP_HASH_SALT: 'test', SITE_URL: 'https://wimco.se', A11Y_RETRY_MS: '1' };
+  const events = await ndjson(await handle(req('/api/a11y', { method: 'POST', body: { url: 'butik.fixtures.wimco.dev' } }), env, platform));
+  const r = events.at(-1).report;
+  assert.equal(r.summary.method, 'lighthouse');
+  assert.equal(r.pages.filter((p) => p.ok).length, 3);
+  assert.ok(calls >= 5, `förväntade omförsök, fick ${calls} anrop`);
+});

@@ -1,0 +1,7 @@
+<!doctype html>
+<html lang="sv"><head><meta charset="utf-8"><title>Sök: test – Testbutiken</title></head>
+<body><main><h1>Sökresultat</h1>
+<form action="/search"><input type="search" name="q" value="test"><button><svg></svg></button></form>
+<h3>2 träffar</h3>
+<a href="/products/ullsocka-gra"><img src="/cdn/ullsocka-1.jpg"></a>
+</main></body></html>
