@@ -1,4 +1,4 @@
-.willem { border-top: 1px solid var(--rule); }
+.about { border-top: 1px solid var(--rule); }
 .me { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(20px, 4vw, 48px); align-items: start; max-width: 980px; }
 .avatar {
   width: clamp(72px, 9vw, 120px);

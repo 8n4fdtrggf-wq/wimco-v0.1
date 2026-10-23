@@ -1,14 +1,14 @@
 'use client';
 
 import { useRef } from 'react';
-import type { ProcessContent, WillemContent } from '@/content/types';
+import type { ProcessContent, CompanyContent } from '@/content/types';
 import { CopyButton } from '@/components/interactive/CopyButton';
 import { gsap, MQ, useGSAP } from '@/lib/gsap';
 import { cx, vars } from '@/lib/css';
-import styles from './Willem.module.css';
+import styles from './About.module.css';
 
-/** A person, then four steps on a line that draws itself as you read along it. */
-export function Willem({ willem, process }: { willem: WillemContent; process: ProcessContent }) {
+/** The company and how to reach it, then four steps on a line that draws itself as you read along it. */
+export function About({ company, process }: { company: CompanyContent; process: ProcessContent }) {
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -43,27 +43,27 @@ export function Willem({ willem, process }: { willem: WillemContent; process: Pr
   );
 
   return (
-    <section id="willem" ref={root} className={cx('section', styles.willem)} aria-labelledby="willem-title">
+    <section id="om-wimco" ref={root} className={cx('section', styles.about)} aria-labelledby="om-wimco-title">
       <div className="wrap">
         <div className={styles.me}>
           <span className={styles.avatar} aria-hidden="true">
-            {willem.initial}
+            {company.initial}
           </span>
           <div className={styles.meText}>
-            <h2 id="willem-title" className={styles.title} data-rise="">
-              {willem.title}
+            <h2 id="om-wimco-title" className={styles.title} data-rise="">
+              {company.title}
             </h2>
             <p className={styles.body} data-rise="">
-              {willem.body}
+              {company.body}
             </p>
             <div className={styles.lines} data-rise="">
               <span className={styles.contactLine}>
-                <a href={`mailto:${willem.email}`}>{willem.email}</a>
-                <CopyButton value={willem.email} label={willem.copyEmailLabel} idle={willem.copy} done={willem.copied} />
+                <a href={`mailto:${company.email}`}>{company.email}</a>
+                <CopyButton value={company.email} label={company.copyEmailLabel} idle={company.copy} done={company.copied} />
               </span>
               <span className={styles.contactLine}>
-                <a href={`tel:${willem.phoneHref}`}>{willem.phone}</a>
-                <CopyButton value={willem.phone} label={willem.copyPhoneLabel} idle={willem.copy} done={willem.copied} />
+                <a href={`tel:${company.phoneHref}`}>{company.phone}</a>
+                <CopyButton value={company.phone} label={company.copyPhoneLabel} idle={company.copy} done={company.copied} />
               </span>
             </div>
           </div>

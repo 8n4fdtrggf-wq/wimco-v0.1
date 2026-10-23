@@ -1,12 +1,12 @@
 import type { FooterContent } from '@/content/types';
 import styles from './Footer.module.css';
 
-export function Footer({ content }: { content: FooterContent }) {
+export function Footer({ content, logoHref = '#top' }: { content: FooterContent; logoHref?: string }) {
   return (
     <footer className={styles.footer}>
       <div className={`wrap ${styles.inner}`}>
         <div className={styles.brand}>
-          <a className={styles.logo} href="#top">
+          <a className={styles.logo} href={logoHref}>
             Wimco<i>.</i>
           </a>
           <p>{content.tagline}</p>
