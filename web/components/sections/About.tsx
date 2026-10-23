@@ -63,8 +63,14 @@ export function About({ company, process }: { company: CompanyContent; process: 
               </span>
               <span className={styles.contactLine}>
                 <a href={`tel:${company.phoneHref}`}>{company.phone}</a>
-                <CopyButton value={company.phone} label={company.copyPhoneLabel} idle={company.copy} done={company.copied} />
+                <CopyButton value={company.phone} label={`${company.copyPhoneLabel} ${company.phone}`} idle={company.copy} done={company.copied} />
               </span>
+              {company.morePhones.map((p) => (
+                <span key={p.phoneHref} className={styles.contactLine}>
+                  <a href={`tel:${p.phoneHref}`}>{p.phone}</a>
+                  <CopyButton value={p.phone} label={`${company.copyPhoneLabel} ${p.phone}`} idle={company.copy} done={company.copied} />
+                </span>
+              ))}
             </div>
           </div>
         </div>

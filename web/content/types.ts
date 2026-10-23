@@ -177,6 +177,8 @@ export interface CompanyContent {
   phone: string;
   /** E.164, for the tel: link. */
   phoneHref: string;
+  /** Further numbers shown under the first, each with its own copy button. */
+  morePhones: { phone: string; phoneHref: string }[];
   copy: string;
   copied: string;
   copyEmailLabel: string;
