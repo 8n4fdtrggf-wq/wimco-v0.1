@@ -451,6 +451,7 @@ export const contact: ContactContent = {
     email: 'hej@wimco.se',
     phone: '070-094 54 80',
     phoneHref: '+46700945480',
+    morePhones: [{ phone: '072-218 05 09', phoneHref: '+46722180509' }],
     copy: 'Kopiera',
     copied: 'Kopierad',
     copyEmailLabel: 'Kopiera e-postadressen',
@@ -466,6 +467,7 @@ export const footer: FooterContent = {
       links: [
         { label: 'hej@wimco.se', href: 'mailto:hej@wimco.se' },
         { label: '070-094 54 80', href: 'tel:+46700945480' },
+        { label: '072-218 05 09', href: 'tel:+46722180509' },
       ],
     },
     {

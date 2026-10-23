@@ -48,7 +48,7 @@ Wimco is a digital studio that designs and builds websites, advanced web solutio
 
 ## Evidence on Hand
 
-- Contact: hej@wimco.se, 070-094 54 80 (tel:+46700945480). These are the only contact details used anywhere on the site.
+- Contact: hej@wimco.se, 070-094 54 80 (tel:+46700945480) and, as second number, 072-218 05 09 (tel:+46722180509). These are the only contact details used anywhere on the site.
 - Guide: `blogg/hur-mycket-kostar-en-hemsida.html`.
 - Own experiment: `playground/` – interactive typography & motion study.
 - GA4 property G-B7VWYC02LZ.
