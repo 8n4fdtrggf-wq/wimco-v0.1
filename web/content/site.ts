@@ -6,6 +6,7 @@ import type {
   FaqContent,
   FooterContent,
   HeroContent,
+  KollenTeaserContent,
   MetaContent,
   NavContent,
   OwnershipContent,
@@ -39,7 +40,7 @@ export const nav: NavContent = {
     { id: 'stationer', label: 'Wimco Score', href: '#stationer' },
     { id: 'tjanster', label: 'Tjänster', href: '#tjanster' },
     { id: 'eget', label: 'Därför Wimco', href: '#eget' },
-    { label: 'Tillgänglighet', href: '/tillganglighet/', page: 'tillganglighet' },
+    { label: 'E-handelskollen', href: '/e-handelskollen/', page: 'kollen' },
     { label: 'Guider', href: '/guider/' },
     { id: 'faq', label: 'Frågor', href: '#faq' },
   ],
@@ -255,6 +256,21 @@ export const build: BuildContent = {
     },
   ],
   cta: { label: 'Starta ett projekt', href: '#projekt' },
+};
+
+export const kollenTeaser: KollenTeaserContent = {
+  tag: 'För nätbutiker',
+  title: 'E-handelskollen.',
+  lede: 'Fem lagkrav som träffar svenska nätbutiker, de flesta nya: tillgänglighet, ångerknapp, rabattpriser, miljöpåståenden och spårning. Kontrollera er butik gratis och se vad som är rött.',
+  href: '/e-handelskollen/',
+  inputLabel: 'Butikens webbadress',
+  placeholder: 'dinbutik.se',
+  submit: 'Kontrollera',
+  note: 'Varje röd punkt har en åtgärd till fast pris, och bevakningen kontrollerar allt varje månad.',
+  more: 'Så fungerar det',
+  boardTitle: 'Krav',
+  boardSince: 'Gäller från',
+  price: 'Exempel på resultat. Åtgärder från 5 900 kr, bevakning 1 990 kr/mån.',
 };
 
 export const ownership: OwnershipContent = {
@@ -473,6 +489,7 @@ export const footer: FooterContent = {
     {
       title: 'Läs mer',
       links: [
+        { label: 'E-handelskollen', href: '/e-handelskollen/' },
         { label: 'Tillgänglighet för e-handel', href: '/tillganglighet/' },
         { label: 'Guider', href: '/guider/' },
         { label: 'Så fungerar Wimco Score', href: '/wimco-score/' },

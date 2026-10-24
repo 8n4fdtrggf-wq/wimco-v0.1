@@ -32,6 +32,7 @@ if (!fs.existsSync(path.join(OUT, 'index.html'))) {
 const PAGES = [
   { dir: '', path: '/' },
   { dir: 'tillganglighet', path: '/tillganglighet/' },
+  { dir: 'e-handelskollen', path: '/e-handelskollen/' },
 ];
 
 // 1. Copy the build

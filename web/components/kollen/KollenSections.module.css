@@ -1,0 +1,91 @@
+/* ---------- Laws ---------- */
+.laws { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule-strong); }
+.laws > li {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 0.32fr) minmax(0, 1fr);
+  gap: 12px 24px;
+  align-items: baseline;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.lawNo { font-size: 12px; color: var(--accent); }
+.laws h3 { font-size: clamp(1.15rem, 1.7vw, 1.35rem); }
+.laws dl { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; }
+.laws dl div { display: grid; gap: 3px; min-width: 0; }
+.laws .wide { grid-column: 1 / -1; }
+.laws dt { font: 500 11px/1.2 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.laws dd { margin: 0; font-size: 15px; line-height: 1.5; }
+
+/* ---------- Packages ---------- */
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
+.grid .card { grid-template-rows: auto auto auto 1fr auto; }
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 46px;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--rule-strong);
+  font: 500 15px/1 var(--f-body);
+  transition: transform var(--dur-press) var(--ease-out), background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+.toggle:active { transform: scale(0.97); }
+.toggle span { font-weight: 700; }
+.toggle[aria-pressed='true'] { background: var(--accent-soft); color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.card[data-rec] .toggle:not([aria-pressed='true']) { background: var(--ink); color: var(--bg); box-shadow: none; }
+
+/* ---------- Order: multi-select ---------- */
+.pick { display: grid; gap: 8px; }
+.pickItem {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 8px 16px 8px 12px;
+  border-radius: 14px;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--rule);
+  cursor: pointer;
+  font-size: 15px;
+  transition: box-shadow 160ms ease, background-color 160ms ease;
+}
+.pickItem input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.box { width: 18px; height: 18px; border-radius: 5px; box-shadow: inset 0 0 0 1.5px var(--rule-strong); background: var(--surface) no-repeat center / 10px 10px; transition: background-color 160ms ease, box-shadow 160ms ease; }
+.pickItem:has(input:checked) { background: var(--surface); box-shadow: inset 0 0 0 2px var(--ink); }
+.pickItem:has(input:checked) .box {
+  background-color: var(--accent);
+  box-shadow: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 5.2 4 7.5 8.5 2.5' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.pickItem:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 3px; }
+.pickName { font-weight: 500; }
+.pickPrice { font: 500 12.5px/1 var(--f-mono); color: var(--muted); white-space: nowrap; }
+.total { margin: 12px 2px 0; font-size: 14.5px; color: var(--muted); }
+.total b { color: var(--ink); font: 650 18px/1 var(--f-display); letter-spacing: -0.02em; }
+
+@media (hover: hover) and (pointer: fine) {
+  .toggle:not([aria-pressed='true']):hover { box-shadow: inset 0 0 0 1px var(--muted); }
+  .card[data-rec] .toggle:not([aria-pressed='true']):hover { background: color-mix(in oklab, var(--ink) 84%, var(--accent)); }
+  .pickItem:hover { box-shadow: inset 0 0 0 1px var(--muted); }
+  .pickItem:has(input:checked):hover { box-shadow: inset 0 0 0 2px var(--ink); }
+}
+@media (max-width: 1000px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .laws > li { grid-template-columns: 36px minmax(0, 1fr); }
+  .laws dl { grid-column: 2; }
+}
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
+  .laws dl { grid-template-columns: 1fr; }
+  .pickItem { grid-template-columns: 18px minmax(0, 1fr); }
+  .pickPrice { grid-column: 2; }
+}

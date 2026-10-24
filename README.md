@@ -14,7 +14,8 @@ Wimcos webbplats: en digital studio för hemsidor, webbutveckling och automation
 | `functions/` | Cloudflare Pages Functions (tunna adaptrar) |
 | `lib/net/` | SSRF-skydd: URL-validering, IP-klassning, säker hämtning med redirect-, tids- och storleksgränser |
 | `lib/analysis/` | HTML-analys, Lighthouse via PageSpeed Insights, valfri AI-bedömning, kontroller och poäng |
-| `lib/router.js` | API: `/api/analyze` (NDJSON-ström), `/api/report/:id`, `/api/a11y` (NDJSON-ström), `/api/a11y/:id`, `/api/lead`, `/r/:id`, `/og/:id.png` |
+| `lib/router.js` | API: `/api/analyze` (NDJSON-ström), `/api/report/:id`, `/api/a11y` och `/api/kollen` (NDJSON-strömmar), `/api/a11y/:id`, `/api/kollen/:id`, `/api/admin/watch`, `/api/cron/kollen`, `/api/lead`, `/r/:id`, `/og/:id.png` |
+| `lib/kollen/` | E-handelskollen: kontrollerna (`checks.js`), körningen (`run.js`), bevakningen (`watch.js`) och områden och paket med priser (`catalog.js`) |
 | `lib/a11y/` | Tillgänglighetstestet för e-handel (`check.js`), WCAG-koppling (`catalog.js`) och paketen med priser (`packages.js`) |
 | `server/dev.mjs` | Lokal server som kör samma router |
 | `tools/` | Byggskript för undersidor, delningsbilder, typsnitt och skärmdumpar |
@@ -55,6 +56,20 @@ Startsidan använder samma API och delade klientkod som resten av sajten:
 - Samma analytics-händelser: `analysis_start`, `analysis_complete`, `analysis_error`, `analysis_cancel` och `generate_lead`.
 
 Texter ändras i `web/content/site.ts`. Mer om komponenter och rörelse i `web/README.md`.
+
+## E-handelskollen (`/e-handelskollen/`)
+
+Wimcos erbjudande till nätbutiker: en gratis kontroll av fem lagkrav, rött och grönt, ett åtgärdspaket med fast pris för varje rött område och en bevakning som kör kontrollen varje månad. Sidan byggs i `web/app/e-handelskollen/` och startsidan har en sektion som leder dit.
+
+| Område | Hur det kontrolleras |
+|---|---|
+| Tillgänglighet | Tillgänglighetstestet nedan (Lighthouse, med kodkontroll som reserv) |
+| Ångerknapp | Länkar och knappar på start- och produktsidan, t.ex. "Ångra avtalet här" |
+| Rabattpriser | Nedsatta priser (`<s>`, `<del>`, `price--on-sale`, "Ord. pris") utan "lägsta pris de senaste 30 dagarna" |
+| Miljöpåståenden | Ord som "klimatneutral", "miljövänlig" (rött) och "hållbar" (gult) i sidornas text |
+| Spårning | Pixlar och taggar i sidans kod och i Lighthouse-testets nätverksanrop, jämfört med om en samtyckeslösning finns |
+
+Kontrollerna flaggar risker. De intygar aldrig att en butik följer lagen, och det står på sidan, i resultatet och i mejlen (`DISCLAIMER` i `lib/kollen/catalog.js`). Områden, lagar, datum och priser ändras i `lib/kollen/catalog.js` följt av `npm run build:home`. Beställningar kommer till hej@wimco.se som `kind: "kollen_order"` med valda paket och resultatet. Bevakningen beskrivs i [docs/SETUP.md](docs/SETUP.md).
 
 ## Tillgänglighet för e-handel (`/tillganglighet/`)
 

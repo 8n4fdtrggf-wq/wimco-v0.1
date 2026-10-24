@@ -14,7 +14,7 @@ import styles from './SiteNav.module.css';
  * follows the score as sections publish it (lib/score.ts), and in the closing section
  * turns into "Din sajt?", the hand-over to the visitor's own analysis.
  */
-export function SiteNav({ content, home = true }: { content: NavContent; home?: boolean }) {
+export function SiteNav({ content, home = true, current }: { content: NavContent; home?: boolean; current?: string }) {
   // On other pages, section links point back to the start page and the score dock is left out.
   const href = (h: string) => (!home && h.startsWith('#') ? `/${h}` : h);
   const root = useRef<HTMLElement>(null);
@@ -106,7 +106,7 @@ export function SiteNav({ content, home = true }: { content: NavContent; home?: 
               key={l.href}
               href={href(l.href)}
               data-section-link={home ? l.id : undefined}
-              aria-current={!home && l.page ? 'page' : undefined}
+              aria-current={!home && l.page && l.page === current ? 'page' : undefined}
             >
               {l.label}
             </a>
@@ -141,7 +141,7 @@ export function SiteNav({ content, home = true }: { content: NavContent; home?: 
       <div id="mobilmeny" className={styles.sheet} hidden={!open}>
         <nav aria-label={content.label} className="wrap">
           {content.links.map((l) => (
-            <a key={l.href} href={href(l.href)} onClick={() => setOpen(false)} aria-current={!home && l.page ? 'page' : undefined}>
+            <a key={l.href} href={href(l.href)} onClick={() => setOpen(false)} aria-current={!home && l.page && l.page === current ? 'page' : undefined}>
               {l.label}
             </a>
           ))}

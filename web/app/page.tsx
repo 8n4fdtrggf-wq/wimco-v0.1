@@ -6,6 +6,8 @@ import { Stations } from '@/components/sections/Stations';
 import { Repair } from '@/components/sections/Repair';
 import { Automation } from '@/components/sections/Automation';
 import { Build } from '@/components/sections/Build';
+import { Kollen } from '@/components/sections/Kollen';
+import { AREAS } from '../../lib/kollen/catalog.js';
 import { Ownership } from '@/components/sections/Ownership';
 import { About } from '@/components/sections/About';
 import { Faq } from '@/components/sections/Faq';
@@ -62,6 +64,7 @@ export default function Page() {
         <Repair content={content.repair} stations={stations} serviceNames={content.serviceNames} />
         <Automation content={content.automation} />
         <Build content={content.build} />
+        <Kollen content={content.kollenTeaser} areas={AREAS} />
         <Ownership content={content.ownership} />
         <About company={contact.company} process={content.process} />
         <Faq content={content.faq} />

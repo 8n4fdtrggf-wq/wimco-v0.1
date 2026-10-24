@@ -185,6 +185,22 @@ export interface CompanyContent {
   copyPhoneLabel: string;
 }
 
+/** The E-handelskollen section on the start page. */
+export interface KollenTeaserContent {
+  tag: string;
+  title: string;
+  lede: string;
+  href: string;
+  inputLabel: string;
+  placeholder: string;
+  submit: string;
+  note: string;
+  more: string;
+  boardTitle: string;
+  boardSince: string;
+  price: string;
+}
+
 export interface ProcessContent {
   title: string;
   steps: { title: string; body: string }[];
