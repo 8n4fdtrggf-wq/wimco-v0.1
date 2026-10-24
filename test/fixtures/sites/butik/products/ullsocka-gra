@@ -3,7 +3,8 @@
 <body><header><a href="/">Testbutiken</a><button class="header__icon--cart"><svg></svg></button></header>
 <main><h1>Ullsocka grå</h1>
 <img src="/cdn/ullsocka-1.jpg" width="600">
-<p>149 kr</p>
+<div class="price price--on-sale"><s class="price-item price-item--regular">199 kr</s> <span class="price-item price-item--sale">149 kr</span></div>
+<p>Ord. pris 199 kr. Mjuk och miljövänlig ull från hållbara gårdar.</p>
 <select name="size"><option>38–40</option><option>41–43</option></select>
 <input type="number" name="quantity" value="1">
 <button type="submit">Lägg i varukorgen</button>

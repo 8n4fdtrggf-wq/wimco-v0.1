@@ -31,18 +31,37 @@ Klistra in id:t i `wrangler.toml` (`REPLACE_WITH_KV_NAMESPACE_ID`) eller koppla 
 | `TURNSTILE_SITE_KEY` / `TURNSTILE_SECRET_KEY` | variabel / hemlighet | nej | Cloudflare Turnstile som extra botskydd för analys och formulär. |
 | `ANTHROPIC_API_KEY` | hemlighet | nej | Valfri AI-bedömning av visuell tydlighet och konvertering (märks "AI-bedömning"). |
 | `ANTHROPIC_MODEL` | variabel | nej | Standard `claude-sonnet-5-5`. |
-| `CRON_SECRET` | hemlighet | för påminnelser | Skyddar `POST /api/cron/reminders`. |
+| `CRON_SECRET` | hemlighet | för påminnelser och bevakning | Skyddar `POST /api/cron/reminders`, `POST /api/cron/kollen` och `/api/admin/watch`. |
+| `WATCH_BATCH` | variabel | nej | Antal butiker per bevakningsanrop (standard 2). |
 | `GLOBAL_DAILY_LIMIT` | variabel | nej | Tak för antal analyser per dygn totalt (standard 3000) – skyddar PSI-kvoten. |
 
 `DEV_FIXTURES`, `DEV_SITE_FIXTURES`, `DEV_FIXTURE_DELAY`, `DEV_USE_PROXY` och `PSI_DISABLED` är endast för lokal utveckling och ska **inte** sättas i produktion.
 
-## 4. Påminnelser om ny analys
+## 4. Påminnelser och E-handelsbevakning
 
-Pages Functions har ingen cron. Anropa endpointen dagligen från t.ex. en liten Cloudflare Worker med Cron Trigger eller en GitHub Action:
+Pages Functions har ingen cron. `.github/workflows/cron.yml` anropar endpointerna varje morgon. Lägg in samma `CRON_SECRET` som i Cloudflare under *GitHub → Settings → Secrets and variables → Actions → New repository secret*. Jobbet kan också köras för hand under fliken *Actions*.
 
 ```sh
 curl -X POST https://wimco.se/api/cron/reminders -H "Authorization: Bearer $CRON_SECRET"
+curl -X POST https://wimco.se/api/cron/kollen    -H "Authorization: Bearer $CRON_SECRET"
 ```
+
+### Lägga till en butik i bevakningen
+
+Lägg till butiken när bevakningen är avtalad (en beställning aktiverar den inte automatiskt). `email` är valfri: med den får kunden månadens resultat, utan den får bara hej@wimco.se det.
+
+```sh
+# Lägg till eller uppdatera
+curl -X POST https://wimco.se/api/admin/watch -H "Authorization: Bearer $CRON_SECRET" \
+  -H "content-type: application/json" -d '{"url":"dinbutik.se","email":"kund@dinbutik.se","company":"Butiken AB"}'
+# Lista
+curl https://wimco.se/api/admin/watch -H "Authorization: Bearer $CRON_SECRET"
+# Ta bort
+curl -X DELETE https://wimco.se/api/admin/watch -H "Authorization: Bearer $CRON_SECRET" \
+  -H "content-type: application/json" -d '{"url":"dinbutik.se"}'
+```
+
+Varje butik kontrolleras när den senaste kontrollen är 30 dagar gammal (`"intervalDays": 7` eller `14` går också). Wimco får alltid ett mejl, med vilka områden som blivit sämre eller bättre.
 
 ## 5. Google Analytics
 

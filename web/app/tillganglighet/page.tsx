@@ -9,6 +9,7 @@ import { Footer } from '@/components/sections/Footer';
 import { ConsentBanner } from '@/components/sections/ConsentBanner';
 import { A11yCheck } from '@/components/a11y/A11yCheck';
 import { Law, Packages, Process, Order } from '@/components/a11y/A11ySections';
+import { KollenCallout } from '@/components/kollen/KollenCallout';
 
 export const metadata: Metadata = {
   title: a11y.meta.title,
@@ -81,9 +82,15 @@ export default function Page() {
       <a className="skip" href="#main">
         {site.nav.skip}
       </a>
-      <SiteNav content={site.nav} home={false} />
+      <SiteNav content={site.nav} home={false} current="tillganglighet" />
       <main id="main">
         <A11yCheck hero={a11y.hero} copy={a11y.check} text={a11y.result} />
+        <KollenCallout
+          title="Tillgänglighet är ett av fem lagkrav."
+          body="E-handelskollen kontrollerar också ångerknappen, rabattpriserna, miljöpåståendena och spårningen, i samma test."
+          cta="Kör E-handelskollen"
+          href="/e-handelskollen/"
+        />
         <Law copy={a11y.law} />
         <Packages copy={a11y.packages} packages={packages} />
         <Process copy={a11y.process} />

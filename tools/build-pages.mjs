@@ -415,7 +415,7 @@ page({
     <p>När du skickar ett formulär sparar vi det du fyller i – till exempel namn, e-post, företag och meddelande – för att kunna svara och hantera din förfrågan. Rättslig grund är vårt berättigade intresse av att besvara förfrågningar, eller förberedelser inför ett avtal. Uppgifterna sparas i högst 24 månader om det inte uppstår ett kundförhållande.</p>
     <p>Ber du om rapporten via e-post eller en påminnelse om ny analys använder vi din e-postadress bara till det. En påminnelse skickas en gång och raderas sedan.</p>
     <h2>När du testar tillgängligheten eller beställer</h2>
-    <p>Tillgänglighetstestet på <a href="/tillganglighet/">/tillganglighet/</a> fungerar som analysen ovan: vi sparar adresserna som testas och resultatet i 180 dagar, och adresserna skickas till Google PageSpeed Insights för mätning. När du beställer sparar vi uppgifterna i formuläret och skickar en bekräftelse till din e-post. Rättslig grund är förberedelser inför ett avtal.</p>
+    <p>Tillgänglighetstestet på <a href="/tillganglighet/">/tillganglighet/</a> och <a href="/e-handelskollen/">E-handelskollen</a> fungerar som analysen ovan: vi sparar adresserna som testas och resultatet, i 180 dagar för tillgänglighetstestet och i ett år för E-handelskollen, och adresserna skickas till Google PageSpeed Insights för mätning. När du beställer sparar vi uppgifterna i formuläret och skickar en bekräftelse till din e-post. Rättslig grund är förberedelser inför ett avtal. Har ni avtalat om bevakning sparar vi butikens adress och den e-postadress ni angett så länge avtalet gäller, och mejlar månadens resultat dit.</p>
     <h2>Cookies och statistik</h2>
     <p>Sajten fungerar utan cookies. Med ditt samtycke använder vi Google Analytics för att förstå hur sajten används, till exempel hur många som startar och slutför en analys. Google Analytics sätter då cookies. Du kan ändra ditt val när som helst via <em>Cookieinställningar</em> i sidfoten.</p>
     <h2>Tjänster vi använder</h2>
@@ -463,13 +463,13 @@ page({
 
 /* ---------------- Sitemap ---------------- */
 const urls = [
-  ['/', '1.0'], ['/tillganglighet/', '0.9'], ['/wimco-score/', '0.8'], ['/guider/', '0.7'],
+  ['/', '1.0'], ['/e-handelskollen/', '0.9'], ['/tillganglighet/', '0.9'], ['/wimco-score/', '0.8'], ['/guider/', '0.7'],
   ...GUIDES.map((g) => [g.slug, '0.6']), ['/blogg/hur-mycket-kostar-en-hemsida.html', '0.6'],
   ['/playground/', '0.4'], ['/integritet/', '0.2'],
 ];
 fs.writeFileSync(path.join(PUB, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(([u, p]) => `  <url><loc>${SITE}${u}</loc><lastmod>${u.includes('kostar') ? '2026-09-29' : u === '/tillganglighet/' ? '2026-10-23' : TODAY}</lastmod><priority>${p}</priority></url>`).join('\n')}
+${urls.map(([u, p]) => `  <url><loc>${SITE}${u}</loc><lastmod>${u.includes('kostar') ? '2026-09-29' : u === '/tillganglighet/' ? '2026-10-23' : u === '/e-handelskollen/' ? '2026-10-24' : TODAY}</lastmod><priority>${p}</priority></url>`).join('\n')}
 </urlset>
 `);
 console.log('Sidor genererade.');

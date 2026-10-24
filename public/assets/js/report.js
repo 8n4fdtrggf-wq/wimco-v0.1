@@ -137,7 +137,7 @@ function catBlock(cat, checks) {
   if (cat.id === 'accessibility' && currentHost) {
     // E-handel: testa även produktsida och sök, de sidor PTS granskar (/tillganglighet/).
     b.append(el('p', { class: 'cat-expl' }, 'Säljer ni till konsumenter på nätet? ',
-      el('a', { href: `/tillganglighet/?url=${encodeURIComponent(currentHost)}`, 'data-track': 'a11y_from_report', text: 'Testa startsida, produktsida och sök mot tillgänglighetslagen' }), '.'));
+      el('a', { href: `/e-handelskollen/?url=${encodeURIComponent(currentHost)}`, 'data-track': 'kollen_from_report', text: 'Kör E-handelskollen: tillgänglighet, ångerknapp, rabattpriser, miljöpåståenden och spårning' }), '.'));
   }
   const list = el('ul', {}, checks.map((c) => el('li', {}, mark(c.status), el('span', {}, c.title, c.value ? el('span', { class: 'f-meta mono', text: ` ${c.value}` }) : null), srcChip(c.source))));
   b.append(el('details', { class: 'cat-checks' }, el('summary', { text: `Alla ${checks.length} kontroller` }), list));
