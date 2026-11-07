@@ -36,7 +36,7 @@ function StructuredData() {
       serviceType: 'Kontroll och åtgärd av lagkrav för nätbutiker',
       areaServed: 'SE',
       url: `${site.meta.siteUrl}/e-handelskollen/`,
-      provider: { '@type': 'ProfessionalService', name: site.meta.siteName, url: `${site.meta.siteUrl}/` },
+      provider: { '@type': 'ProfessionalService', '@id': `${site.meta.siteUrl}/#org`, name: site.meta.siteName, url: `${site.meta.siteUrl}/` },
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'Åtgärder och bevakning',

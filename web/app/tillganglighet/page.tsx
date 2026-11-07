@@ -37,7 +37,7 @@ function StructuredData() {
       serviceType: 'Tillgänglighetsgranskning och åtgärd enligt WCAG 2.1 AA',
       areaServed: 'SE',
       url: `${site.meta.siteUrl}/tillganglighet/`,
-      provider: { '@type': 'ProfessionalService', name: site.meta.siteName, url: `${site.meta.siteUrl}/` },
+      provider: { '@type': 'ProfessionalService', '@id': `${site.meta.siteUrl}/#org`, name: site.meta.siteName, url: `${site.meta.siteUrl}/` },
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'Tillgänglighetspaket',

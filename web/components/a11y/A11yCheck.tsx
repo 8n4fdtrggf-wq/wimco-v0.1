@@ -283,10 +283,10 @@ export function A11yCheck({ hero, copy, text }: Props) {
             <p className="tag rise" style={vars({ i: 0 })}>
               {hero.tag}
             </p>
-            <h1 id="a11y-title" className={cx(styles.title, 'rise')} style={vars({ i: 1 })}>
+            <h1 id="a11y-title" className={cx(styles.title, 'rise', 'rise-move')} style={vars({ i: 1 })}>
               {hero.title}
             </h1>
-            <p className={cx(styles.lede, 'rise')} style={vars({ i: 2 })}>
+            <p className={cx(styles.lede, 'rise', 'rise-move')} style={vars({ i: 2 })}>
               {hero.lede}
             </p>
             <ul className={cx(styles.proof, 'rise')} style={vars({ i: 3 })}>

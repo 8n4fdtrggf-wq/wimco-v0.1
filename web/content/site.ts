@@ -22,12 +22,14 @@ export const meta: MetaContent = {
   siteUrl: 'https://wimco.se',
   siteName: 'Wimco',
   locale: 'sv_SE',
-  title: 'Wimco – gratis analys av din webbplats | Hemsidor, webbutveckling och automation',
+  title: 'Hemsidor, automation och gratis webbanalys | Wimco',
   description:
     'Testa din webbplats gratis med Wimco Score. Wimco bygger hemsidor du kan ändra själv, webbverktyg och automationer – och allt står i ditt namn.',
   ogTitle: 'Wimco Score: se vad som håller din sajt tillbaka',
   ogDescription: 'Gratis analys på en minut. Sen bygger vi det som löser det: hemsidor, webbverktyg och automation.',
   ogImage: '/assets/og-default.png',
+  /** Wimco's own profiles elsewhere, for structured data (schema.org sameAs). */
+  sameAs: ['https://www.instagram.com/wimco.se/', 'https://www.facebook.com/p/Wimco-Se-61594851422605/'],
   themeColor: '#F4F6F4',
 };
 
@@ -507,7 +509,7 @@ export const footer: FooterContent = {
 
 export const consent: ConsentContent = {
   text: 'Vi vill använda Google Analytics för att se hur sajten används. Det sätter cookies och körs bara om du godkänner.',
-  link: { label: 'Läs mer', href: '/integritet/' },
+  link: { label: 'Läs mer om cookies', href: '/integritet/' },
   deny: 'Nej tack',
   allow: 'Godkänn',
 };

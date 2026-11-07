@@ -278,10 +278,10 @@ export function KollenCheck({ hero, copy, text, areas, packages, disclaimer }: P
             <p className="tag rise" style={vars({ i: 0 })}>
               {hero.tag}
             </p>
-            <h1 id="kollen-title" className={cx(a11y.title, styles.title, 'rise')} style={vars({ i: 1 })}>
+            <h1 id="kollen-title" className={cx(a11y.title, styles.title, 'rise', 'rise-move')} style={vars({ i: 1 })}>
               {hero.title}
             </h1>
-            <p className={cx(a11y.lede, 'rise')} style={vars({ i: 2 })}>
+            <p className={cx(a11y.lede, 'rise', 'rise-move')} style={vars({ i: 2 })}>
               {hero.lede}
             </p>
             <ul className={cx(a11y.proof, 'rise')} style={vars({ i: 3 })}>

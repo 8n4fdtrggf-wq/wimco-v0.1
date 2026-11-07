@@ -47,9 +47,12 @@ export function Hero({ content, stations, analyse }: Props) {
 
       mm.add(MQ.motion, () => {
         // 1. Arrival: copy settles, planes come in at different depths.
+        // The title and lede only move, never fade: they are the LCP candidates, and hiding them
+        // after the server-rendered first paint pushes LCP to the end of the animation.
         const intro = gsap.timeline({ defaults: { ease: 'expo.out', duration: 1.1 } });
         intro
-          .from('[data-copy] > *', { y: 26, opacity: 0, stagger: 0.08 })
+          .from('[data-copy] > :is(h1, p)', { y: 26, stagger: 0.08 })
+          .from('[data-copy] > :not(h1, p)', { y: 26, opacity: 0, stagger: 0.08 }, 0.16)
           .from('[data-plane="back"]', { y: 40, opacity: 0, duration: 1.4 }, 0.1)
           .from('[data-plane="mid"]', { y: 60, opacity: 0, scale: 0.96, duration: 1.2 }, 0.2)
           .from('[data-plane="front"] > *', { y: 30, opacity: 0, stagger: 0.12 }, 0.9);
