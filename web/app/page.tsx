@@ -32,7 +32,7 @@ function StructuredData() {
           '@id': org,
           name: meta.siteName,
           url: `${meta.siteUrl}/`,
-          logo: `${meta.siteUrl}/assets/favicon.svg`,
+          logo: `${meta.siteUrl}/assets/logo.png`,
           image: `${meta.siteUrl}${meta.ogImage}`,
           description: meta.description,
           email: company.email,

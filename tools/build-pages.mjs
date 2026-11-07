@@ -16,7 +16,7 @@ const HEADER = fs.readFileSync(path.join(ROOT, 'tools/partials/header.html'), 'u
 const FOOTER = fs.readFileSync(path.join(ROOT, 'tools/partials/footer.html'), 'utf8');
 
 // Samma företag som i startsidans strukturerade data (web/app/page.tsx), där @id definieras fullt ut.
-const ORG = { '@type': 'Organization', '@id': `${SITE}/#org`, name: 'Wimco', url: `${SITE}/`, logo: { '@type': 'ImageObject', url: `${SITE}/assets/favicon.svg` } };
+const ORG = { '@type': 'Organization', '@id': `${SITE}/#org`, name: 'Wimco', url: `${SITE}/`, logo: { '@type': 'ImageObject', url: `${SITE}/assets/logo.png`, width: 720, height: 720 } };
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
