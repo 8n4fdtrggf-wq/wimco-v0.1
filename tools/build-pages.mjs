@@ -482,7 +482,7 @@ page({
 const urls = [
   ['/', '1.0'], ['/e-handelskollen/', '0.9'], ['/tillganglighet/', '0.9'], ['/wimco-score/', '0.8'], ['/guider/', '0.7'],
   ...GUIDES.map((g) => [g.slug, '0.6']), ['/blogg/hur-mycket-kostar-en-hemsida', '0.6'],
-  ['/playground/', '0.4'], ['/integritet/', '0.2'],
+  ['/integritet/', '0.2'],
 ];
 fs.writeFileSync(path.join(PUB, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

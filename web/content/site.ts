@@ -364,7 +364,8 @@ export const faq: FaqContent = {
     {
       question: 'Vad kostar ett projekt?',
       answer:
-        'Det beror helt på dina behov. Vi utgår alltid från din budget och prioriterar det som ger mest effekt först. Boka ett samtal så får du en kostnadsfri uppskattning.',
+        'Det beror helt på dina behov. Vi utgår alltid från din budget och prioriterar det som ger mest effekt först. Boka ett samtal så får du en kostnadsfri uppskattning. Vår prisguide visar vad en hemsida brukar kosta och vad som styr priset.',
+      link: { label: 'Vad kostar en hemsida 2026?', href: '/blogg/hur-mycket-kostar-en-hemsida' },
     },
     {
       question: 'Hur lång tid tar ett projekt?',
@@ -495,7 +496,6 @@ export const footer: FooterContent = {
         { label: 'Tillgänglighet för e-handel', href: '/tillganglighet/' },
         { label: 'Guider', href: '/guider/' },
         { label: 'Så fungerar Wimco Score', href: '/wimco-score/' },
-        { label: 'Playground', href: '/playground/' },
       ],
     },
     {
@@ -504,7 +504,7 @@ export const footer: FooterContent = {
     },
   ],
   consentLabel: 'Cookieinställningar',
-  legal: '© 2026 Wimco',
+  legal: '© 2026 Wimco · Godkänd för F-skatt',
 };
 
 export const consent: ConsentContent = {
