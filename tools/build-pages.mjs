@@ -15,6 +15,9 @@ const TODAY = '2026-09-30';
 const HEADER = fs.readFileSync(path.join(ROOT, 'tools/partials/header.html'), 'utf8');
 const FOOTER = fs.readFileSync(path.join(ROOT, 'tools/partials/footer.html'), 'utf8');
 
+// Samma företag som i startsidans strukturerade data (web/app/page.tsx), där @id definieras fullt ut.
+const ORG = { '@type': 'Organization', '@id': `${SITE}/#org`, name: 'Wimco', url: `${SITE}/`, logo: { '@type': 'ImageObject', url: `${SITE}/assets/favicon.svg` } };
+
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 function page({ file, title, description, canonical, robots = 'index, follow', ogType = 'website', ogImage = `${SITE}/assets/og-default.png`, scripts = [], jsonLd = null, body, slots = false }) {
@@ -80,11 +83,23 @@ function article({ slug, file, title, h1, description, lead, updated = TODAY, bo
   return page({
     file, title: `${title} | Wimco`, description, canonical, ogType: 'article',
     jsonLd: {
-      '@context': 'https://schema.org', '@type': 'Article', headline: h1, description,
-      datePublished: updated, dateModified: updated, inLanguage: 'sv-SE',
-      author: { '@type': 'Organization', name: 'Wimco', url: SITE },
-      publisher: { '@type': 'Organization', name: 'Wimco', url: SITE, logo: { '@type': 'ImageObject', url: `${SITE}/assets/favicon.svg` } },
-      mainEntityOfPage: canonical,
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'Article', headline: h1, description,
+          datePublished: updated, dateModified: updated, inLanguage: 'sv-SE',
+          author: ORG, publisher: ORG,
+          mainEntityOfPage: canonical,
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Wimco', item: `${SITE}/` },
+            { '@type': 'ListItem', position: 2, name: 'Guider', item: `${SITE}/guider/` },
+            { '@type': 'ListItem', position: 3, name: h1, item: canonical },
+          ],
+        },
+      ],
     },
     body: `<div class="wrap">
   <header class="page-head">
@@ -273,8 +288,10 @@ ${cta('Hur tas dina förfrågningar emot?', 'Wimco Score visar om din sajt har f
 for (const g of GUIDES) article(g);
 
 /* ---------------- Befintlig guide, ny design (innehållet bevarat) ---------------- */
+// Filen heter .html, men Cloudflare Pages serverar den utan ändelse (308 från .html-adressen),
+// så kanonisk adress, länkar och sitemap använder adressen utan ändelse.
 article({
-  slug: '/blogg/hur-mycket-kostar-en-hemsida.html', file: 'blogg/hur-mycket-kostar-en-hemsida.html', badge: 'h', line: 'H',
+  slug: '/blogg/hur-mycket-kostar-en-hemsida', file: 'blogg/hur-mycket-kostar-en-hemsida.html', badge: 'h', line: 'H',
   title: 'Hur mycket kostar en hemsida för småföretag 2026?',
   h1: 'Hur mycket kostar en hemsida för småföretag 2026?',
   description: 'Enkel genomgång av vad en hemsida kostar 2026: prisnivåer, dolda kostnader och 5 frågor att ställa innan du skriver avtal. Guide för småföretagare.',
@@ -321,7 +338,7 @@ ${cta('Vad behöver din nuvarande sajt?', 'Börja med en gratis analys. Den visa
 /* ---------------- Guideindex ---------------- */
 const allGuides = [
   ...GUIDES.map((g) => ({ href: g.slug, title: g.h1, text: g.description, badge: g.badge, line: g.line })),
-  { href: '/blogg/hur-mycket-kostar-en-hemsida.html', title: 'Hur mycket kostar en hemsida för småföretag 2026?', text: 'Prisnivåer, dolda kostnader och fem frågor att ställa innan du skriver avtal.', badge: 'h', line: 'H' },
+  { href: '/blogg/hur-mycket-kostar-en-hemsida', title: 'Hur mycket kostar en hemsida för småföretag 2026?', text: 'Prisnivåer, dolda kostnader och fem frågor att ställa innan du skriver avtal.', badge: 'h', line: 'H' },
 ];
 page({
   file: 'guider/index.html', title: 'Guider om hemsidor, prestanda, SEO, UX och automation | Wimco',
@@ -464,8 +481,8 @@ page({
 /* ---------------- Sitemap ---------------- */
 const urls = [
   ['/', '1.0'], ['/e-handelskollen/', '0.9'], ['/tillganglighet/', '0.9'], ['/wimco-score/', '0.8'], ['/guider/', '0.7'],
-  ...GUIDES.map((g) => [g.slug, '0.6']), ['/blogg/hur-mycket-kostar-en-hemsida.html', '0.6'],
-  ['/playground/', '0.4'], ['/integritet/', '0.2'],
+  ...GUIDES.map((g) => [g.slug, '0.6']), ['/blogg/hur-mycket-kostar-en-hemsida', '0.6'],
+  ['/integritet/', '0.2'],
 ];
 fs.writeFileSync(path.join(PUB, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

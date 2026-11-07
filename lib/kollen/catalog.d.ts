@@ -6,6 +6,8 @@ export interface KollenArea {
   law: string;
   since: string;
   authority: string;
+  /** Tillsynsmyndigheternas webbplatser, länkade på /e-handelskollen/. */
+  authoritySites: { name: string; url: string }[];
   checks: string;
   package: string;
 }

@@ -22,12 +22,14 @@ export const meta: MetaContent = {
   siteUrl: 'https://wimco.se',
   siteName: 'Wimco',
   locale: 'sv_SE',
-  title: 'Wimco – gratis analys av din webbplats | Hemsidor, webbutveckling och automation',
+  title: 'Hemsidor, automation och gratis webbanalys | Wimco',
   description:
     'Testa din webbplats gratis med Wimco Score. Wimco bygger hemsidor du kan ändra själv, webbverktyg och automationer – och allt står i ditt namn.',
   ogTitle: 'Wimco Score: se vad som håller din sajt tillbaka',
   ogDescription: 'Gratis analys på en minut. Sen bygger vi det som löser det: hemsidor, webbverktyg och automation.',
   ogImage: '/assets/og-default.png',
+  /** Wimco's own profiles elsewhere, for structured data (schema.org sameAs). */
+  sameAs: ['https://www.instagram.com/wimco.se/', 'https://www.facebook.com/p/Wimco-Se-61594851422605/'],
   themeColor: '#F4F6F4',
 };
 
@@ -362,7 +364,8 @@ export const faq: FaqContent = {
     {
       question: 'Vad kostar ett projekt?',
       answer:
-        'Det beror helt på dina behov. Vi utgår alltid från din budget och prioriterar det som ger mest effekt först. Boka ett samtal så får du en kostnadsfri uppskattning.',
+        'Det beror helt på dina behov. Vi utgår alltid från din budget och prioriterar det som ger mest effekt först. Boka ett samtal så får du en kostnadsfri uppskattning. Vår prisguide visar vad en hemsida brukar kosta och vad som styr priset.',
+      link: { label: 'Vad kostar en hemsida 2026?', href: '/blogg/hur-mycket-kostar-en-hemsida' },
     },
     {
       question: 'Hur lång tid tar ett projekt?',
@@ -493,7 +496,6 @@ export const footer: FooterContent = {
         { label: 'Tillgänglighet för e-handel', href: '/tillganglighet/' },
         { label: 'Guider', href: '/guider/' },
         { label: 'Så fungerar Wimco Score', href: '/wimco-score/' },
-        { label: 'Playground', href: '/playground/' },
       ],
     },
     {
@@ -502,12 +504,12 @@ export const footer: FooterContent = {
     },
   ],
   consentLabel: 'Cookieinställningar',
-  legal: '© 2026 Wimco',
+  legal: '© 2026 Wimco · Godkänd för F-skatt',
 };
 
 export const consent: ConsentContent = {
   text: 'Vi vill använda Google Analytics för att se hur sajten används. Det sätter cookies och körs bara om du godkänner.',
-  link: { label: 'Läs mer', href: '/integritet/' },
+  link: { label: 'Läs mer om cookies', href: '/integritet/' },
   deny: 'Nej tack',
   allow: 'Godkänn',
 };

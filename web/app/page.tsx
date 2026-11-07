@@ -15,20 +15,48 @@ import { Close } from '@/components/sections/Close';
 import { Footer } from '@/components/sections/Footer';
 import { ConsentBanner } from '@/components/sections/ConsentBanner';
 
-/** Structured data: the business, and the FAQ (eligible for rich results). */
+/**
+ * Structured data: the business and the site as one graph (other pages point to `#org`),
+ * and the FAQ.
+ */
 function StructuredData() {
   const { meta, contact, faq } = content;
+  const { company } = contact;
+  const org = `${meta.siteUrl}/#org`;
   const data = [
     {
       '@context': 'https://schema.org',
-      '@type': 'ProfessionalService',
-      name: meta.siteName,
-      url: `${meta.siteUrl}/`,
-      image: `${meta.siteUrl}${meta.ogImage}`,
-      description: meta.description,
-      email: contact.company.email,
-      telephone: contact.company.phoneHref,
-      areaServed: 'SE',
+      '@graph': [
+        {
+          '@type': 'ProfessionalService',
+          '@id': org,
+          name: meta.siteName,
+          url: `${meta.siteUrl}/`,
+          logo: `${meta.siteUrl}/assets/favicon.svg`,
+          image: `${meta.siteUrl}${meta.ogImage}`,
+          description: meta.description,
+          email: company.email,
+          telephone: company.phoneHref,
+          contactPoint: [company, ...company.morePhones].map((p) => ({
+            '@type': 'ContactPoint',
+            telephone: p.phoneHref,
+            email: company.email,
+            contactType: 'customer service',
+            areaServed: 'SE',
+            availableLanguage: 'sv',
+          })),
+          areaServed: { '@type': 'Country', name: 'Sverige' },
+          sameAs: meta.sameAs,
+        },
+        {
+          '@type': 'WebSite',
+          '@id': `${meta.siteUrl}/#website`,
+          url: `${meta.siteUrl}/`,
+          name: meta.siteName,
+          inLanguage: 'sv-SE',
+          publisher: { '@id': org },
+        },
+      ],
     },
     {
       '@context': 'https://schema.org',

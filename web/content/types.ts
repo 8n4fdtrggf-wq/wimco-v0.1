@@ -23,6 +23,7 @@ export interface MetaContent {
   ogTitle: string;
   ogDescription: string;
   ogImage: string;
+  sameAs: string[];
   themeColor: string;
 }
 

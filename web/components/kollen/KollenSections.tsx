@@ -43,7 +43,16 @@ export function Laws({ copy, areas }: { copy: typeof LawsCopy; areas: KollenArea
                 </div>
                 <div>
                   <dt>{copy.head.authority}</dt>
-                  <dd>{a.authority}</dd>
+                  <dd>
+                    {a.authoritySites.map((site, j) => (
+                      <span key={site.url}>
+                        {j > 0 && ' och '}
+                        <a className="link" href={site.url} rel="noopener">
+                          {site.name}
+                        </a>
+                      </span>
+                    ))}
+                  </dd>
                 </div>
                 <div className={styles.wide}>
                   <dt>{copy.head.checks}</dt>

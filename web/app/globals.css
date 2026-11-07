@@ -156,6 +156,9 @@ h3 { font-family: var(--f-display); font-weight: 620; letter-spacing: -0.02em; l
 /* Entrance on first paint, staggered by --i. Runs once; ease-out, no scale(0). */
 .rise { animation: rise 700ms var(--ease-out) both; animation-delay: calc(var(--i, 0) * 70ms); }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } }
+/* Hero title and lede: move only. They are the LCP candidates, and fading them in delays LCP. */
+.rise.rise-move { animation-name: settle; }
+@keyframes settle { from { transform: translateY(14px); } }
 
 /* <Reveal variant="heading">: the line segment draws from its badge, the title settles up.
    Content is never hidden: only transform moves, and only once JS is running. */
@@ -170,6 +173,7 @@ h3 { font-family: var(--f-display); font-weight: 620; letter-spacing: -0.02em; l
 
 @media (prefers-reduced-motion: reduce) {
   .rise { animation: fade 200ms ease both; animation-delay: 0ms; }
+  .rise.rise-move { animation: none; }
   .js [data-reveal]:not([data-in]) .title,
   .js [data-reveal]:not([data-in]) [data-seg],
   .js [data-reveal]:not([data-in]) > * { transform: none; }
