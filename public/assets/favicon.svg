@@ -1,14 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Wimco">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#f4f8f5"/>
-    </linearGradient>
-    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#2f8a73"/>
-      <stop offset="1" stop-color="#176653"/>
-    </linearGradient>
-  </defs>
-  <rect x="1.5" y="1.5" width="61" height="61" rx="16" fill="url(#bg)" stroke="#2f8a73" stroke-width="3"/>
-  <path d="M13 18.5 20.5 45h6.2L32 29.6 37.3 45h6.2L51 18.5h-7.1l-3.7 16.1-5.1-16.1h-6.2l-5.1 16.1-3.7-16.1H13Z" fill="url(#mark)"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Wimco"><rect width="1024" height="1024" rx="232" fill="#f4f6f4"/><g transform="translate(218.7 693.4) scale(0.54980)"><path fill="#0f1a16" d="M151 0 12 -660H178L266 -146H269L369 -660H550L653 -146H656L742 -660H900L761 0H547L457 -504H454L363 0Z"/><path fill="#0b7a5c" d="M956.0 13Q908.0 13 884.0 -8.0Q860.0 -29 860.0 -73Q860.0 -118 884.0 -139.0Q908.0 -160 956.0 -160Q1006.0 -160 1030.5 -139.0Q1055.0 -118 1055.0 -73Q1055.0 13 956.0 13Z"/></g></svg>

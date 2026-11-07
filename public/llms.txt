@@ -1,0 +1,27 @@
+# Wimco
+
+> Wimco (wimco.se) är en svensk digital studio för små och medelstora företag. Wimco bygger hemsidor som kunden kan ändra själv, webbverktyg och automationer, och allt står i kundens namn: domän, kod och konton. Wimco erbjuder två gratis verktyg: Wimco Score, en analys av en webbplats på 0–100, och E-handelskollen, en kontroll av fem lagkrav för svenska nätbutiker. Wimco arbetar på distans i hela Sverige, med kunder framför allt i Stockholmsområdet, och är godkänd för F-skatt.
+
+Inte att förväxla med WIMCO Villas (villauthyrning i Karibien), WIMCO Corporation (amerikanskt byggföretag) eller WiMCO (nätverket Women in Mission Critical Operations).
+
+## Tjänster
+- [Hemsidor, webbutveckling och automation](https://wimco.se/#tjanster): Nya hemsidor och förbättringar av befintliga, webbverktyg och automationer som bokningsbekräftelser, uppföljningsmejl och leadhantering. En ny hemsida tar oftast 3–6 veckor. Det första samtalet är gratis, 20 minuter.
+- [Tillgänglighet för e-handel](https://wimco.se/tillganglighet/): Gratis test av startsida, produktsida och sök enligt tillgänglighetslagen (2023:254). Granskning 12 900 kr, granskning och åtgärd från 34 900 kr, bevakning 1 490 kr/mån (exkl. moms).
+- [E-handelskollen](https://wimco.se/e-handelskollen/): Gratis kontroll av tillgänglighet, ångerknapp, rabattpriser, miljöpåståenden och spårning, med fast pris på varje åtgärd. Kontrollen flaggar risker och är inte juridisk rådgivning.
+
+## Verktyg
+- [Wimco Score](https://wimco.se/wimco-score/): Gratis analys som väger ihop prestanda (20 %), mobil (15 %), tillgänglighet (15 %), SEO och teknik (20 %), visuell tydlighet (15 %) och konvertering (15 %) till ett betyg mellan 0 och 100. Prestanda och tillgänglighet mäts med Google Lighthouse.
+
+## Guider
+- [Vad kostar en hemsida för småföretag 2026?](https://wimco.se/blogg/hur-mycket-kostar-en-hemsida)
+- [Snabbare webbplats: Core Web Vitals på svenska](https://wimco.se/guider/prestanda/)
+- [SEO-grunden varje företagssajt behöver](https://wimco.se/guider/seo-grund/)
+- [Tillgänglighet som gör sajten bättre för alla](https://wimco.se/guider/tillganglighet/)
+- [Från besökare till förfrågan: UX som konverterar](https://wimco.se/guider/konvertering/)
+- [Automatisera leadhanteringen utan krångel](https://wimco.se/guider/automatisera-leads/)
+
+## Kontakt
+- E-post: hej@wimco.se
+- Telefon: 070-094 54 80
+- Webbplats: https://wimco.se/
+- Integritet: https://wimco.se/integritet/
