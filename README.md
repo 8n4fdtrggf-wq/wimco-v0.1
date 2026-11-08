@@ -79,6 +79,20 @@ Sidan byggs i `web/app/tillganglighet/` och publiceras med `npm run build:home`.
 - **Paketen**: namn, priser och innehåll står i `lib/a11y/packages.js`. Samma fil används av sidan och av API:t, så ändra bara där och kör `npm run build:home`.
 - **Beställning** (`/api/lead` med `kind: "a11y_order"`): Wimco (hej@wimco.se) får ett mejl med paket, kunduppgifter och länk till testresultatet. Kunden får en bekräftelse om att inget är bindande förrän Wimcos skriftliga bekräftelse godkänts. Kräver `RESEND_API_KEY`.
 
+## Prospektering med E-handelskollen (`tools/prospect.mjs`)
+
+Kör E-handelskollen mot en lista med butiker och skriver ett mejlutkast till varje butik där något är rött, med butikens egna fynd, fast pris per åtgärd och en länk till resultatet. Skriptet letar också upp butikens kontaktadress (samma varumärke räknas även på en annan toppdomän; andra adresser märks "kontrollera"). **Inget skickas automatiskt.**
+
+```sh
+# Testläge: körs lokalt, resultaten sparas i .data/ och länkarna pekar på localhost
+PSI_API_KEY=... node tools/prospect.mjs butiker.txt
+
+# Skarpt: körs via POST /api/admin/prospect på wimco.se, så att länkarna i mejlen fungerar för kunden
+CRON_SECRET=... node tools/prospect.mjs butiker.txt --remote
+```
+
+`butiker.txt` har en adress per rad. Resultatet hamnar i `prospekt/<datum>/` (ignoreras av git): `resultat.csv` och en `.txt` per utkast. `/api/admin/prospect` kräver `CRON_SECRET` och räknas mot sajtens dagliga totalgräns. Mejla bara aktiebolag (inte enskilda firmor), och läs varje utkast innan det skickas.
+
 ## Hur Wimco Score räknas
 
 Sex kategorier vägs ihop till 0–100: Prestanda 20 %, Mobilupplevelse 15 %, Tillgänglighet 15 %, SEO och teknisk grund 20 %, Visuell tydlighet 15 %, Konverteringsförmåga 15 %. Varje kontroll märks med sin källa – *Uppmätt* (Google Lighthouse), *Regelkontroll* (sidans kod) eller *Bedömning* (fasta regler, eller AI om det är aktiverat). Detaljer: `/wimco-score/` och `lib/analysis/score.js`.
