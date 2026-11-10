@@ -4,71 +4,61 @@
    O/Analys = signalorange, H = blå, W = grön, A = gul.
    ========================================================================== */
 
-@font-face {
-  font-family: "Archivo";
-  src: url("/assets/fonts/archivo-var.woff2") format("woff2");
-  font-weight: 400 850;
-  font-stretch: 100% 125%;
-  font-display: swap;
-}
-@font-face {
-  font-family: "JetBrains Mono";
-  src: url("/assets/fonts/jetbrains-mono-var.woff2") format("woff2");
-  font-weight: 400 700;
-  font-display: swap;
-}
-/* Metrikjusterad reservfont minskar layoutskift medan Archivo laddas */
-@font-face {
-  font-family: "Archivo Fallback";
-  src: local("Arial");
-  size-adjust: 104%;
-  ascent-override: 88%;
-  descent-override: 21%;
-}
+/* Samma typsnitt som startsidan (Next.js): Bricolage Grotesque för rubriker, Geist för brödtext, Geist Mono för siffror. */
+@font-face { font-family: "Bricolage Grotesque"; src: url("/assets/fonts/bricolage-grotesque-latin-opsz-normal.woff2") format("woff2-variations"); font-weight: 200 800; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Bricolage Grotesque"; src: url("/assets/fonts/bricolage-grotesque-latin-ext-opsz-normal.woff2") format("woff2-variations"); font-weight: 200 800; font-display: swap; unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Geist"; src: url("/assets/fonts/geist-latin-wght-normal.woff2") format("woff2-variations"); font-weight: 100 900; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Geist"; src: url("/assets/fonts/geist-latin-ext-wght-normal.woff2") format("woff2-variations"); font-weight: 100 900; font-display: swap; unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Geist Mono"; src: url("/assets/fonts/geist-mono-latin-wght-normal.woff2") format("woff2-variations"); font-weight: 100 900; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Geist Mono"; src: url("/assets/fonts/geist-mono-latin-ext-wght-normal.woff2") format("woff2-variations"); font-weight: 100 900; font-display: swap; unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 
 :root {
-  --paper: #F3F5F4;
-  --paper-2: #E7ECEA;
+  --paper: #f4f6f4;
+  --paper-2: #e9eeeb;
   --white: #FFFFFF;
-  --ink: #0B1B33;
-  --ink-2: #33425A;
-  --ink-3: #56647A;
-  --rule: rgba(11, 27, 51, 0.14);
-  --rule-strong: rgba(11, 27, 51, 0.28);
-  --navy: #0B1B33;
-  --navy-2: #142A4B;
-  --on-navy: #F3F5F4;
-  --on-navy-2: #AAB8CC;
-  --signal: #FF5A1F;
-  --signal-hover: #FF7440;
-  --signal-ink: #B83A0B;
-  --line-h: #1F5FD1;
-  --line-w: #0A7A55;
-  --line-a: #F5B700;
+  --ink: #0f1a16;
+  --ink-2: #34423c;
+  --ink-3: #52605a;
+  --rule: #dce3df;
+  --rule-strong: #c3ccc7;
+  --navy: #0f1a16;
+  --navy-2: #24302b;
+  --on-navy: #f4f6f4;
+  --on-navy-2: #b9c4be;
+  --signal: #0b7a5c;
+  --signal-hover: #096a50;
+  --signal-ink: #0b7a5c;
+  --line-h: #0b7a5c;
+  --line-w: #0b7a5c;
+  --line-a: #0b7a5c;
   --line-o: var(--signal);
-  --pass: #0E8F62;
-  --pass-ink: #0A7550;
-  --warn: #F0A202;
-  --warn-ink: #875700;
-  --fail: #E0342A;
-  --fail-ink: #B42318;
+  --pass: #0b7a5c;
+  --pass-ink: #0b7a5c;
+  --warn: #9a5b00;
+  --warn-ink: #9a5b00;
+  --fail: #c8372d;
+  --fail-ink: #c8372d;
 
-  --f-sans: "Archivo", "Archivo Fallback", system-ui, sans-serif;
-  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --f-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-display: "Bricolage Grotesque", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --accent-soft: #e2f1ec;
+  --e2: 0 2px 4px rgba(15, 40, 30, 0.05), 0 12px 28px -8px rgba(15, 40, 30, 0.14);
+  --e3: 0 4px 10px rgba(15, 40, 30, 0.06), 0 30px 60px -18px rgba(15, 40, 30, 0.22);
+  --f-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  --wrap: 1320px;
+  --wrap: 1240px;
   --gutter: clamp(16px, 4.2vw, 56px);
   --section: clamp(72px, 10vw, 150px);
   --r-s: 6px;
-  --r-m: 12px;
-  --r-l: 18px;
+  --r-m: 14px;
+  --r-l: 24px;
   --track: 8px;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
-  --shadow: 0 1px 2px rgba(11, 27, 51, 0.06), 0 12px 32px -12px rgba(11, 27, 51, 0.22);
+  --shadow: 0 2px 4px rgba(15, 40, 30, 0.05), 0 12px 28px -8px rgba(15, 40, 30, 0.14);
   color-scheme: light;
 }
 
@@ -81,7 +71,6 @@ body {
   font-family: var(--f-sans);
   font-size: 1.0625rem;
   line-height: 1.55;
-  font-stretch: 102%;
   font-kerning: normal;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -92,11 +81,11 @@ img, svg { display: block; max-width: 100%; height: auto; }
 a { color: inherit; text-decoration-thickness: 1.5px; text-underline-offset: 0.2em; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
-a, button, input, select, textarea, label, summary { touch-action: manipulation; -webkit-tap-highlight-color: rgba(255, 90, 31, 0.18); }
+a, button, input, select, textarea, label, summary { touch-action: manipulation; -webkit-tap-highlight-color: rgba(11, 122, 92, 0.16); }
 h1, h2, h3, h4 { margin: 0; font-weight: 750; line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; }
 p { margin: 0; text-wrap: pretty; }
 ul, ol { margin: 0; padding: 0; }
-::selection { background: rgba(255, 90, 31, 0.28); color: var(--ink); }
+::selection { background: rgba(11, 122, 92, 0.2); color: var(--ink); }
 :focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; border-radius: 4px; }
 [hidden] { display: none !important; }
 
@@ -997,3 +986,112 @@ ul, ol { margin: 0; padding: 0; }
 .linemap:not([data-mode="demo"]) .demo-toggle { display: none; }
 .sr-line { display: flex; width: fit-content; align-items: center; gap: 8px; min-height: 44px; margin-top: 2px; font-weight: 700; text-decoration: underline; text-decoration-color: var(--signal); text-underline-offset: 0.2em; }
 .sr-top li > span:last-child { line-height: 1.5; }
+
+/* ==========================================================================
+   Nytt tema (nov 2026)
+   Startsidan, /tillganglighet/, /e-handelskollen/ och /wimco-score/ byggs i Next.js
+   (web/). Det här lagret får de genererade sidorna (guider, blogg, integritet, 404)
+   och rapportsidan att se likadana ut: samma färger, typsnitt, knappar och sidhuvud.
+   ========================================================================== */
+h1, h2, h3, h4, .display, .h-xl, .h-lg, .h-md, .logo, .badge {
+  font-family: var(--f-display);
+  font-optical-sizing: auto;
+  font-stretch: normal;
+}
+h1, h2, h3, h4 { font-weight: 650; letter-spacing: -0.025em; }
+.display { font-weight: 700; letter-spacing: -0.038em; line-height: 0.98; }
+.h-xl, .h-lg { font-weight: 650; letter-spacing: -0.03em; line-height: 1.03; }
+.h-md { font-weight: 620; letter-spacing: -0.02em; }
+.lead, .section-lead { color: var(--ink-3); }
+body { font-size: 1rem; line-height: 1.6; }
+:focus-visible { outline-width: 2px; border-radius: 8px; }
+
+/* Taggar: mono, versaler, en punkt – som "METOD" och "KÄLLOR" på startsidan */
+.tag {
+  padding: 0; border-radius: 0; background: none; color: var(--ink-3);
+  font: 500 11.5px/1 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase;
+}
+.tag::before { width: 6px; height: 6px; background: currentColor; opacity: 0.6; }
+
+/* Linjebadges blir mjuka gröna markeringar */
+.badge { border-radius: 8px; background: var(--accent-soft); color: var(--signal); font-weight: 650; }
+.badge-a, .badge-o { color: var(--signal); }
+
+/* Knappar: piller. Primär = mörk, som "Starta ett projekt" i sidhuvudet. */
+.btn { border-radius: 999px; font-weight: 550; min-height: 48px; padding: 0 22px; border-width: 1px; }
+.btn-sm { min-height: 40px; padding: 0 16px; font-size: 0.92rem; }
+.btn-signal, .btn-ink { background: var(--ink); color: var(--paper); }
+.btn-line { border-color: var(--rule-strong); color: var(--ink); background: var(--white); }
+@media (hover: hover) and (pointer: fine) {
+  .btn-signal:hover, .btn-ink:hover { background: var(--navy-2); }
+  .btn-line:hover { background: var(--white); color: var(--ink); border-color: var(--ink); }
+}
+.link-arrow { font-weight: 550; text-decoration-color: var(--rule-strong); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+@media (hover: hover) and (pointer: fine) { .link-arrow:hover { text-decoration-color: var(--signal); } }
+
+/* Sidhuvud: klistrat, halvgenomskinligt, 64 px – som startsidans */
+.site-header {
+  position: sticky; top: 0; z-index: 30;
+  background: rgba(244, 246, 244, 0.8);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom: 1px solid var(--rule);
+}
+.header-inner { min-height: 64px; }
+.logo { font-size: 1.35rem; font-weight: 750; letter-spacing: -0.045em; }
+.nav-list { gap: clamp(10px, 1.8vw, 26px); }
+.nav-list a:not(.btn) { font-weight: 450; font-size: 0.95rem; color: var(--ink-3); background-position: 0 calc(100% - 10px); background-size: 0 1px; }
+.nav-list a[aria-current="page"], .nav-list a:not(.btn):hover { color: var(--ink); }
+.nav-cta { margin-left: auto; }
+@media (max-width: 900px) {
+  .nav-toggle { border: 1px solid var(--rule); border-radius: 999px; background: var(--paper-2); font-weight: 500; font-size: 0.95rem; }
+  .nav-toggle-bars { display: none; }
+  .nav-list { top: 64px; background: var(--white); color: var(--ink); border-radius: var(--r-l); box-shadow: var(--e3); }
+  .nav-list li { border-bottom-color: var(--rule); }
+  .nav-list a:not(.btn) { color: var(--ink); font-size: 1.05rem; }
+  .nav-list .btn-ink { width: 100%; }
+}
+
+/* Sidfot: ljus, som startsidans */
+.site-footer { background: var(--paper); color: var(--ink); border-top: 1px solid var(--rule); padding-top: clamp(48px, 6vw, 80px); }
+.logo-light { color: var(--ink); }
+.footer-brand p { color: var(--ink-3); }
+.footer-h { font: 500 11.5px/1 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px; }
+.footer-col a, .footer-col .linklike { color: var(--ink); font-weight: 450; }
+.footer-bottom { border-top-color: var(--rule); color: var(--ink-3); font: 400 12.5px/1.4 var(--f-mono); }
+
+/* Samtyckesrutan */
+.consent { border: 1px solid var(--rule); border-radius: var(--r-l); box-shadow: var(--e3); }
+
+/* Guider och textsidor */
+.page-head { padding-block: clamp(48px, 8vw, 112px) clamp(24px, 3vw, 40px); }
+.page-head .display { font-size: clamp(2.4rem, 5.6vw, 4.4rem); }
+.crumbs { font: 500 11.5px/1 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; }
+.crumbs a { color: var(--ink-3); text-decoration: none; }
+.prose { font-size: 1.0625rem; line-height: 1.7; color: var(--ink-2); }
+.prose h2 { font-size: clamp(1.55rem, 2.6vw, 2.05rem); font-weight: 650; letter-spacing: -0.03em; color: var(--ink); }
+.prose h3 { font-weight: 620; color: var(--ink); }
+.prose strong { font-weight: 600; color: var(--ink); }
+.prose li::marker { color: var(--signal); }
+.prose a { font-weight: 500; color: var(--ink); text-decoration-color: var(--rule-strong); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+@media (hover: hover) and (pointer: fine) { .prose a:hover { text-decoration-color: var(--signal); } }
+.prose th { font: 500 11.5px/1.2 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); border-bottom-color: var(--rule-strong); }
+.prose td { border-bottom-color: var(--rule); }
+.guide-aside { top: 88px; padding: 24px; background: var(--white); box-shadow: var(--e2), inset 0 0 0 1px var(--rule); }
+.callout { margin-top: 2.6em; padding: clamp(24px, 3vw, 36px); border-radius: var(--r-l); background: var(--white); color: var(--ink); box-shadow: var(--e3), inset 0 0 0 1px var(--rule); gap: 14px; }
+.prose .callout h2 { margin-top: 0; font-size: clamp(1.35rem, 2vw, 1.65rem); }
+.callout p { color: var(--ink-3); }
+.prose .callout .btn { color: var(--paper); text-decoration: none; }
+
+/* Rapportsidan: ljust betygskort som startsidans, tunnare avdelare */
+.scoreboard { background: var(--white); color: var(--ink); box-shadow: var(--e3), inset 0 0 0 1px var(--rule); }
+.sb-num { font-family: var(--f-display); font-weight: 700; font-stretch: normal; letter-spacing: -0.05em; }
+.sb-of, .sb-body p, .sb-shot figcaption, .how th { color: var(--ink-3); }
+.sb-compare { color: var(--ink) !important; }
+.sb-body .grade { font-family: var(--f-display); font-weight: 650; font-stretch: normal; }
+.sb-shot figure { background: var(--paper-2); border: 1px solid var(--rule); }
+.how summary { color: var(--ink); font-weight: 550; text-decoration-color: var(--rule-strong); text-decoration-thickness: 1px; }
+.how th, .how td { border-bottom-color: var(--rule); }
+.board, .cat-block { border-top-width: 1px; border-top-color: var(--rule-strong); }
+.action-tabs button { border-radius: 999px; font-weight: 550; }
+.action-tabs button[aria-pressed="true"] { color: var(--white); }
+.actions-panel { border-radius: calc(var(--r-l) + 8px); }
