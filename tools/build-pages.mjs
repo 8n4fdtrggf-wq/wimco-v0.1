@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Genererar undersidor med gemensam header/footer från public/index.html.
 // Kör: node tools/build-pages.mjs  (skriver till public/)
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -14,6 +15,8 @@ const TODAY = '2026-09-30';
 // ligger som egna filer i tools/partials/.
 const HEADER = fs.readFileSync(path.join(ROOT, 'tools/partials/header.html'), 'utf8');
 const FOOTER = fs.readFileSync(path.join(ROOT, 'tools/partials/footer.html'), 'utf8');
+// Cloudflare cachar /assets/css/ i flera timmar. En hash av filen i adressen gör att nya versioner slår igenom direkt.
+const CSS_VERSION = crypto.createHash('sha256').update(fs.readFileSync(path.join(ROOT, 'public/assets/css/site.css'))).digest('hex').slice(0, 10);
 
 // Samma företag som i startsidans strukturerade data (web/app/page.tsx), där @id definieras fullt ut.
 const ORG = { '@type': 'Organization', '@id': `${SITE}/#org`, name: 'Wimco', url: `${SITE}/`, logo: { '@type': 'ImageObject', url: `${SITE}/assets/logo.png`, width: 720, height: 720 } };
@@ -47,7 +50,7 @@ ${canonical ? `<meta property="og:url" content="${canonical}"${slot('og-url')}>`
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/site.css?v=${CSS_VERSION}">
 <script type="module" src="/assets/js/site.js"></script>
 ${scripts.map((s) => `<script type="module" src="${s}"></script>`).join('\n')}
 ${jsonLd ? `<script type="application/ld+json">\n${JSON.stringify(jsonLd, null, 2)}\n</script>` : ''}
