@@ -27,9 +27,9 @@ export const meta: MetaContent = {
     'Testa din webbplats gratis med Wimco Score. Wimco bygger hemsidor du kan ändra själv, webbverktyg och automationer – och allt står i ditt namn.',
   ogTitle: 'Wimco Score: se vad som håller din sajt tillbaka',
   ogDescription: 'Gratis analys på en minut. Sen bygger vi det som löser det: hemsidor, webbverktyg och automation.',
-  ogImage: '/assets/og-default.png',
+  ogImage: '/assets/og-wimco-2.png',
   /** Wimco's own profiles elsewhere, for structured data (schema.org sameAs). */
-  sameAs: ['https://www.instagram.com/wimco.se/', 'https://www.facebook.com/p/Wimco-Se-61594851422605/'],
+  sameAs: ['https://www.instagram.com/wimco.se/', 'https://www.facebook.com/profile.php?id=61596548905641'],
   themeColor: '#F4F6F4',
 };
 
