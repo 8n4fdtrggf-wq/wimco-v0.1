@@ -45,7 +45,8 @@ ${canonical ? `<meta property="og:url" content="${canonical}"${slot('og-url')}>`
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="${ogImage}"${slot('twitter-image')}>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="/assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css">
 <script type="module" src="/assets/js/site.js"></script>
 ${scripts.map((s) => `<script type="module" src="${s}"></script>`).join('\n')}
