@@ -356,56 +356,7 @@ ${allGuides.map((g) => `    <li><a href="${g.href}"><span class="badge badge-${g
 </div>`,
 });
 
-/* ---------------- Wimco Score: metod ---------------- */
-page({
-  file: 'wimco-score/index.html', title: 'Wimco Score – så analyserar och poängsätter vi din webbplats | Wimco',
-  description: 'Så fungerar Wimco Score: sex kategorier, vilka källor som används, hur poängen viktas och prioriteras, och hur analysen skyddas mot missbruk.',
-  canonical: `${SITE}/wimco-score/`,
-  body: `<div class="wrap">
-  <header class="page-head">
-    <p class="crumbs"><a href="/">Wimco</a></p>
-    <h1 class="display">Så fungerar Wimco Score</h1>
-    <p class="lead">En gratis analys som ger ett betyg mellan 0 och 100 – och visar exakt var varje siffra kommer ifrån.</p>
-    <p><a class="btn btn-signal" href="/#analys">Analysera min webbplats</a></p>
-  </header>
-  <div class="guide-layout">
-    <article class="prose">
-      <h2>Tre sorters källor</h2>
-      <ul>
-        <li><strong>Uppmätt</strong> – värden från Google Lighthouse via PageSpeed Insights: laddtider, layoutskift, blockeringstid och automatiska tester av tillgänglighet, SEO och bästa praxis. Testet körs som en mellanklasstelefon på mobilnät. Har sajten tillräckligt med trafik visas även riktiga besökares upplevelse från Chrome UX Report.</li>
-        <li><strong>Regelkontroll</strong> – deterministiska kontroller av sidans HTML och serverns svar: HTTPS, titel, metabeskrivning, rubriker, alt-texter, formuläretiketter, viewport, sitemap, strukturerad data och tecken på föråldrad teknik.</li>
-        <li><strong>Bedömning</strong> – tolkningar enligt fasta regler av tydlighet och konverteringsförmåga: hur långt huvudbudskapet är, om det finns uppmaningar och var de syns, kontaktvägar och förtroendesignaler. När AI-bedömning är aktiverad får en språkmodell dessutom se sidans första skärm; det märks då som AI-bedömning.</li>
-      </ul>
-      <h2>Kategorier och vikter</h2>
-      <table>
-        <thead><tr><th scope="col">Kategori</th><th scope="col">Vikt</th><th scope="col">Så räknas den</th></tr></thead>
-        <tbody>
-          <tr><td>Prestanda</td><td>20 %</td><td>80 % Lighthouse-prestanda, 20 % egna kontroller</td></tr>
-          <tr><td>Mobilupplevelse</td><td>15 %</td><td>Kontroller, varav flera uppmätta i Lighthouse</td></tr>
-          <tr><td>Tillgänglighet</td><td>15 %</td><td>60 % Lighthouse-tillgänglighet, 40 % egna kontroller</td></tr>
-          <tr><td>SEO och teknisk grund</td><td>20 %</td><td>40 % Lighthouse-SEO, 60 % egna kontroller</td></tr>
-          <tr><td>Visuell tydlighet</td><td>15 %</td><td>Bedömning; med AI vägs AI och regler lika</td></tr>
-          <tr><td>Konverteringsförmåga</td><td>15 %</td><td>Bedömning; med AI vägs AI och regler lika</td></tr>
-        </tbody>
-      </table>
-      <p>Varje kontroll har en vikt mellan 1 och 5. Godkänd ger full poäng, ”kan förbättras” halv och brist ingen. Totalbetyget är ett viktat snitt av kategorierna. Om en kategori inte kan mätas, till exempel för att Lighthouse inte når sidan, räknas den bort och vikterna fördelas om – och rapporten säger det.</p>
-      <h2>Prioritering</h2>
-      <p>Alla brister rangordnas efter kontrollens vikt, hur allvarlig bristen är, kategorins vikt, möjlig effekt och uppskattad insats. De tre som ger mest effekt i förhållande till insatsen hamnar under <strong>Åtgärda först</strong>, nästa grupp under <strong>Nästa förbättring</strong> och det som redan fungerar under <strong>Bra redan nu</strong>.</p>
-      <h2>Begränsningar</h2>
-      <ul>
-        <li>Analysen gäller den adress du anger, inte hela sajten.</li>
-        <li>Lighthouse-värden varierar något mellan körningar.</li>
-        <li>Sajter som blockerar automatiska besök kan inte analyseras.</li>
-        <li>Bedömningar av tydlighet och konvertering är förenklingar. En människa ser saker regler missar – därför erbjuder vi en kostnadsfri genomgång.</li>
-      </ul>
-      <h2>Säkerhet och integritet</h2>
-      <p>Analysen hämtar bara publika http- och https-adresser på standardportar. Interna nätverk, lokala adresser, molnleverantörers metadata-tjänster och vidarebefordringar dit stoppas innan någon anslutning görs. Hämtningen har tidsgräns, storleksgräns och ett begränsat antal vidarebefordringar, och antalet analyser per besökare är begränsat. Sidans kod körs aldrig – den läses som text.</p>
-      <p>Rapporter sparas i 180 dagar och är privata: de nås bara via sin länk och visas inte i sökmotorer om inte den som skapade rapporten väljer det. <a href="/integritet/">Läs integritetspolicyn</a>.</p>
-    </article>
-    ${aside('o', 'O', 'Analysen visar vad som håller sajten tillbaka. Wimco kan sedan designa, utveckla och automatisera lösningen.', 'Starta ett projekt', '/#starta')}
-  </div>
-</div>`,
-});
+/* Wimco Score: metodsidan byggs nu i Next.js (web/app/wimco-score) och publiceras med npm run build:home. */
 
 /* ---------------- Integritet ---------------- */
 page({
