@@ -33,6 +33,7 @@ const PAGES = [
   { dir: '', path: '/' },
   { dir: 'tillganglighet', path: '/tillganglighet/' },
   { dir: 'e-handelskollen', path: '/e-handelskollen/' },
+  { dir: 'wimco-score', path: '/wimco-score/' },
 ];
 
 // 1. Copy the build
