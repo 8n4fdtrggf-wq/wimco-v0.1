@@ -508,7 +508,7 @@ export const footer: FooterContent = {
 };
 
 export const consent: ConsentContent = {
-  text: 'Vi vill använda Google Analytics för att se hur sajten används. Det sätter cookies och körs bara om du godkänner.',
+  text: 'Vi vill använda Google Analytics för att se hur sajten används och Meta-pixeln för att mäta våra annonser på Facebook och Instagram. Det sätter cookies och körs bara om du godkänner.',
   link: { label: 'Läs mer om cookies', href: '/integritet/' },
   deny: 'Nej tack',
   allow: 'Godkänn',

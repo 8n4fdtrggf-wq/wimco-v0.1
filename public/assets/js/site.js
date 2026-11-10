@@ -1,7 +1,10 @@
 // Delad klientkod: navigation, samtycke/analytics, formulär, flikar och botskydd.
 
 const GA_ID = 'G-B7VWYC02LZ';
-const CONSENT_KEY = 'wimco-consent-v1';
+// Meta-pixel (Händelsehanteraren, "Wimco.se pixel"). Laddas bara efter samtycke, precis som GA.
+const META_PIXEL_ID = '1658983345773756';
+// v2: samtycket omfattar nu även Meta-pixeln, så alla tillfrågas igen.
+const CONSENT_KEY = 'wimco-consent-v2';
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function safeStorage(fn, fallback = null) {
@@ -22,15 +25,49 @@ function loadAnalytics() {
   s.async = true;
   s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
   document.head.appendChild(s);
+  loadMetaPixel();
 }
+
+let metaLoaded = false;
+function loadMetaPixel() {
+  if (metaLoaded || !/^\d+$/.test(META_PIXEL_ID)) return;
+  metaLoaded = true;
+  // Metas standardkod för fbq, utan inline-skript (CSP tillåter bara connect.facebook.net).
+  const fbq = function fbq() {
+    if (fbq.callMethod) fbq.callMethod.apply(fbq, arguments);
+    else fbq.queue.push(arguments);
+  };
+  fbq.push = fbq;
+  fbq.loaded = true;
+  fbq.version = '2.0';
+  fbq.queue = [];
+  window.fbq = window.fbq || fbq;
+  if (!window._fbq) window._fbq = window.fbq;
+  window.fbq('init', META_PIXEL_ID);
+  window.fbq('track', 'PageView');
+  const s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://connect.facebook.net/en_US/fbevents.js';
+  document.head.appendChild(s);
+}
+
+// GA-händelser som också skickas till Meta, så annonserna kan optimeras mot dem.
+const META_EVENTS = {
+  generate_lead: ['track', 'Lead'],
+  analysis_complete: ['trackCustom', 'AnalysisComplete', { tool: 'wimco_score' }],
+  a11y_complete: ['trackCustom', 'AnalysisComplete', { tool: 'tillganglighet' }],
+  kollen_complete: ['trackCustom', 'AnalysisComplete', { tool: 'e_handelskollen' }],
+};
 
 export function consentState() {
   return safeStorage(() => localStorage.getItem(CONSENT_KEY));
 }
 
 export function track(name, params = {}) {
-  if (consentState() !== 'granted' || !window.gtag) return;
-  window.gtag('event', name, params);
+  if (consentState() !== 'granted') return;
+  window.gtag?.('event', name, params);
+  const meta = META_EVENTS[name];
+  if (meta && window.fbq) window.fbq(meta[0], meta[1], { ...meta[2], ...(params.kind ? { kind: params.kind } : {}) });
 }
 
 function initConsent() {
@@ -56,10 +93,11 @@ function initConsent() {
     if (choice === 'granted') loadAnalytics();
     else if (gaLoaded) {
       window.gtag('consent', 'update', { analytics_storage: 'denied' });
-      // Ta bort GA-cookies för den här domänen
+      window.fbq?.('consent', 'revoke');
+      // Ta bort GA- och Meta-cookies för den här domänen
       for (const c of document.cookie.split(';')) {
         const name = c.split('=')[0].trim();
-        if (/^_ga/.test(name)) document.cookie = `${name}=; Max-Age=0; path=/; domain=.${location.hostname.replace(/^www\./, '')}`;
+        if (/^_ga|^_fbp$|^_fbc$/.test(name)) document.cookie = `${name}=; Max-Age=0; path=/; domain=.${location.hostname.replace(/^www\./, '')}`;
       }
     }
   });

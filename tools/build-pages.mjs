@@ -434,18 +434,24 @@ page({
     <h2>När du testar tillgängligheten eller beställer</h2>
     <p>Tillgänglighetstestet på <a href="/tillganglighet/">/tillganglighet/</a> och <a href="/e-handelskollen/">E-handelskollen</a> fungerar som analysen ovan: vi sparar adresserna som testas och resultatet, i 180 dagar för tillgänglighetstestet och i ett år för E-handelskollen, och adresserna skickas till Google PageSpeed Insights för mätning. När du beställer sparar vi uppgifterna i formuläret och skickar en bekräftelse till din e-post. Rättslig grund är förberedelser inför ett avtal. Har ni avtalat om bevakning sparar vi butikens adress och den e-postadress ni angett så länge avtalet gäller, och mejlar månadens resultat dit.</p>
     <h2>Cookies och statistik</h2>
-    <p>Sajten fungerar utan cookies. Med ditt samtycke använder vi Google Analytics för att förstå hur sajten används, till exempel hur många som startar och slutför en analys. Google Analytics sätter då cookies. Du kan ändra ditt val när som helst via <em>Cookieinställningar</em> i sidfoten.</p>
+    <p>Sajten fungerar utan cookies. Med ditt samtycke använder vi:</p>
+    <ul>
+      <li><strong>Google Analytics</strong> för att förstå hur sajten används, till exempel hur många som startar och slutför en analys.</li>
+      <li><strong>Meta-pixeln</strong> för att mäta och förbättra våra annonser på Facebook och Instagram, till exempel om ett besök från en annons leder till att någon gör en analys eller kontaktar oss. Meta får då uppgifter om besöket, din webbläsare och vilka sidor du besöker, och kan koppla dem till ett Meta-konto. Meta är självständigt personuppgiftsansvarig för sin egen behandling, se <a href="https://www.facebook.com/privacy/policy/">Metas integritetspolicy</a>.</li>
+    </ul>
+    <p>Båda sätter cookies. Rättslig grund är ditt samtycke. Du kan ändra ditt val när som helst via <em>Cookieinställningar</em> i sidfoten.</p>
     <h2>Tjänster vi använder</h2>
     <ul>
       <li>Cloudflare – drift, säkerhet och lagring av rapporter.</li>
       <li>Google – PageSpeed Insights för mätningar och, med samtycke, Google Analytics.</li>
+      <li>Meta – med samtycke, Meta-pixeln för att mäta annonser.</li>
       <li>E-posttjänst för att skicka bekräftelser, rapporter och påminnelser.</li>
       <li>AI-leverantör för valfri bedömning av analyserade sidor.</li>
     </ul>
     <p>Vissa av tjänsterna kan behandla uppgifter utanför EU/EES. Vi använder då leverantörer med godkända skyddsåtgärder, till exempel EU-kommissionens standardavtalsklausuler.</p>
     <h2>Dina rättigheter</h2>
     <p>Du har rätt att få veta vilka uppgifter vi har om dig, få dem rättade eller raderade, invända mot behandlingen och begära att den begränsas. Du kan också lämna klagomål till Integritetsskyddsmyndigheten (IMY).</p>
-    <p>Senast uppdaterad <time datetime="${TODAY}">30 september 2026</time>.</p>
+    <p>Senast uppdaterad <time datetime="2026-11-10">10 november 2026</time>.</p>
   </article>
 </div>`,
 });
