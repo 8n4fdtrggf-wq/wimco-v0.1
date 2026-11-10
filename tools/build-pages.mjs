@@ -20,7 +20,7 @@ const ORG = { '@type': 'Organization', '@id': `${SITE}/#org`, name: 'Wimco', url
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-function page({ file, title, description, canonical, robots = 'index, follow', ogType = 'website', ogImage = `${SITE}/assets/og-default.png`, scripts = [], jsonLd = null, body, slots = false }) {
+function page({ file, title, description, canonical, robots = 'index, follow', ogType = 'website', ogImage = `${SITE}/assets/og-wimco.png`, scripts = [], jsonLd = null, body, slots = false }) {
   const slot = (name) => (slots ? ` data-slot="${name}"` : '');
   const html = `<!doctype html>
 <html lang="sv">
