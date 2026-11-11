@@ -282,7 +282,6 @@ export const build: BuildContent = {
  */
 export const work: WorkContent = {
   title: 'Se vad vi har byggt åt andra.',
-  lede: 'Riktiga sajter som är i drift. Scrolla så rullar sidan på skärmen.',
   listLabel: 'Referenser',
   didLabel: 'Vi gjorde',
   visit: 'Besök sajten',
@@ -297,9 +296,9 @@ export const work: WorkContent = {
       id: 'voccleaning',
       name: 'Voccleaning Sweden AB',
       about: 'VOC- och luktrening för industrin',
-      host: 'voccleaning.wimco.se',
-      href: 'https://voccleaning.wimco.se/',
-      did: ['Design', 'Utveckling', 'Text och struktur'],
+      host: 'voccleaning.se',
+      // Lägg till href: 'https://voccleaning.se/' när sajten är lanserad, så visas länken "Besök sajten".
+      did: ['Design', 'Utveckling', 'Sökmotoroptimering'],
       image: { src: '/assets/img/referenser/voccleaning.webp', width: 800, height: 1850 },
     },
   ],

@@ -135,7 +135,8 @@ export interface WorkItem {
   about: string;
   /** Shown in the address bar on the laptop screen. */
   host: string;
-  href: string;
+  /** Leave out until the site is live; the "visit" link is shown only when set. */
+  href?: string;
   /** What Wimco did. */
   did: string[];
   /** A tall screenshot at 16:10 or longer, in public/assets/img/referenser/. */
@@ -145,7 +146,7 @@ export interface WorkItem {
 /** "Referenser": real sites on a laptop screen, and the list to switch between them. */
 export interface WorkContent {
   title: string;
-  lede: string;
+  lede?: string;
   listLabel: string;
   didLabel: string;
   visit: string;

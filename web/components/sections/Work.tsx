@@ -44,9 +44,11 @@ export function Work({ content }: { content: WorkContent }) {
           <h2 id="referenser-title" className={styles.title} data-rise="">
             {content.title}
           </h2>
-          <p className={styles.lede} data-rise="">
-            {content.lede}
-          </p>
+          {content.lede && (
+            <p className={styles.lede} data-rise="">
+              {content.lede}
+            </p>
+          )}
         </div>
 
         <div className={styles.stage}>
@@ -115,6 +117,7 @@ export function Work({ content }: { content: WorkContent }) {
                   <li key={d}>{d}</li>
                 ))}
               </ul>
+              {item.href && (
               <a className={styles.visit} href={item.href} target="_blank" rel="noopener">
                 {content.visit}
                 <span className="sr-only"> {item.name}</span>
@@ -122,6 +125,7 @@ export function Work({ content }: { content: WorkContent }) {
                   <path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </a>
+              )}
             </div>
 
             <a className={styles.next} href={content.next.cta.href}>
