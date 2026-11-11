@@ -6,6 +6,7 @@ import { Stations } from '@/components/sections/Stations';
 import { Repair } from '@/components/sections/Repair';
 import { Automation } from '@/components/sections/Automation';
 import { Build } from '@/components/sections/Build';
+import { Work } from '@/components/sections/Work';
 import { Kollen } from '@/components/sections/Kollen';
 import { AREAS } from '../../lib/kollen/catalog.js';
 import { Ownership } from '@/components/sections/Ownership';
@@ -45,7 +46,9 @@ function StructuredData() {
             areaServed: 'SE',
             availableLanguage: 'sv',
           })),
+          address: { '@type': 'PostalAddress', addressLocality: 'Stockholm', addressCountry: 'SE' },
           areaServed: { '@type': 'Country', name: 'Sverige' },
+          knowsAbout: content.build.items.map((i) => i.name),
           sameAs: meta.sameAs,
         },
         {
@@ -74,7 +77,7 @@ function StructuredData() {
 /**
  * The start page reads as one running Wimco Score report (docs/redesign/BRIEF.md):
  * a scan in progress → what is measured → the repair (the peak) → automation you run yourself
- * → what we build → yours to edit and own → the company → questions → your turn.
+ * → what we do → references → yours to edit and own → the company → questions → your turn.
  */
 export default function Page() {
   const { stations, contact } = content;
@@ -92,6 +95,7 @@ export default function Page() {
         <Repair content={content.repair} stations={stations} serviceNames={content.serviceNames} />
         <Automation content={content.automation} />
         <Build content={content.build} />
+        <Work content={content.work} />
         <Kollen content={content.kollenTeaser} areas={AREAS} />
         <Ownership content={content.ownership} />
         <About company={contact.company} process={content.process} />

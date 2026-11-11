@@ -14,6 +14,7 @@ import type {
   RepairContent,
   Station,
   StationsContent,
+  WorkContent,
 } from './types';
 
 /** All copy for wimco.se. Edit here; components only render it. */
@@ -22,11 +23,11 @@ export const meta: MetaContent = {
   siteUrl: 'https://wimco.se',
   siteName: 'Wimco',
   locale: 'sv_SE',
-  title: 'Hemsidor, automation och gratis webbanalys | Wimco',
+  title: 'Digitalbyrå i Stockholm: hemsidor, SEO och automation | Wimco',
   description:
-    'Testa din webbplats gratis med Wimco Score. Wimco bygger hemsidor du kan ändra själv, webbverktyg och automationer – och allt står i ditt namn.',
+    'Wimco är en digitalbyrå i Stockholm. Vi bygger hemsidor du kan ändra själv, sköter SEO och annonsering och automatiserar det som tar tid. Testa din sajt gratis med Wimco Score.',
   ogTitle: 'Wimco Score: se vad som håller din sajt tillbaka',
-  ogDescription: 'Gratis analys på en minut. Sen bygger vi det som löser det: hemsidor, webbverktyg och automation.',
+  ogDescription: 'Digitalbyrå i Stockholm. Gratis analys på en minut, sen bygger vi det som löser det: hemsidor, SEO, annonsering och automation.',
   ogImage: '/assets/og-wimco-2.png',
   /** Wimco's own profiles elsewhere, for structured data (schema.org sameAs). */
   sameAs: ['https://www.instagram.com/wimco.se/', 'https://www.facebook.com/profile.php?id=61596548905641'],
@@ -41,6 +42,7 @@ export const nav: NavContent = {
   links: [
     { id: 'stationer', label: 'Wimco Score', href: '#stationer' },
     { id: 'tjanster', label: 'Tjänster', href: '#tjanster' },
+    { id: 'referenser', label: 'Referenser', href: '#referenser' },
     { id: 'eget', label: 'Därför Wimco', href: '#eget' },
     { label: 'E-handelskollen', href: '/e-handelskollen/', page: 'kollen' },
     { label: 'Guider', href: '/guider/' },
@@ -224,8 +226,8 @@ export const automation: AutomationContent = {
 };
 
 export const build: BuildContent = {
-  title: 'Det här bygger vi.',
-  lede: 'Samma studio som hittar felen bygger lösningen. Du pratar direkt med den som gör jobbet.',
+  title: 'Det här gör vi.',
+  lede: 'Wimco är en digitalbyrå i Stockholm. Samma byrå som hittar felen bygger lösningen och ser till att den syns. Du pratar direkt med den som gör jobbet.',
   head: { name: 'Tjänst', what: 'Vad det är', time: 'Tid' },
   items: [
     {
@@ -253,11 +255,54 @@ export const build: BuildContent = {
       service: 'optimering',
       name: 'Optimering',
       what: 'Vässa det du redan har. Laddtid, tydlighet och kontaktvägar avgör om besökaren stannar.',
-      examples: ['Core Web Vitals', 'Teknisk SEO', 'Tillgänglighet'],
+      examples: ['Core Web Vitals', 'Konvertering', 'Tillgänglighet'],
       time: 'Ofta en vecka',
+    },
+    {
+      service: 'optimering',
+      name: 'SEO',
+      what: 'Syns när kunderna söker. Vi rättar tekniken, väljer sökorden som ger förfrågningar och skriver sidorna som svarar på dem.',
+      examples: ['Sökordsanalys', 'Teknisk SEO', 'Lokal synlighet'],
+      time: 'Löpande',
+    },
+    {
+      service: 'optimering',
+      name: 'Betald marknadsföring',
+      what: 'Annonser som når rätt personer i Google och sociala medier. Vi mäter vad varje förfrågan kostar, så att budgeten går dit den gör mest nytta.',
+      examples: ['Google Ads', 'Meta-annonser', 'Mätning och rapport'],
+      time: 'Månadsvis',
     },
   ],
   cta: { label: 'Starta ett projekt', href: '#projekt' },
+};
+
+/**
+ * Referenser. To add one: put a tall screenshot (800 px wide or more) in
+ * public/assets/img/referenser/, add an object to `items`, and run `npm run build:home`.
+ */
+export const work: WorkContent = {
+  title: 'Se vad vi har byggt åt andra.',
+  lede: 'Riktiga sajter som är i drift. Scrolla så rullar sidan på skärmen.',
+  listLabel: 'Referenser',
+  didLabel: 'Vi gjorde',
+  visit: 'Besök sajten',
+  screenLabel: 'Skärmbild av {name}',
+  next: {
+    title: 'Nästa kan vara er.',
+    body: 'Första samtalet är gratis och tar 20 minuter.',
+    cta: { label: 'Starta ett projekt', href: '#projekt' },
+  },
+  items: [
+    {
+      id: 'voccleaning',
+      name: 'Voccleaning Sweden AB',
+      about: 'VOC- och luktrening för industrin',
+      host: 'voccleaning.wimco.se',
+      href: 'https://voccleaning.wimco.se/',
+      did: ['Design', 'Utveckling', 'Text och struktur'],
+      image: { src: '/assets/img/referenser/voccleaning.webp', width: 800, height: 1850 },
+    },
+  ],
 };
 
 export const kollenTeaser: KollenTeaserContent = {
@@ -466,7 +511,7 @@ export const contact: ContactContent = {
   company: {
     initial: 'W',
     title: 'Hej, vi är Wimco.',
-    body: 'En digital studio för små och medelstora företag. Vi finns för att teknik som borde vara enkel ska vara det: hemsidor, webbverktyg och automationer som håller. Första samtalet är gratis: 20 minuter, utan förpliktelser.',
+    body: 'En digitalbyrå i Stockholm för små och medelstora företag. Vi finns för att teknik som borde vara enkel ska vara det: hemsidor, webbverktyg och automationer som håller. Första samtalet är gratis: 20 minuter, utan förpliktelser.',
     email: 'hej@wimco.se',
     phone: '070-094 54 80',
     phoneHref: '+46700945480',
@@ -479,7 +524,7 @@ export const contact: ContactContent = {
 };
 
 export const footer: FooterContent = {
-  tagline: 'Hemsidor, webbutveckling och automation för små och medelstora företag.',
+  tagline: 'Digitalbyrå i Stockholm. Hemsidor, SEO, annonsering och automation för små och medelstora företag.',
   columns: [
     {
       title: 'Kontakt',

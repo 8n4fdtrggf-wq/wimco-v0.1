@@ -126,6 +126,35 @@ export interface AutomationContent {
   more: { title: string; items: string[] };
 }
 
+/** One reference: a site Wimco built. Add a new object to `work.items` in content/site.ts. */
+export interface WorkItem {
+  /** Short, URL-safe key, e.g. "voccleaning". */
+  id: string;
+  name: string;
+  /** What the client does, in a few words. */
+  about: string;
+  /** Shown in the address bar on the laptop screen. */
+  host: string;
+  href: string;
+  /** What Wimco did. */
+  did: string[];
+  /** A tall screenshot at 16:10 or longer, in public/assets/img/referenser/. */
+  image: { src: string; width: number; height: number };
+}
+
+/** "Referenser": real sites on a laptop screen, and the list to switch between them. */
+export interface WorkContent {
+  title: string;
+  lede: string;
+  listLabel: string;
+  didLabel: string;
+  visit: string;
+  /** "{name}" is replaced. */
+  screenLabel: string;
+  next: { title: string; body: string; cta: LinkItem };
+  items: WorkItem[];
+}
+
 export interface BuildContent {
   title: string;
   lede: string;

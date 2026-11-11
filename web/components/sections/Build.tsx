@@ -18,7 +18,7 @@ export function Build({ content }: { content: BuildContent }) {
 
         <ul className={styles.list}>
           {content.items.map((item) => (
-            <li key={item.service} className={styles.row} data-rise="">
+            <li key={item.name} className={styles.row} data-rise="">
               <h3 className={styles.name}>{item.name}</h3>
               <p className={styles.what}>{item.what}</p>
               <ul className={styles.examples} aria-label={`Exempel på ${item.name.toLowerCase()}`}>

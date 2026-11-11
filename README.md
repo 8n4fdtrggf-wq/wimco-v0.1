@@ -57,6 +57,16 @@ Startsidan använder samma API och delade klientkod som resten av sajten:
 
 Texter ändras i `web/content/site.ts`. Mer om komponenter och rörelse i `web/README.md`.
 
+## Referenser (startsidan, `#referenser`)
+
+Sektionen visar sajter Wimco byggt på en laptop, och sidan på skärmen rullar när besökaren scrollar. Lägg till en referens så här:
+
+1. Spara en lång skärmbild av sajten (minst 800 px bred, gärna 2–4 skärmhöjder) som `.webp` i `public/assets/img/referenser/`.
+2. Lägg till ett objekt i `work.items` i `web/content/site.ts` (namn, vad kunden gör, adress, vad Wimco gjorde, bildens sökväg och mått).
+3. Kör `npm run build:home`.
+
+Med två eller fler referenser blir listan klickbar och byter sajt på skärmen.
+
 ## E-handelskollen (`/e-handelskollen/`)
 
 Wimcos erbjudande till nätbutiker: en gratis kontroll av fem lagkrav, rött och grönt, ett åtgärdspaket med fast pris för varje rött område och en bevakning som kör kontrollen varje månad. Sidan byggs i `web/app/e-handelskollen/` och startsidan har en sektion som leder dit.
