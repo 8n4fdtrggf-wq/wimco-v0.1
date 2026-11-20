@@ -131,7 +131,8 @@ export const stations: Station[] = [
 
 export const hero: HeroContent = {
   title: 'Se vad som håller din sajt tillbaka.',
-  lede: 'Gratis analys på en minut. Sen bygger vi hemsidan, verktyget eller automationen som löser det.',
+  lede: 'Vi är en digitalbyrå i Stockholm som bygger hemsidor, webbverktyg och automationer. Börja med en gratis analys av din sajt: den tar en minut.',
+  secondary: { text: 'Vet du redan vad du behöver?', link: { label: 'Berätta om ditt projekt', href: '#projekt' } },
   proof: ['Uppmätt med Google Lighthouse', 'Ingen registrering', 'Hemsidor du kan ändra själv'],
   example: {
     host: 'ekdahls-bygg.exempel',
@@ -208,7 +209,7 @@ export const build: BuildContent = {
       time: 'Månadsvis',
     },
   ],
-  cta: { label: 'Starta ett projekt', href: '#projekt' },
+  cta: { label: 'Berätta om ditt projekt', href: '#projekt' },
 };
 
 /**
@@ -224,7 +225,7 @@ export const work: WorkContent = {
   next: {
     title: 'Nästa kan vara er.',
     body: 'Första samtalet är gratis och tar 20 minuter.',
-    cta: { label: 'Starta ett projekt', href: '#projekt' },
+    cta: { label: 'Berätta om ditt projekt', href: '#projekt' },
   },
   items: [
     {
@@ -372,7 +373,8 @@ export const contact: ContactContent = {
     },
     budgets: ['Vet inte än', 'Under 25 000 kr', '25 000–75 000 kr', '75 000–150 000 kr', 'Över 150 000 kr'],
     privacy: { text: 'Vi använder uppgifterna bara för att svara dig.', link: { label: 'Integritet', href: '/integritet/' } },
-    submit: 'Skicka förfrågan',
+    call: 'Hellre prata direkt? Ring {phone}.',
+    submit: 'Skicka och få ett förslag',
     sending: 'Skickar…',
     successTitle: 'Tack, förfrågan är skickad.',
     successBody: 'Vi återkommer till {email} så snart som möjligt. Vill du prata direkt? Ring 070-094 54 80.',

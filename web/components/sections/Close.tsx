@@ -17,7 +17,7 @@ import styles from './Close.module.css';
  */
 export function Close({ content, stations }: { content: ContactContent; stations: Station[] }) {
   const root = useRef<HTMLElement>(null);
-  const after = stations.map((s) => s.after);
+  const before = stations.map((s) => s.before);
   const { analyse, project, company } = content;
 
   useGSAP(
@@ -26,7 +26,7 @@ export function Close({ content, stations }: { content: ContactContent; stations
         trigger: root.current,
         start: 'top 55%',
         onEnter: () => publish(null),
-        onLeaveBack: () => publish(after),
+        onLeaveBack: () => publish(before),
       });
     },
     { scope: root },
@@ -64,6 +64,11 @@ export function Close({ content, stations }: { content: ContactContent; stations
             <p className="tag">{project.eyebrow}</p>
             <h3 className={styles.panelTitle}>{project.title}</h3>
             <p className={styles.body}>{project.body}</p>
+            <p className={styles.call}>
+              {project.call.split('{phone}')[0]}
+              <a href={`tel:${company.phoneHref}`}>{company.phone}</a>
+              {project.call.split('{phone}')[1]}
+            </p>
             <ProjectForm content={project} email={company.email} />
           </div>
         </div>

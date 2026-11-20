@@ -42,6 +42,8 @@
   text-wrap: pretty;
 }
 .form { max-width: 520px; margin-top: 6px; }
+.secondary { margin: 0; font-size: 15px; color: var(--muted); }
+.secondary a { color: var(--ink); font-weight: 600; text-underline-offset: 3px; }
 .proof { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: var(--muted); }
 .proof li { display: inline-flex; align-items: center; gap: 8px; }
 .proof li::before {

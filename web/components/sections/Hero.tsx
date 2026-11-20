@@ -140,6 +140,9 @@ export function Hero({ content, stations, analyse }: Props) {
           <div id="analys" className={styles.form}>
             <AnalysisForm content={analyse} />
           </div>
+          <p className={styles.secondary}>
+            {content.secondary.text} <a href={content.secondary.link.href}>{content.secondary.link.label}</a>
+          </p>
           <ul className={styles.proof}>
             {content.proof.map((p) => (
               <li key={p}>{p}</li>

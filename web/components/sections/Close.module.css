@@ -20,6 +20,8 @@
 .panel :global(.tag) { margin: 0; }
 .panelTitle { font-size: clamp(1.5rem, 2.4vw, 2rem); letter-spacing: -0.03em; }
 .body { margin: 0; color: var(--muted); }
+.call { margin: 0; font-size: 15px; color: var(--muted); }
+.call a { color: var(--ink); font-weight: 600; white-space: nowrap; text-underline-offset: 3px; }
 
 .gets { list-style: none; margin: 4px 0 0; padding: 14px 0 0; display: grid; gap: 8px; font-size: 14.5px; border-top: 1px solid var(--rule); counter-reset: g; }
 .gets li { display: flex; gap: 12px; align-items: baseline; }
