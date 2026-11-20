@@ -1,5 +1,4 @@
 import type {
-  AutomationContent,
   BuildContent,
   ConsentContent,
   ContactContent,
@@ -9,9 +8,7 @@ import type {
   KollenTeaserContent,
   MetaContent,
   NavContent,
-  OwnershipContent,
   ProcessContent,
-  RepairContent,
   Station,
   StationsContent,
   WorkContent,
@@ -43,12 +40,12 @@ export const nav: NavContent = {
     { id: 'stationer', label: 'Wimco Score', href: '#stationer' },
     { id: 'tjanster', label: 'Tjänster', href: '#tjanster' },
     { id: 'referenser', label: 'Referenser', href: '#referenser' },
-    { id: 'eget', label: 'Därför Wimco', href: '#eget' },
+    { id: 'om-wimco', label: 'Om oss', href: '#om-wimco' },
     { label: 'E-handelskollen', href: '/e-handelskollen/', page: 'kollen' },
     { label: 'Guider', href: '/guider/' },
     { id: 'faq', label: 'Frågor', href: '#faq' },
   ],
-  cta: { label: 'Starta ett projekt', href: '#projekt' },
+  cta: { label: 'Kontakta oss', href: '#projekt' },
   menu: { open: 'Meny', close: 'Stäng' },
   dock: {
     label: 'Wimco Score just nu: {score} av 100, för exempelföretaget. Gå till analysen.',
@@ -132,13 +129,6 @@ export const stations: Station[] = [
   },
 ];
 
-export const serviceNames: Record<Station['service'], string> = {
-  hemsidor: 'Hemsida',
-  webbutveckling: 'Webbutveckling',
-  automation: 'Automation',
-  optimering: 'Optimering',
-};
-
 export const hero: HeroContent = {
   title: 'Se vad som håller din sajt tillbaka.',
   lede: 'Gratis analys på en minut. Sen bygger vi hemsidan, verktyget eller automationen som löser det.',
@@ -168,61 +158,6 @@ export const stationsSection: StationsContent = {
   lede: 'Wimco Score väger ihop dem till ett betyg mellan 0 och 100. Varje siffra visar var den kommer ifrån.',
   sourcesNote: 'Uppmätt betyder Google Lighthouse. Regelkontroll betyder att sidans kod granskas mot fasta regler. Bedömning görs enligt fasta kriterier.',
   link: { label: 'Så räknas poängen', href: '/wimco-score/' },
-};
-
-export const repair: RepairContent = {
-  pause: 'Ett betyg är bara början. Så här ser det ut när vi åtgärdar det.',
-  title: 'Sex fynd. Sex åtgärder.',
-  lede: 'Scrolla och se exempelsajten lagas, ett fynd i taget.',
-  note: 'Påhittat företag. Fynd och poäng är illustrativa, men räknade med Wimco Scores riktiga vikter.',
-  ringLabel: 'Exempelföretagets Wimco Score under åtgärderna.',
-  serviceLabel: 'Åtgärdas med',
-  findingLabel: 'Fynd',
-  fixLabel: 'Åtgärd',
-  site: {
-    host: 'ekdahls-bygg.exempel',
-    tabBefore: 'Hem',
-    tabAfter: 'Badrum i Stockholm · Ekdahls Bygg',
-    company: 'Ekdahls Bygg AB',
-    navBefore: ['Hem', 'Om oss', 'Tjänster', 'Galleri', 'Länkar', 'Kontakt'],
-    navAfter: ['Badrum', 'Kök', 'Om oss'],
-    headlineBefore: 'Välkommen till vår hemsida!',
-    headlineAfter: 'Badrum klara på 3 veckor.',
-    bodyBefore: 'Vi utför alla typer av byggtjänster i Stockholmsområdet sedan 1998. Kontakta oss gärna för mer information.',
-    bodyAfter: 'Fast pris och ROT-avdraget direkt på fakturan.',
-    imageWeight: '4,2 MB',
-    cookie: 'Denna webbplats använder cookies för att förbättra din upplevelse.',
-    cookieButton: 'OK',
-    cta: 'Få offert inom 24 h',
-    toast: 'Ny förfrågan · svar skickat',
-  },
-};
-
-export const automation: AutomationContent = {
-  title: 'Och sen sköter sig resten.',
-  lede: 'En förfrågan som kommer in en söndagskväll ska inte vänta till måndag. Tryck på knappen och se vad som händer.',
-  run: 'Skicka en testförfrågan',
-  rerun: 'Skicka en till',
-  demoNote: 'Demo i din webbläsare. Inget skickas någonstans.',
-  form: { name: 'Sara Lind', message: 'Hej! Vi vill renovera badrummet i höst. Vad kostar det ungefär?', service: 'Badrum' },
-  steps: [
-    { title: 'Förfrågan kommer in', body: 'Via offertformuläret på sajten.' },
-    { title: 'Sorteras och sparas', body: 'Rätt tjänst, direkt i kundregistret.' },
-    { title: 'Kunden får svar', body: 'Ett personligt mejl med en länk för att boka hembesök.' },
-    { title: 'Du får en sammanfattning', body: 'Det viktigaste först, i mobilen.' },
-  ],
-  surface: {
-    formTitle: 'Offertförfrågan',
-    crmHead: ['Kund', 'Tjänst', 'Status'],
-    crmStatus: 'Ny',
-    replySubject: 'Tack Sara, vi har fått din förfrågan',
-    replyBody: 'Välj en tid för hembesök så tittar vi på badrummet tillsammans.',
-    summary: '1 ny förfrågan · badrum · svar skickat',
-  },
-  more: {
-    title: 'Annat vi ofta automatiserar',
-    items: ['Bokningsbekräftelser', 'Uppföljningsmejl', 'Rapporter som skriver sig själva', 'Kopplingar mellan system', 'AI-assistent för vanliga frågor'],
-  },
 };
 
 export const build: BuildContent = {
@@ -319,63 +254,6 @@ export const kollenTeaser: KollenTeaserContent = {
   price: 'Exempel på resultat. Åtgärder från 5 900 kr, bevakning 1 990 kr/mån.',
 };
 
-export const ownership: OwnershipContent = {
-  title: 'Din sajt. Du bestämmer.',
-  lede: 'Många byråer bygger så att du måste fråga dem varje gång något ska ändras. Vi gör tvärtom. Du får ett redigeringsverktyg och ändrar text, bilder och priser själv, utan att kunna kod.',
-  editor: {
-    label: 'Prova redigeringsverktyget',
-    hint: 'Klicka på en text och skriv',
-    demoNote: 'Demo i din webbläsare. Ändringarna sparas inte.',
-    host: 'ekdahls-bygg.exempel',
-    company: 'Ekdahls Bygg',
-    nav: ['Badrum', 'Kök', 'Om oss'],
-    headline: 'Badrum klara på 3 veckor.',
-    demoHeadline: 'Badrum klara på 2 veckor.',
-    body: 'Fast pris och ROT-avdraget direkt på fakturan.',
-    price: '89 000 kr',
-    priceLabel: 'Från',
-    images: [
-      { label: 'Kakel', kind: 'tiles' },
-      { label: 'Kök', kind: 'kitchen' },
-      { label: 'Trä', kind: 'wood' },
-    ],
-    swapImage: 'Byt bild',
-    fieldLabels: { headline: 'Rubrik', body: 'Underrubrik', price: 'Pris' },
-    change: '1 ändring',
-    changes: '{count} ändringar',
-    noChanges: 'Inga ändringar än',
-    publish: 'Publicera',
-    publishing: 'Publicerar…',
-    published: 'Publicerat {time}.',
-    publishedSub: 'Inget mejl till byrån. Ingen faktura.',
-    undo: 'Återställ',
-  },
-  promisesTitle: 'Det här gäller alltid hos oss',
-  usualLabel: 'Så brukar det vara',
-  promises: [
-    {
-      title: 'Du ändrar själv',
-      usual: 'Mejla byrån och vänta på en offert för att byta en mening.',
-      body: 'Redigeringsverktyget ingår, och vi går igenom det med dig när sajten lanseras.',
-    },
-    {
-      title: 'Allt står i ditt namn',
-      usual: 'Domänen och kontona ligger hos byrån.',
-      body: 'Domän, kod och konton är dina. Vill du byta leverantör tar du med dig allt.',
-    },
-    {
-      title: 'Ingen inlåsning',
-      usual: 'Ett system bara byrån kan jobba i.',
-      body: 'Vi bygger med vanlig, dokumenterad teknik som andra utvecklare också kan ta över.',
-    },
-    {
-      title: 'Vi finns kvar',
-      usual: 'Lansering, faktura och sedan tystnad.',
-      body: 'Vi mäter, följer upp och hjälper dig när du kör fast. Du når oss direkt.',
-    },
-  ],
-};
-
 export const process: ProcessContent = {
   title: 'Så jobbar vi.',
   steps: [
@@ -441,7 +319,7 @@ export const faq: FaqContent = {
 
 export const contact: ContactContent = {
   title: 'Din tur.',
-  lede: 'Resten av sidan handlade om ett påhittat byggföretag. Nu gäller det din sajt.',
+  lede: 'Analysera din sajt gratis, eller berätta vad du vill bygga. Vi hör av oss.',
   analyse: {
     id: 'din-sajt',
     eyebrow: 'Jag har en webbplats',
@@ -476,7 +354,7 @@ export const contact: ContactContent = {
     id: 'projekt',
     eyebrow: 'Jag vill bygga något nytt',
     title: 'Berätta vad du behöver.',
-    body: 'Vi svarar med förslag på nästa steg.',
+    body: 'Vi svarar med förslag på nästa steg. Första samtalet är gratis och utan förpliktelser.',
     typeLegend: 'Vad gäller det?',
     types: [
       { label: 'Hemsida', service: 'hemsidor' },
