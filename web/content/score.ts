@@ -113,5 +113,5 @@ export const close = {
   title: 'Testa din sajt.',
   body: 'Gratis, ungefär en minut och ingen registrering. Sen bygger vi det som löser det, om du vill.',
   cta: { label: 'Analysera din webbplats', href: '/#analys' },
-  secondary: { label: 'Starta ett projekt', href: '/#projekt' },
+  secondary: { label: 'Berätta om ditt projekt', href: '/#projekt' },
 };

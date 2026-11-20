@@ -58,6 +58,8 @@ export interface Station {
 export interface HeroContent {
   title: string;
   lede: string;
+  /** A second way in for visitors who already know they want something built. */
+  secondary: { text: string; link: LinkItem };
   proof: string[];
   example: {
     host: string;
@@ -200,6 +202,8 @@ export interface ProjectContent {
   fields: { name: string; email: string; company: string; budget: string; message: string; honeypot: string };
   budgets: string[];
   privacy: { text: string; link: LinkItem };
+  /** Shown under the form intro; `{phone}` becomes a tel: link. */
+  call: string;
   submit: string;
   sending: string;
   successTitle: string;
