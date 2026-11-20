@@ -79,53 +79,6 @@ export interface StationsContent {
   link: LinkItem;
 }
 
-export interface RepairContent {
-  pause: string;
-  title: string;
-  lede: string;
-  note: string;
-  ringLabel: string;
-  serviceLabel: string;
-  findingLabel: string;
-  fixLabel: string;
-  site: {
-    host: string;
-    tabBefore: string;
-    tabAfter: string;
-    company: string;
-    navBefore: string[];
-    navAfter: string[];
-    headlineBefore: string;
-    headlineAfter: string;
-    bodyBefore: string;
-    bodyAfter: string;
-    imageWeight: string;
-    cookie: string;
-    cookieButton: string;
-    cta: string;
-    toast: string;
-  };
-}
-
-export interface AutomationContent {
-  title: string;
-  lede: string;
-  run: string;
-  rerun: string;
-  demoNote: string;
-  form: { name: string; message: string; service: string };
-  steps: { title: string; body: string }[];
-  surface: {
-    formTitle: string;
-    crmHead: string[];
-    crmStatus: string;
-    replySubject: string;
-    replyBody: string;
-    summary: string;
-  };
-  more: { title: string; items: string[] };
-}
-
 /** One reference: a site Wimco built. Add a new object to `work.items` in content/site.ts. */
 export interface WorkItem {
   /** Short, URL-safe key, e.g. "voccleaning". */
@@ -162,41 +115,6 @@ export interface BuildContent {
   head: { name: string; what: string; time: string };
   items: { service: ServiceKey; name: string; what: string; examples: string[]; time: string }[];
   cta: LinkItem;
-}
-
-/** "Din sajt. Du bestämmer." The editor you can try, and what Wimco promises. */
-export interface OwnershipContent {
-  title: string;
-  lede: string;
-  editor: {
-    label: string;
-    hint: string;
-    demoNote: string;
-    host: string;
-    company: string;
-    nav: string[];
-    headline: string;
-    /** Played once when the section arrives, unless the visitor got there first. */
-    demoHeadline: string;
-    body: string;
-    price: string;
-    priceLabel: string;
-    images: { label: string; kind: 'tiles' | 'kitchen' | 'wood' }[];
-    swapImage: string;
-    fieldLabels: { headline: string; body: string; price: string };
-    change: string;
-    changes: string;
-    noChanges: string;
-    publish: string;
-    publishing: string;
-    /** "{time}" is replaced with the visitor's clock. */
-    published: string;
-    publishedSub: string;
-    undo: string;
-  };
-  promisesTitle: string;
-  usualLabel: string;
-  promises: { title: string; usual: string; body: string }[];
 }
 
 /** The company section: who Wimco is and how to reach it. */
