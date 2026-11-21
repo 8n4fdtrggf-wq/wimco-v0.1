@@ -10,7 +10,8 @@ Inte att förväxla med WIMCO Villas (villauthyrning i Karibien), WIMCO Corporat
 - [E-handelskollen](https://wimco.se/e-handelskollen/): Gratis kontroll av tillgänglighet, ångerknapp, rabattpriser, miljöpåståenden och spårning, med fast pris på varje åtgärd. Kontrollen flaggar risker och är inte juridisk rådgivning.
 
 ## Referenser
-- [Referenser](https://wimco.se/#referenser): Sajter Wimco har byggt, bland annat Voccleaning Sweden AB (VOC- och luktrening för industrin).
+- [Referenser](https://wimco.se/#referenser): Sajter Wimco har byggt.
+- [Voccleaning Sweden AB](https://wimco.se/referenser/voccleaning/): Ny hemsida åt ett företag inom VOC- och luktrening för industrin. Wimco gjorde design, utveckling, konverteringsoptimering (CRO), SEO och synlighet i AI-tjänster.
 
 ## Verktyg
 - [Wimco Score](https://wimco.se/wimco-score/): Gratis analys som väger ihop prestanda (20 %), mobil (15 %), tillgänglighet (15 %), SEO och teknik (20 %), visuell tydlighet (15 %) och konvertering (15 %) till ett betyg mellan 0 och 100. Prestanda och tillgänglighet mäts med Google Lighthouse.

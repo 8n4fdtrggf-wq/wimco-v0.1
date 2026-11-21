@@ -92,6 +92,8 @@ export interface WorkItem {
   host: string;
   /** Leave out until the site is live; the "visit" link is shown only when set. */
   href?: string;
+  /** A case page on wimco.se, e.g. "/referenser/voccleaning/". Shown as "Läs caset". */
+  caseHref?: string;
   /** What Wimco did. */
   did: string[];
   /** A tall screenshot at 16:10 or longer, in public/assets/img/referenser/. */
@@ -105,6 +107,8 @@ export interface WorkContent {
   listLabel: string;
   didLabel: string;
   visit: string;
+  /** Link text for caseHref. */
+  readCase: string;
   /** "{name}" is replaced. */
   screenLabel: string;
   next: { title: string; body: string; cta: LinkItem };

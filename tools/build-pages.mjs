@@ -411,6 +411,103 @@ page({
 </div>`,
 });
 
+/* ---------------- Referenser ---------------- */
+// Bara det Wimco faktiskt levererat. Inga påhittade siffror eller citat (se PRODUCT.md):
+// lägg till mätvärden och kundcitat här först när de finns och kunden godkänt dem.
+const CASES = [
+  {
+    slug: '/referenser/voccleaning/', file: 'referenser/voccleaning/index.html', updated: '2026-11-21',
+    client: 'Voccleaning Sweden AB',
+    title: 'Voccleaning: ny hemsida byggd för förfrågningar, Google och AI-sök',
+    h1: 'Voccleaning: en sajt byggd för att ge förfrågningar.',
+    description: 'Så byggde Wimco en ny hemsida åt Voccleaning Sweden AB, som renar VOC och lukt åt industrin: design, utveckling, konverteringsoptimering, SEO och synlighet i AI-tjänster som ChatGPT och Google AI Overviews.',
+    lead: 'Voccleaning renar VOC och lukt åt industrin. Vi byggde en ny sajt som förklarar tjänsten på några sekunder, syns när inköpare söker och går att läsa för AI-tjänsterna som allt fler frågar först.',
+    body: `<dl class="case-facts">
+<div><dt>Kund</dt><dd>Voccleaning Sweden AB</dd></div>
+<div><dt>Bransch</dt><dd>VOC- och luktrening för industrin</dd></div>
+<div><dt>Vi gjorde</dt><dd>Design, utveckling, CRO, SEO, AI-synlighet</dd></div>
+</dl>
+<h2>Uppdraget</h2>
+<p>VOC-rening är en teknisk tjänst som köps av driftchefer, miljöansvariga och inköpare. De vill förstå tre saker snabbt: löser ni mitt problem, har ni gjort det förut och hur kommer jag vidare. Sajten skulle svara på det, synas när de söker och göra det enkelt att höra av sig.</p>
+<h2>Ny hemsida</h2>
+<ul>
+<li><strong>Design från grunden.</strong> En lugn, teknisk form som passar en industrikund, med problemet och lösningen överst i stället för allmänna bilder.</li>
+<li><strong>Snabb och lätt.</strong> Modern kod utan tunga sidbyggare, komprimerade bilder och få typsnitt, så att sidan laddar snabbt även på mobilnät ute i en anläggning.</li>
+<li><strong>Byggd för mobil.</strong> Rubriker, knappar och kontaktvägar fungerar lika bra på telefonen som på datorn.</li>
+<li><strong>Tillgänglig.</strong> Tydliga kontraster, rubriker i rätt ordning och full tangentbordsnavigering.</li>
+</ul>
+<h2>Konvertering (CRO)</h2>
+<ul>
+<li><strong>Ett tydligt nästa steg.</strong> Varje sida slutar med samma enkla väg vidare: kontakta oss om ert problem.</li>
+<li><strong>Kort formulär.</strong> Bara de fält som behövs för att kunna svara, så att fler skickar in.</li>
+<li><strong>Telefon och mejl alltid nära.</strong> Den som hellre ringer ska inte behöva leta.</li>
+<li><strong>Förtroende där beslutet tas.</strong> Hur det går till, vilka branscher och vilka problem står intill knapparna, inte längst ned.</li>
+</ul>
+<h2>SEO</h2>
+<ul>
+<li><strong>Teknisk grund.</strong> HTTPS, sitemap, kanoniska adresser, rätt indexering och snabba sidor.</li>
+<li><strong>Sökorden kunderna använder.</strong> Sidor och rubriker utgår från hur kunder faktiskt söker, som VOC-rening, luktrening och rening av processluft, inte från interna begrepp.</li>
+<li><strong>Unika titlar och beskrivningar</strong> för varje sida, skrivna för att få klicket i sökresultatet.</li>
+<li><strong>Strukturerad data</strong> som beskriver företaget och tjänsterna för Google.</li>
+</ul>
+<h2>Synlighet i AI-tjänster</h2>
+<p>Allt fler inköpare frågar ChatGPT, Perplexity, Copilot eller Googles AI-översikter innan de söker vidare. De tjänsterna läser sajter på ett annat sätt än en människa, så vi byggde för dem också:</p>
+<ul>
+<li><strong>Raka svar i texten.</strong> Vad företaget gör, för vem och hur står i klartext tidigt på sidan, så att en AI kan citera det rätt.</li>
+<li><strong>Frågor och svar</strong> på de frågor kunder brukar ställa, i en form som är lätt att plocka ut.</li>
+<li><strong>Strukturerad data och tydlig sidstruktur</strong> som gör det otvetydigt vem företaget är och vad det erbjuder.</li>
+<li><strong>Öppet för AI-läsare.</strong> Sajten går att läsa utan JavaScript och har en sammanfattning för språkmodeller (llms.txt).</li>
+</ul>
+<h2>Det vi följer upp</h2>
+<p>Efter lansering mäter vi det som betyder något för affären: antal förfrågningar via sajten, placeringar för de viktigaste sökorden, trafik från AI-tjänster och laddtid. Vi förbättrar sedan där siffrorna visar att det behövs.</p>
+<aside class="callout">
+  <h2 class="h-md">Vill ni ha samma sak?</h2>
+  <p>Första samtalet är gratis och tar 20 minuter. Vill du börja med att se hur er nuvarande sajt står sig kan du köra Wimco Score.</p>
+  <p><a class="btn btn-signal" href="/#projekt">Berätta om ditt projekt</a></p>
+  <p><a class="link-arrow" href="/#analys">Analysera min webbplats gratis</a></p>
+</aside>`,
+  },
+];
+
+for (const c of CASES) {
+  const canonical = `${SITE}${c.slug}`;
+  page({
+    file: c.file, title: `${c.title} | Wimco`, description: c.description, canonical, ogType: 'article',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'Article', headline: c.h1, description: c.description,
+          datePublished: c.updated, dateModified: c.updated, inLanguage: 'sv-SE',
+          author: ORG, publisher: ORG, mainEntityOfPage: canonical,
+          about: { '@type': 'Organization', name: c.client },
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Wimco', item: `${SITE}/` },
+            { '@type': 'ListItem', position: 2, name: 'Referenser', item: `${SITE}/#referenser` },
+            { '@type': 'ListItem', position: 3, name: c.client, item: canonical },
+          ],
+        },
+      ],
+    },
+    body: `<div class="wrap">
+  <header class="page-head">
+    <p class="crumbs"><a href="/">Wimco</a> <span aria-hidden="true">/</span> <a href="/#referenser">Referenser</a></p>
+    <h1 class="display">${c.h1}</h1>
+    <p class="lead">${c.lead}</p>
+  </header>
+  <div class="guide-layout">
+    <article class="prose">
+${c.body}
+    </article>
+    ${aside('h', 'H', 'Wimco bygger hemsidor som ger förfrågningar, syns i Google och går att läsa för AI-tjänster. Allt står i ert namn.', 'Berätta om ditt projekt', '/#projekt')}
+  </div>
+</div>`,
+  });
+}
+
 /* ---------------- Rapportskal (/r/:id serveras av funktionen med rätt metadata) ---------------- */
 page({
   file: 'rapport/index.html', title: 'Rapport | Wimco Score', slots: true, robots: 'noindex, nofollow',
@@ -443,11 +540,12 @@ page({
 const urls = [
   ['/', '1.0'], ['/e-handelskollen/', '0.9'], ['/tillganglighet/', '0.9'], ['/wimco-score/', '0.8'], ['/guider/', '0.7'],
   ...GUIDES.map((g) => [g.slug, '0.6']), ['/blogg/hur-mycket-kostar-en-hemsida', '0.6'],
+  ...CASES.map((c) => [c.slug, '0.7']),
   ['/integritet/', '0.2'],
 ];
 fs.writeFileSync(path.join(PUB, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(([u, p]) => `  <url><loc>${SITE}${u}</loc><lastmod>${u.includes('kostar') ? '2026-09-29' : u === '/tillganglighet/' ? '2026-10-23' : u === '/e-handelskollen/' ? '2026-10-24' : TODAY}</lastmod><priority>${p}</priority></url>`).join('\n')}
+${urls.map(([u, p]) => `  <url><loc>${SITE}${u}</loc><lastmod>${CASES.find((c) => c.slug === u)?.updated ?? (u.includes('kostar') ? '2026-09-29' : u === '/tillganglighet/' ? '2026-10-23' : u === '/e-handelskollen/' ? '2026-10-24' : TODAY)}</lastmod><priority>${p}</priority></url>`).join('\n')}
 </urlset>
 `);
 console.log('Sidor genererade.');

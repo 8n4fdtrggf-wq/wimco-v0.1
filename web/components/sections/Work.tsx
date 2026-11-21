@@ -117,6 +117,13 @@ export function Work({ content }: { content: WorkContent }) {
                   <li key={d}>{d}</li>
                 ))}
               </ul>
+              {item.caseHref && (
+              <a className={styles.visit} href={item.caseHref}>
+                {content.readCase}
+                <span className="sr-only">: {item.name}</span>
+                <i aria-hidden="true">→</i>
+              </a>
+              )}
               {item.href && (
               <a className={styles.visit} href={item.href} target="_blank" rel="noopener">
                 {content.visit}

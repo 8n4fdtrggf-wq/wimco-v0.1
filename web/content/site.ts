@@ -221,6 +221,7 @@ export const work: WorkContent = {
   listLabel: 'Referenser',
   didLabel: 'Vi gjorde',
   visit: 'Besök sajten',
+  readCase: 'Läs caset',
   screenLabel: 'Skärmbild av {name}',
   next: {
     title: 'Nästa kan vara er.',
@@ -234,7 +235,8 @@ export const work: WorkContent = {
       about: 'VOC- och luktrening för industrin',
       host: 'voccleaning.se',
       // Lägg till href: 'https://voccleaning.se/' när sajten är lanserad, så visas länken "Besök sajten".
-      did: ['Design', 'Utveckling', 'Sökmotoroptimering'],
+      caseHref: '/referenser/voccleaning/',
+      did: ['Design', 'Utveckling', 'CRO', 'SEO', 'AI-synlighet'],
       image: { src: '/assets/img/referenser/voccleaning.webp', width: 800, height: 1850 },
     },
   ],
