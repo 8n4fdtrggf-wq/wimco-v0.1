@@ -8,7 +8,8 @@ import { OrbitCard } from './OrbitCards';
 import styles from './CaseOrbit.module.css';
 
 /**
- * A reference shown as its screenshot with small live cards floating around it in 3D.
+ * A reference shown as its screenshot, in a browser window or a phone, with small live cards
+ * floating around it in 3D.
  *
  * Sequence: when the stage scrolls into view the screenshot settles out of a blur, then the cards
  * arrive one by one. Once that is done the screenshot becomes a link to the case ("ready"). Every
@@ -38,6 +39,7 @@ export function CaseOrbit({ items, active, screenLabel, orbitLabel, readCase }: 
   const [reduce, setReduce] = useState(false);
   const busy = useRef(false);
   const item = items[shown];
+  const phone = item.frame === 'phone';
   const live = ready && inView && !reduce;
 
   const q = (sel: string) => gsap.utils.toArray<HTMLElement>(sel, stage.current);
@@ -208,21 +210,25 @@ export function CaseOrbit({ items, active, screenLabel, orbitLabel, readCase }: 
           ))}
         </ul>
 
-        <div className={styles.center}>
+        <div className={styles.center} data-frame={phone ? 'phone' : 'browser'}>
           <a
             className={styles.hero}
             href={item.caseHref ?? item.href}
             data-hero=""
             data-ready={ready || undefined}
           >
-            <span className={styles.bar} aria-hidden="true">
-              <span className={styles.lights}>
-                <i />
-                <i />
-                <i />
+            {phone ? (
+              <i className={styles.island} aria-hidden="true" />
+            ) : (
+              <span className={styles.bar} aria-hidden="true">
+                <span className={styles.lights}>
+                  <i />
+                  <i />
+                  <i />
+                </span>
+                <span className={`${styles.url} mono`}>{item.host}</span>
               </span>
-              <span className={`${styles.url} mono`}>{item.host}</span>
-            </span>
+            )}
             <span className={styles.screen} data-screen="">
               <img
                 key={item.id}

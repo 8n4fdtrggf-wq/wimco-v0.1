@@ -96,8 +96,10 @@ export interface WorkItem {
   caseHref?: string;
   /** What Wimco did. */
   did: string[];
-  /** A tall screenshot at 16:10 or longer, in public/assets/img/referenser/. */
+  /** A tall screenshot in public/assets/img/referenser/: 16:10 or longer for a site, 390:844 or longer for an app. */
   image: { src: string; width: number; height: number };
+  /** What the screenshot sits in: a browser window (default, shows `host`) or a phone (for apps). */
+  frame?: 'browser' | 'phone';
   /** The small live cards around the screenshot. Four show at a time; up to eight rotate in on each shuffle. */
   orbit: OrbitCard[];
 }
@@ -114,7 +116,9 @@ export type OrbitCard =
   | { kind: 'switches'; title: string; items: string[] }
   | { kind: 'tabs'; title: string; tabs: { label: string; text: string }[] }
   | { kind: 'load'; title: string; label: string; done: string }
-  | { kind: 'device'; title: string; options: [string, string] };
+  | { kind: 'device'; title: string; options: [string, string] }
+  | { kind: 'push'; title: string; app: string; items: string[] }
+  | { kind: 'signature'; title: string; name: string; done: string };
 
 /** "Referenser": real sites on a laptop screen, and the list to switch between them. */
 export interface WorkContent {
