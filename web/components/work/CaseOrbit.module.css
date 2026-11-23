@@ -66,6 +66,18 @@
 .screen { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; background: var(--tint); }
 .screen img { position: absolute; inset: 0 0 auto; display: block; width: 100%; height: auto; will-change: transform; }
 
+/* ---------- Phone frame, for apps: a narrower, taller centre ---------- */
+.center[data-frame='phone'] { width: 28%; transform: translate(-50%, -50%) translateZ(6cqw); }
+.center[data-frame='phone'] .hero {
+  padding: 1cqw;
+  border-radius: 4.2cqw;
+  background: #121417;
+  box-shadow: inset 0 0 0 0.25cqw #2b2f35, var(--e3);
+}
+.center[data-frame='phone'] .screen { aspect-ratio: 390 / 844; border-radius: 3.3cqw; }
+.island { position: absolute; z-index: 2; left: 50%; top: 2cqw; width: 30%; height: 2.2cqw; translate: -50% 0; border-radius: 99px; background: #000; }
+.center[data-frame='phone'] .cta { left: 50%; right: auto; bottom: 3cqw; translate: -50% 0; white-space: nowrap; }
+
 /* "Läs caset": appears once the entrance has played, the whole screenshot is the link. */
 .cta {
   position: absolute;
@@ -97,6 +109,14 @@
 @media (max-width: 700px) {
   .stage { aspect-ratio: 4 / 5; perspective: 1100px; }
   .center { width: 72%; }
+  /* A phone is taller than a browser: a taller stage, the cards pushed to its edges, the phone in front. */
+  .stage:has(.center[data-frame='phone']) { aspect-ratio: 3 / 4; }
+  .stage:has(.center[data-frame='phone']) .slot[data-slot='0'], .stage:has(.center[data-frame='phone']) .slot[data-slot='1'] { --y: 10%; }
+  .stage:has(.center[data-frame='phone']) .slot[data-slot='2'], .stage:has(.center[data-frame='phone']) .slot[data-slot='3'] { --y: 90%; }
+  .center[data-frame='phone'] { width: 40%; }
+  .center[data-frame='phone'] .hero { padding: 1.6cqw; border-radius: 7cqw; }
+  .center[data-frame='phone'] .screen { border-radius: 5.6cqw; }
+  .island { top: 3.2cqw; height: 3.6cqw; }
   .hero { border-radius: 2.4cqw; }
   .bar { height: 5.4cqw; }
   .lights { left: 2.4cqw; gap: 1cqw; }

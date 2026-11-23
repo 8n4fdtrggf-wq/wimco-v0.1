@@ -137,6 +137,32 @@
 .track i[data-phase='1'] { transform: scaleX(0.94); transition: transform 1.5s cubic-bezier(0.3, 0.7, 0.2, 1); }
 .track i[data-phase='2'] { transform: scaleX(1); transition: transform 200ms var(--ease-out); }
 
+/* ---------- Push notifications ---------- */
+.push { list-style: none; margin: 0; padding: 0; display: grid; }
+.push li {
+  grid-area: 1 / 1; display: flex; gap: 3cqw; align-items: center;
+  padding: 3cqw 3.5cqw; border-radius: 5cqw; background: var(--tint);
+  font-size: 0.92em; line-height: 1.25;
+  opacity: 0; transform: translateY(-25%) scale(0.96);
+  transition: opacity var(--dur-state) ease, transform var(--dur-state) var(--ease-out);
+}
+.push li[data-on] { opacity: 1; transform: none; }
+.push li[data-depth='1'] { opacity: 0.6; transform: translateY(14%) scale(0.94); }
+.push li[data-depth='2'] { opacity: 0.3; transform: translateY(26%) scale(0.88); }
+.push li[data-depth='0'] { z-index: 3; box-shadow: var(--e1); background: var(--surface); }
+.push i { display: grid; place-items: center; flex: none; width: 8cqw; height: 8cqw; border-radius: 2.2cqw; background: #ff5b1f; color: #fff; font-style: normal; font-weight: 700; font-size: 0.9em; }
+.push b { display: block; font-size: 0.86em; color: var(--muted); font-weight: 600; }
+
+/* ---------- Signature ---------- */
+.sign { display: grid; gap: 3cqw; }
+.pad { position: relative; padding: 2cqw 3cqw 3cqw; border-radius: 4cqw; background: var(--tint); }
+.pad svg { width: 100%; height: auto; overflow: visible; }
+.pad path { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.pad path[data-on] { stroke-dashoffset: 0; transition: stroke-dashoffset 1.3s cubic-bezier(0.45, 0, 0.25, 1); }
+.pad small { display: block; padding-top: 1.5cqw; border-top: 1px solid var(--rule-strong); color: var(--muted); font-size: 0.85em; }
+.sent { justify-self: start; padding: 1.4cqw 3.5cqw; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 500; font-size: 0.9em; opacity: 0; transform: translateY(1.5cqw); transition: opacity var(--dur-state) ease, transform var(--dur-state) var(--ease-out); }
+.sent[data-on] { opacity: 1; transform: none; }
+
 @media (prefers-reduced-motion: reduce) {
   .card *, .card *::after { transition: none !important; animation: none !important; }
 }

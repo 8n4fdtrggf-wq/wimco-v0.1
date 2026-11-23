@@ -55,6 +55,8 @@ const T = {
   form: [800, 900, 900, 600, 2800],
   tabs: [2400, 2400, 2400],
   load: [500, 1700, 2600],
+  push: [900, 1400, 1400, 2600],
+  signature: [600, 1600, 2600],
 };
 
 export function OrbitCard({ card, live, still }: Props) {
@@ -84,6 +86,10 @@ function Body({ card, live, still }: Props) {
       return <Tabs card={card} live={live} still={still} />;
     case 'load':
       return <Load card={card} live={live} still={still} />;
+    case 'push':
+      return <Push card={card} live={live} still={still} />;
+    case 'signature':
+      return <Signature card={card} live={live} still={still} />;
   }
 }
 
@@ -239,6 +245,47 @@ function Load({ card, live, still }: Of<'load'>) {
       </p>
       <span className={styles.track}>
         <i data-phase={phase} />
+      </span>
+    </div>
+  );
+}
+
+function Push({ card, live, still }: Of<'push'>) {
+  // Notifications arrive one per phase; the newest sits on top, older ones step back.
+  const phase = usePhase(T.push, live, still);
+  const shown = still ? card.items.length : Math.min(phase, card.items.length);
+  return (
+    <ul className={styles.push}>
+      {card.items.map((text, i) => (
+        <li key={text} data-on={i < shown || undefined} data-depth={Math.max(0, shown - 1 - i)}>
+          <i aria-hidden="true">{card.app.slice(0, 1)}</i>
+          <span>
+            <b>{card.app}</b>
+            {text}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function Signature({ card, live, still }: Of<'signature'>) {
+  // 0 empty · 1 the name is written · 2 sent
+  const phase = usePhase(T.signature, live, still);
+  return (
+    <div className={styles.sign}>
+      <div className={styles.pad}>
+        <svg viewBox="0 0 120 40" aria-hidden="true">
+          <path
+            data-on={phase >= 1 || undefined}
+            pathLength={1}
+            d="M6 28c6-14 10-20 12-16s-6 18-2 18 8-16 12-16-2 14 3 14 6-10 9-10 0 9 4 9 6-8 9-8 1 7 5 7 9-6 14-6 8 4 14 2 12-4 20-4"
+          />
+        </svg>
+        <small>{card.name}</small>
+      </div>
+      <span className={styles.sent} data-on={phase === 2 || undefined}>
+        {card.done}
       </span>
     </div>
   );

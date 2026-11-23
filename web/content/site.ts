@@ -271,6 +271,35 @@ export const work: WorkContent = {
         { kind: 'load', title: 'Snabb och lätt', label: 'Startsidan på mobilnät', done: 'Klar' },
       ],
     },
+    {
+      // Ett eget koncept, inte en kund: det står i `about` och på casesidan.
+      id: 'runda',
+      name: 'Runda',
+      about: 'Koncept: app för serviceföretag',
+      host: 'Runda',
+      frame: 'phone',
+      caseHref: '/referenser/runda/',
+      did: ['UX', 'UI-design', 'Prototyp', 'Automation'],
+      image: { src: '/assets/img/referenser/runda.webp', width: 780, height: 3370 },
+      orbit: [
+        { kind: 'push', title: 'Notiser', app: 'Runda', items: ['Nytt jobb 13:00: Kontorshuset Norr', 'Lars Berg har signerat', 'Rapporten är skickad'] },
+        { kind: 'checklist', title: 'Bergs Bageri', items: ['Golv i butiken', 'Disk och montrar', 'Bakrum och ugnar', 'Toaletter', 'Sopor ut'] },
+        { kind: 'signature', title: 'Kundens signatur', name: 'Lars Berg', done: 'Rapport skickad' },
+        { kind: 'switches', title: 'Appen', items: ['Offline-läge', 'Push-notiser', 'Face ID'] },
+        { kind: 'form', title: 'Nytt jobb', fields: ['Kund', 'Adress', 'Tid'], submit: 'Skicka', toast: 'Skickat till Elins telefon' },
+        {
+          kind: 'tabs',
+          title: 'Flikarna',
+          tabs: [
+            { label: 'Idag', text: 'Dagens jobb, det som pågår överst.' },
+            { label: 'Karta', text: 'Alla stopp i ordning.' },
+            { label: 'Rapporter', text: 'Skickas när kunden signerat.' },
+          ],
+        },
+        { kind: 'load', title: 'Automatiskt', label: 'Fakturaunderlag', done: 'Skapat' },
+        { kind: 'checklist', title: 'Vi gjorde', items: ['UX', 'UI-design', 'Prototyp', 'Automation'] },
+      ],
+    },
   ],
 };
 

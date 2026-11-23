@@ -21,9 +21,12 @@ const CSS_VERSION = crypto.createHash('sha256').update(fs.readFileSync(path.join
 // Samma företag som i startsidans strukturerade data (web/app/page.tsx), där @id definieras fullt ut.
 const ORG = { '@type': 'Organization', '@id': `${SITE}/#org`, name: 'Wimco', url: `${SITE}/`, logo: { '@type': 'ImageObject', url: `${SITE}/assets/logo.png`, width: 720, height: 720 } };
 
+// Samma cachebrytare för sidspecifika stilmallar och skript.
+const version = (asset) => crypto.createHash('sha256').update(fs.readFileSync(path.join(PUB, asset))).digest('hex').slice(0, 10);
+
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-function page({ file, title, description, canonical, robots = 'index, follow', ogType = 'website', ogImage = `${SITE}/assets/og-wimco-2.png`, scripts = [], jsonLd = null, body, slots = false }) {
+function page({ file, title, description, canonical, robots = 'index, follow', ogType = 'website', ogImage = `${SITE}/assets/og-wimco-2.png`, scripts = [], styles = [], jsonLd = null, body, slots = false }) {
   const slot = (name) => (slots ? ` data-slot="${name}"` : '');
   const html = `<!doctype html>
 <html lang="sv">
@@ -50,9 +53,9 @@ ${canonical ? `<meta property="og:url" content="${canonical}"${slot('og-url')}>`
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/site.css?v=${CSS_VERSION}">
+<link rel="stylesheet" href="/assets/css/site.css?v=${CSS_VERSION}">${styles.map((s) => `\n<link rel="stylesheet" href="${s}?v=${version(s)}">`).join('')}
 <script type="module" src="/assets/js/site.js"></script>
-${scripts.map((s) => `<script type="module" src="${s}"></script>`).join('\n')}
+${scripts.map((s) => `<script type="module" src="${s}?v=${version(s)}"></script>`).join('\n')}
 ${jsonLd ? `<script type="application/ld+json">\n${JSON.stringify(jsonLd, null, 2)}\n</script>` : ''}
 </head>
 <body>
@@ -467,12 +470,66 @@ const CASES = [
   <p><a class="link-arrow" href="/#analys">Analysera min webbplats gratis</a></p>
 </aside>`,
   },
+  {
+    slug: '/referenser/runda/', file: 'referenser/runda/index.html', updated: '2026-11-23',
+    client: 'Runda (koncept av Wimco)', concept: true,
+    styles: ['/assets/css/runda.css'], scripts: ['/assets/js/runda.js'],
+    title: 'Runda: appkoncept för serviceföretag, med checklista, signatur och automatisk rapport',
+    h1: 'Runda: en app för dem som jobbar ute hos kunderna.',
+    description: 'Runda är ett appkoncept av Wimco för serviceföretag: dagens jobb, checklistor, kundens signatur i telefonen och en rapport som skickas automatiskt. Prova den interaktiva prototypen.',
+    lead: 'Runda är vårt eget koncept, inte en kund. Vi ville visa hur vi tänker när vi bygger appar: en sak i taget, stora tryckytor och att pappersarbetet sköts av sig självt. Prova prototypen nedan.',
+    demo: `<div class="rd-demo">
+  <div class="rd-phone"><div id="runda-app" data-runda></div></div>
+  <div>
+    <ol class="rd-steps" data-runda-steps="runda-app">
+      <li data-on><b>Tryck på jobbet som pågår</b>Bergs Bageri, högst upp i listan.</li>
+      <li><b>Bocka av checklistan</b>Knappen blir aktiv när allt är klart.</li>
+      <li><b>Låt kunden signera</b>Med fingret eller musen, direkt i telefonen.</li>
+      <li><b>Klart</b>Rapporten och fakturaunderlaget skickas av sig självt.</li>
+    </ol>
+    <button type="button" class="rd-reset" data-runda-reset="runda-app">Börja om</button>
+  </div>
+</div>
+<p class="rd-note">Företagen, personerna och jobben i prototypen är påhittade exempel.</p>`,
+    lineText: 'Wimco bygger appar och automation åt små och medelstora företag: från idé och prototyp till en app som används varje dag.',
+    body: `<dl class="case-facts">
+<div><dt>Typ</dt><dd>Koncept av Wimco</dd></div>
+<div><dt>För</dt><dd>Serviceföretag med personal ute på jobb</dd></div>
+<div><dt>Vi gjorde</dt><dd>UX, UI-design, prototyp, automationsflöde</dd></div>
+</dl>
+<h2>Idén</h2>
+<p>I många serviceföretag ligger dagens jobb i ett sms, checklistan på papper och rapporten skrivs på kvällen. Det tar tid, saker glöms och fakturan dröjer. Runda samlar en arbetsdag i telefonen: vart man ska, vad som ska göras och ett kvitto till kunden när det är gjort.</p>
+<h2>Så fungerar appen</h2>
+<ul>
+<li><strong>Idag.</strong> Dagens jobb i tidsordning, med det som pågår överst och hur långt man har kommit.</li>
+<li><strong>Checklista per jobb.</strong> Samma punkter varje gång, så att inget glöms och kunden får samma kvalitet oavsett vem som kommer.</li>
+<li><strong>Signatur på plats.</strong> Kunden signerar med fingret när jobbet är klart. Ingen utskrift, ingen efterhandskontakt.</li>
+<li><strong>Karta och rutt.</strong> Dagens stopp i ordning, med vägbeskrivning till nästa.</li>
+</ul>
+<h2>Det som sker automatiskt</h2>
+<p>När kunden har signerat skickas en rapport med checklistan och foton till kunden, och ett underlag för fakturan skapas. Det är samma sorts automation vi bygger åt företag i dag: det som annars görs för hand efter arbetsdagen sker i stället i samma ögonblick som jobbet blir klart.</p>
+<h2>Designen</h2>
+<ul>
+<li><strong>Byggd för en hand och arbetshandskar.</strong> Stora tryckytor, viktigast längst ned där tummen når och tydlig återkoppling direkt när man trycker.</li>
+<li><strong>En sak i taget.</strong> Jobbet öppnas i ett ark som går att dra ned för att stänga, så att man aldrig tappar bort sig i listan.</li>
+<li><strong>Status i färg och ord.</strong> Pågår, Kommande och Klart syns både som färg och text, så att det fungerar för alla.</li>
+<li><strong>Känns som en riktig app.</strong> Systemtypsnittet, rörelser som följer fingret och respekt för inställningen för minskad rörelse.</li>
+</ul>
+<h2>Från koncept till riktig app</h2>
+<p>Runda kan byggas som en webbapp som installeras på hemskärmen, eller som en app i App Store och Google Play. Vi börjar alltid som här: med en prototyp man kan trycka på, så att ni ser och känner hur det fungerar innan något byggs på riktigt.</p>
+<aside class="callout">
+  <h2 class="h-md">Har ni ett flöde som borde vara en app?</h2>
+  <p>Första samtalet är gratis och tar 20 minuter. Berätta hur ni jobbar i dag, så visar vi vad som går att göra enklare.</p>
+  <p><a class="btn btn-signal" href="/#projekt">Berätta om ditt projekt</a></p>
+</aside>`,
+  },
 ];
 
 for (const c of CASES) {
   const canonical = `${SITE}${c.slug}`;
   page({
     file: c.file, title: `${c.title} | Wimco`, description: c.description, canonical, ogType: 'article',
+    styles: c.styles, scripts: c.scripts,
     jsonLd: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -480,7 +537,7 @@ for (const c of CASES) {
           '@type': 'Article', headline: c.h1, description: c.description,
           datePublished: c.updated, dateModified: c.updated, inLanguage: 'sv-SE',
           author: ORG, publisher: ORG, mainEntityOfPage: canonical,
-          about: { '@type': 'Organization', name: c.client },
+          about: c.concept ? { '@type': 'CreativeWork', name: c.client } : { '@type': 'Organization', name: c.client },
         },
         {
           '@type': 'BreadcrumbList',
@@ -497,12 +554,14 @@ for (const c of CASES) {
     <p class="crumbs"><a href="/">Wimco</a> <span aria-hidden="true">/</span> <a href="/#referenser">Referenser</a></p>
     <h1 class="display">${c.h1}</h1>
     <p class="lead">${c.lead}</p>
-  </header>
+  </header>${c.demo ? `\n${c.demo}` : ''}
   <div class="guide-layout">
     <article class="prose">
 ${c.body}
     </article>
-    ${aside('h', 'H', 'Wimco bygger hemsidor som ger förfrågningar, syns i Google och går att läsa för AI-tjänster. Allt står i ert namn.', 'Berätta om ditt projekt', '/#projekt')}
+    ${c.concept
+      ? aside('a', 'A', c.lineText, 'Berätta om ditt projekt', '/#projekt')
+      : aside('h', 'H', 'Wimco bygger hemsidor som ger förfrågningar, syns i Google och går att läsa för AI-tjänster. Allt står i ert namn.', 'Berätta om ditt projekt', '/#projekt')}
   </div>
 </div>`,
   });
