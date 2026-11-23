@@ -98,7 +98,7 @@ export interface WorkItem {
   did: string[];
   /** A tall screenshot at 16:10 or longer, in public/assets/img/referenser/. */
   image: { src: string; width: number; height: number };
-  /** The small live cards that float around the screenshot. Eight fill every slot; fewer leave gaps. */
+  /** The small live cards around the screenshot. Four show at a time; up to eight rotate in on each shuffle. */
   orbit: OrbitCard[];
 }
 
