@@ -1,0 +1,118 @@
+/* ---------- Stage: sized by its own width, 1cqw = 1% of it ---------- */
+.stage {
+  position: relative;
+  container-type: inline-size;
+  aspect-ratio: 16 / 11;
+  min-width: 0;
+  perspective: 1600px;
+  perspective-origin: 50% 40%;
+}
+.glow {
+  position: absolute;
+  inset: 8% 10%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--accent) 16%, transparent), transparent);
+  filter: blur(24px);
+  pointer-events: none;
+}
+.rig { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(9deg); }
+.cards { position: absolute; inset: 0; list-style: none; margin: 0; padding: 0; transform-style: preserve-3d; }
+
+/* ---------- Slots: where each card floats. Cards with z > 0 pass in front of the screenshot. ---------- */
+.slot {
+  --x: 50%; --y: 50%; --z: 0cqw; --ry: 0deg; --rx: 0deg;
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 25%;
+  container-type: inline-size;
+  transform: translate(-50%, -50%) translateZ(var(--z)) rotateY(var(--ry)) rotateX(var(--rx));
+}
+.slot[data-slot='0'] { --x: 13%; --y: 24%; --z: -5cqw; --ry: 20deg; --rx: 3deg; }
+.slot[data-slot='1'] { --x: 37%; --y: 10%; --z: -11cqw; --ry: 8deg; --rx: 8deg; }
+.slot[data-slot='2'] { --x: 65%; --y: 11%; --z: -8cqw; --ry: -8deg; --rx: 8deg; }
+.slot[data-slot='3'] { --x: 88%; --y: 27%; --z: -3cqw; --ry: -20deg; --rx: 3deg; }
+.slot[data-slot='4'] { --x: 88%; --y: 73%; --z: 4cqw; --ry: -20deg; --rx: -4deg; }
+.slot[data-slot='5'] { --x: 64%; --y: 90%; --z: 7cqw; --ry: -8deg; --rx: -8deg; }
+.slot[data-slot='6'] { --x: 35%; --y: 90%; --z: 3cqw; --ry: 8deg; --rx: -8deg; }
+.slot[data-slot='7'] { --x: 12%; --y: 72%; --z: 1cqw; --ry: 20deg; --rx: -4deg; }
+.bob, .layer { will-change: transform; }
+
+/* ---------- The screenshot, in a browser frame. The wrapper centres it; GSAP owns .hero's transform. ---------- */
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 46%;
+  transform: translate(-50%, -50%);
+  transform-style: preserve-3d;
+}
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  border-radius: 1.4cqw;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--rule), var(--e3);
+  color: var(--ink);
+  text-decoration: none;
+  overflow: hidden;
+  pointer-events: none;
+  outline-offset: 6px;
+}
+.hero[data-ready] { pointer-events: auto; cursor: pointer; }
+.bar { position: relative; display: grid; place-items: center; height: 3.4cqw; background: #eef1ef; box-shadow: inset 0 -1px 0 var(--rule); }
+.lights { position: absolute; left: 1.3cqw; top: 50%; translate: 0 -50%; display: flex; gap: 0.55cqw; }
+.lights i { width: 0.85cqw; height: 0.85cqw; min-width: 5px; min-height: 5px; border-radius: 50%; background: var(--rule-strong); }
+.url { padding: 0.2cqw 1.6cqw; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px var(--rule); color: var(--muted); font-size: clamp(8px, 1.1cqw, 12px); line-height: 1.4; white-space: nowrap; }
+.screen { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; background: var(--tint); }
+.screen img { position: absolute; inset: 0 0 auto; display: block; width: 100%; height: auto; will-change: transform; }
+
+/* "Läs caset": appears once the entrance has played, the whole screenshot is the link. */
+.cta {
+  position: absolute;
+  right: 1.6cqw;
+  bottom: 1.6cqw;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.6em 1.05em;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: clamp(12px, 1.35cqw, 15px);
+  font-weight: 500;
+  box-shadow: var(--e2);
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  transition: opacity var(--dur-state) ease, transform var(--dur-state) var(--ease-out), background-color 180ms ease;
+}
+.cta i { font-style: normal; transition: transform 200ms var(--ease-out); }
+.hero[data-ready] .cta { opacity: 1; transform: none; }
+.hero:active .cta { transform: scale(0.97); }
+@media (hover: hover) and (pointer: fine) {
+  .hero[data-ready]:hover .cta { background: var(--accent); }
+  .hero[data-ready]:hover .cta i { transform: translateX(3px); }
+}
+
+/* ---------- Phones: four larger slots in the corners, the screenshot wider ---------- */
+@media (max-width: 700px) {
+  .stage { aspect-ratio: 4 / 5; perspective: 1100px; }
+  .center { width: 72%; }
+  .hero { border-radius: 2.4cqw; }
+  .bar { height: 5.4cqw; }
+  .lights { left: 2.4cqw; gap: 1cqw; }
+  .lights i { width: 1.5cqw; height: 1.5cqw; }
+  .url { font-size: 2.6cqw; padding: 0.3cqw 3cqw; }
+  .cta { right: 2.6cqw; bottom: 2.6cqw; font-size: 3.2cqw; }
+  .slot { width: 44%; }
+  .slot[data-slot='0'] { --x: 24%; --y: 12%; --z: -4cqw; --ry: 12deg; --rx: 6deg; }
+  .slot[data-slot='1'] { --x: 76%; --y: 12%; --z: -6cqw; --ry: -12deg; --rx: 6deg; }
+  .slot[data-slot='2'] { --x: 76%; --y: 88%; --z: 5cqw; --ry: -12deg; --rx: -6deg; }
+  .slot[data-slot='3'] { --x: 24%; --y: 88%; --z: 3cqw; --ry: 12deg; --rx: -6deg; }
+  .slot[data-slot='4'], .slot[data-slot='5'], .slot[data-slot='6'], .slot[data-slot='7'] { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta { transition: none; }
+}

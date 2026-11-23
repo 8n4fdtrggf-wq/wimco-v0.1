@@ -98,7 +98,23 @@ export interface WorkItem {
   did: string[];
   /** A tall screenshot at 16:10 or longer, in public/assets/img/referenser/. */
   image: { src: string; width: number; height: number };
+  /** The small live cards that float around the screenshot. Eight fill every slot; fewer leave gaps. */
+  orbit: OrbitCard[];
 }
+
+/**
+ * One floating card around a reference. Each kind is a tiny UI that plays on a loop and shows
+ * one thing Wimco did for the client. Copy only; the motion lives in components/work/OrbitCards.tsx.
+ */
+export type OrbitCard =
+  | { kind: 'checklist'; title: string; items: string[] }
+  | { kind: 'search'; title: string; query: string; resultTitle: string; resultUrl: string; resultText: string }
+  | { kind: 'ai'; title: string; question: string; answer: string; source: string }
+  | { kind: 'form'; title: string; fields: string[]; submit: string; toast: string }
+  | { kind: 'switches'; title: string; items: string[] }
+  | { kind: 'tabs'; title: string; tabs: { label: string; text: string }[] }
+  | { kind: 'load'; title: string; label: string; done: string }
+  | { kind: 'device'; title: string; options: [string, string] };
 
 /** "Referenser": real sites on a laptop screen, and the list to switch between them. */
 export interface WorkContent {
@@ -111,6 +127,8 @@ export interface WorkContent {
   readCase: string;
   /** "{name}" is replaced. */
   screenLabel: string;
+  /** Label of the floating cards around the screenshot. "{name}" is replaced. */
+  orbitLabel: string;
   next: { title: string; body: string; cta: LinkItem };
   items: WorkItem[];
 }
