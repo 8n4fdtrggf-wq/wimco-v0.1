@@ -223,6 +223,7 @@ export const work: WorkContent = {
   visit: 'Besök sajten',
   readCase: 'Läs caset',
   screenLabel: 'Skärmbild av {name}',
+  orbitLabel: 'Det vi byggde åt {name}',
   next: {
     title: 'Nästa kan vara er.',
     body: 'Första samtalet är gratis och tar 20 minuter.',
@@ -238,6 +239,37 @@ export const work: WorkContent = {
       caseHref: '/referenser/voccleaning/',
       did: ['Design', 'Utveckling', 'CRO', 'SEO', 'AI-synlighet'],
       image: { src: '/assets/img/referenser/voccleaning.webp', width: 800, height: 1850 },
+      orbit: [
+        { kind: 'checklist', title: 'Uppdraget', items: ['Design', 'Utveckling', 'CRO', 'SEO', 'AI-synlighet'] },
+        {
+          kind: 'search',
+          title: 'Google',
+          query: 'vocrening industri',
+          resultTitle: 'VOC- och luktrening för industrin',
+          resultUrl: 'voccleaning.se',
+          resultText: 'Vi renar VOC och lukt ur processluft åt industrin.',
+        },
+        { kind: 'switches', title: 'Teknisk SEO', items: ['Strukturerad data', 'Sitemap', 'llms.txt'] },
+        { kind: 'device', title: 'Byggd för mobil', options: ['Dator', 'Mobil'] },
+        {
+          kind: 'ai',
+          title: 'AI-synlighet',
+          question: 'Vem renar VOC åt industrin?',
+          answer: 'Voccleaning Sweden AB renar VOC och lukt ur processluft.',
+          source: 'voccleaning.se',
+        },
+        { kind: 'form', title: 'Kort formulär', fields: ['Namn', 'E-post', 'Ert problem'], submit: 'Skicka', toast: 'Tack! Vi hör av oss.' },
+        {
+          kind: 'tabs',
+          title: 'Varje sida',
+          tabs: [
+            { label: 'Problem', text: 'Problemet och lösningen står överst.' },
+            { label: 'Bevis', text: 'Branscher och arbetssätt vid knapparna.' },
+            { label: 'Nästa steg', text: 'Samma enkla väg vidare: kontakta oss.' },
+          ],
+        },
+        { kind: 'load', title: 'Snabb och lätt', label: 'Startsidan på mobilnät', done: 'Klar' },
+      ],
     },
   ],
 };
