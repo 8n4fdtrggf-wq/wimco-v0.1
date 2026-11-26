@@ -48,5 +48,10 @@
 @media (max-width: 480px) {
   .form { flex-direction: column; padding: 8px; border-radius: 22px; }
   .form input { height: 48px; }
-  .form button { width: 100%; }
+  .form button { width: 100%; border-radius: 14px; } /* koncentriskt: 22px − 8px padding */
+}
+@supports (corner-shape: squircle) {
+  @media (max-width: 480px) {
+    .form, .form button { corner-shape: squircle; }
+  }
 }

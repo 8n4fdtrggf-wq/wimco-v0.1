@@ -24,6 +24,10 @@
   background: var(--surface);
   box-shadow: inset 0 0 0 1px var(--rule);
 }
+.contactLine button { border-radius: 8px; } /* koncentriskt: 14px − 6px padding */
+@supports (corner-shape: squircle) {
+  .contactLine, .contactLine button { corner-shape: squircle; }
+}
 .contactLine a { font: 500 15px/1.2 var(--f-mono); color: var(--ink); text-decoration: none; }
 @media (hover: hover) and (pointer: fine) {
   .contactLine a:hover { text-decoration: underline; text-underline-offset: 3px; }
