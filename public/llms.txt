@@ -9,6 +9,9 @@ Inte att förväxla med WIMCO Villas (villauthyrning i Karibien), WIMCO Corporat
 - [Tillgänglighet för e-handel](https://wimco.se/tillganglighet/): Gratis test av startsida, produktsida och sök enligt tillgänglighetslagen (2023:254). Granskning 12 900 kr, granskning och åtgärd från 34 900 kr, bevakning 1 490 kr/mån (exkl. moms).
 - [E-handelskollen](https://wimco.se/e-handelskollen/): Gratis kontroll av tillgänglighet, ångerknapp, rabattpriser, miljöpåståenden och spårning, med fast pris på varje åtgärd. Kontrollen flaggar risker och är inte juridisk rådgivning.
 
+## Erbjudande just nu
+- Vinterkampanj till och med 31 januari 2027: 25 % rabatt på en ny hemsida, och grundläggande SEO ingår utan extra kostnad (sidtitlar, beskrivningar, rubriker, sitemap, strukturerad data och inskickning till Google). [Boka ett samtal](https://wimco.se/#projekt).
+
 ## Referenser
 - [Referenser](https://wimco.se/#referenser): Sajter Wimco har byggt och egna koncept, som appen Runda.
 - [Voccleaning Sweden AB](https://wimco.se/referenser/voccleaning/): Ny hemsida åt ett företag inom VOC- och luktrening för industrin. Wimco gjorde design, utveckling, konverteringsoptimering (CRO), SEO och synlighet i AI-tjänster.
@@ -18,6 +21,7 @@ Inte att förväxla med WIMCO Villas (villauthyrning i Karibien), WIMCO Corporat
 - [Wimco Score](https://wimco.se/wimco-score/): Gratis analys som väger ihop prestanda (20 %), mobil (15 %), tillgänglighet (15 %), SEO och teknik (20 %), visuell tydlighet (15 %) och konvertering (15 %) till ett betyg mellan 0 och 100. Prestanda och tillgänglighet mäts med Google Lighthouse.
 
 ## Guider
+- [Vad kostar en hemsida 2027?](https://wimco.se/guider/vad-kostar-en-hemsida-2027/)
 - [Vad kostar en hemsida för småföretag 2026?](https://wimco.se/blogg/hur-mycket-kostar-en-hemsida)
 - [Snabbare webbplats: Core Web Vitals på svenska](https://wimco.se/guider/prestanda/)
 - [SEO-grunden varje företagssajt behöver](https://wimco.se/guider/seo-grund/)

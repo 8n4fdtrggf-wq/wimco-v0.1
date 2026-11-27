@@ -1,7 +1,8 @@
 'use client';
 
 import { useRef } from 'react';
-import type { ContactContent, Station } from '@/content/types';
+import type { CampaignContent, ContactContent, Station } from '@/content/types';
+import { Campaign } from '@/components/ui/Campaign';
 import { AnalysisForm } from '@/components/interactive/AnalysisForm';
 import { ProjectForm } from '@/components/interactive/ProjectForm';
 import { ScoreRing } from '@/components/score/ScoreRing';
@@ -15,7 +16,7 @@ import styles from './Close.module.css';
  * ("?" in the bar and here), and the page ends on two real inputs: analyse your site,
  * or tell us what you want built.
  */
-export function Close({ content, stations }: { content: ContactContent; stations: Station[] }) {
+export function Close({ content, stations, campaign }: { content: ContactContent; stations: Station[]; campaign?: CampaignContent }) {
   const root = useRef<HTMLElement>(null);
   const before = stations.map((s) => s.before);
   const { analyse, project, company } = content;
@@ -64,6 +65,7 @@ export function Close({ content, stations }: { content: ContactContent; stations
             <p className="tag">{project.eyebrow}</p>
             <h3 className={styles.panelTitle}>{project.title}</h3>
             <p className={styles.body}>{project.body}</p>
+            {campaign && <Campaign content={campaign} note />}
             <p className={styles.call}>
               {project.call.split('{phone}')[0]}
               <a href={`tel:${company.phoneHref}`}>{company.phone}</a>

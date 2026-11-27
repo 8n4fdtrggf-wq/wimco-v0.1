@@ -1,7 +1,8 @@
 'use client';
 
 import { useRef } from 'react';
-import type { AnalyseContent, HeroContent, Station } from '@/content/types';
+import type { AnalyseContent, CampaignContent, HeroContent, Station } from '@/content/types';
+import { Campaign } from '@/components/ui/Campaign';
 import { AnalysisForm } from '@/components/interactive/AnalysisForm';
 import { ScoreRing } from '@/components/score/ScoreRing';
 import { gsap, MQ, useGSAP } from '@/lib/gsap';
@@ -13,6 +14,7 @@ interface Props {
   content: HeroContent;
   stations: Station[];
   analyse: AnalyseContent;
+  campaign?: CampaignContent;
 }
 
 /**
@@ -20,7 +22,7 @@ interface Props {
  * finishing a labelled example scan in three planes (ghost of the example site behind,
  * the score card, findings in front) that separate with the pointer and with scroll.
  */
-export function Hero({ content, stations, analyse }: Props) {
+export function Hero({ content, stations, analyse, campaign }: Props) {
   const root = useRef<HTMLElement>(null);
   const before = stations.map((s) => s.before);
   const finalTotal = total(before);
@@ -133,6 +135,7 @@ export function Hero({ content, stations, analyse }: Props) {
     <section id="top" ref={root} className={styles.hero} aria-labelledby="hero-title">
       <div className={cx('wrap', styles.grid)}>
         <div className={styles.copy} data-copy="">
+          {campaign && <Campaign content={campaign} className={styles.campaign} />}
           <h1 id="hero-title" className={styles.title}>
             {content.title}
           </h1>
