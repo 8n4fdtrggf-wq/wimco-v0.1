@@ -177,7 +177,7 @@ ${cta('Hur snabb är din sajt?', 'Wimco Score mäter med Google Lighthouse och v
     h1: 'Vad kostar en hemsida 2027?',
     description: 'Vad en hemsida för ett litet företag kostar 2027: tre prisnivåer, vad som ingår, löpande kostnader och vad som blir dyrare 2027. Med frågor att ställa innan du väljer byrå.',
     lead: 'Korta svaret: för de flesta småföretag kostar en seriös hemsida <strong>10 000–50 000 kr</strong> att bygga och <strong>1 000–3 000 kr per år</strong> att driva. Här är vad som styr priset 2027, vad som är nytt jämfört med i år och var du inte bör spara.',
-    asideText: 'Vinterkampanj: beställer du en ny hemsida senast 31 januari får du 25 % rabatt och grundläggande SEO på köpet.',
+    asideText: 'Vinterkampanj: beställer du en ny hemsida senast 31 januari ingår grundläggande SEO och AI-synlighet utan extra kostnad.',
     asideBtn: 'Boka ett samtal', asideHref: '/#projekt',
     body: `<h2>Tre prisnivåer 2027</h2>
 <ul>
