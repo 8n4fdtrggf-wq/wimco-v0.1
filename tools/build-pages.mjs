@@ -189,7 +189,7 @@ ${cta('Hur snabb är din sajt?', 'Wimco Score mäter med Google Lighthouse och v
 <h2>Det här är nytt 2027</h2>
 <ul>
 <li><strong>Tillgänglighet är ett krav för fler.</strong> Lagen om tillgänglighet till vissa produkter och tjänster gäller sedan juni 2025 för bland annat e-handel. En ny sajt bör byggas tillgänglig från början. Det är billigare än att rätta i efterhand.</li>
-<li><strong>AI-svar tar plats i sökresultaten.</strong> Google och ChatGPT svarar allt oftare direkt och hänvisar till några få källor. Sajter med tydliga svar, strukturerad data och snabba sidor har bättre chans att vara den källan.</li>
+<li><strong>AI-svar tar plats i sökresultaten.</strong> Google och ChatGPT svarar allt oftare direkt och hänvisar till några få källor. Sajter med tydliga svar, strukturerad data och snabba sidor har bättre chans att vara den källan. Läs mer i <a href="/guider/ai-synlighet-2027/">AI-synlighet 2027</a>.</li>
 <li><strong>Färdiga verktyg har blivit bättre.</strong> För en enkel sida kan en byggare för några hundra kronor i månaden räcka. Skillnaden mot en byrå ligger i text, struktur och att någon tar ansvar för att sajten faktiskt ger förfrågningar.</li>
 </ul>
 <h2>Löpande kostnader</h2>
@@ -212,6 +212,43 @@ ${cta('Hur snabb är din sajt?', 'Wimco Score mäter med Google Lighthouse och v
 <h2>Sammanfattning</h2>
 <p>Räkna med 15 000–50 000 kr för en företagshemsida 2027 och några tusen kronor per år i drift. Det viktigaste är inte priset utan vad sajten ska ge: en sajt som ger två nya kunder har ofta betalat sig själv. Läs också <a href="/guider/seo-grund/">SEO-grunden varje företagssajt behöver</a>.</p>
 ${cta('Vad behöver din nuvarande sajt?', 'Börja med en gratis analys. Den visar om det räcker att vässa det du har eller om det är dags för något nytt.')}`,
+  },
+  {
+    // Också skriven inför 2027: AI-synlighet är det många företagare frågar om men få svenska sidor förklarar.
+    slug: '/guider/ai-synlighet-2027/', file: 'guider/ai-synlighet-2027/index.html', badge: 'o', line: 'O',
+    updated: '2026-11-27',
+    title: 'AI-synlighet 2027: syns ditt företag i ChatGPT och Googles AI-svar?',
+    h1: 'AI-synlighet 2027: så syns ditt företag i ChatGPT och Googles AI-svar',
+    description: 'Vad AI-synlighet är, varför det spelar roll 2027 och sex konkreta steg för att ChatGPT, Gemini och Googles AI-översikter ska förstå och nämna ditt företag.',
+    lead: 'Allt fler frågar ChatGPT eller läser Googles AI-översikt i stället för att klicka på länkar. AI-svaren hänvisar till ett fåtal källor. Här är vad som avgör om ditt företag blir en av dem, och vad du kan göra redan nu.',
+    asideText: 'Vinterkampanj: beställer du en ny hemsida senast 31 januari ingår grundläggande SEO och AI-synlighet utan extra kostnad.',
+    asideBtn: 'Boka ett samtal', asideHref: '/#projekt',
+    body: `<h2>Vad är AI-synlighet?</h2>
+<p>AI-synlighet betyder att AI-tjänster som ChatGPT, Gemini, Perplexity och Googles AI-översikter förstår vad ditt företag gör och nämner er när någon frågar om det ni säljer. Det bygger på samma grund som vanlig SEO, men belönar tydlighet ännu mer: AI:n letar efter korta, säkra svar den kan återge.</p>
+<h2>Varför det spelar roll 2027</h2>
+<ul>
+<li><strong>Färre klick, fler direkta svar.</strong> När svaret står överst i sökresultatet klickar färre vidare. Den som nämns i svaret får uppmärksamheten.</li>
+<li><strong>Få källor per svar.</strong> Ett AI-svar hänvisar ofta till två till fem sidor. Det är en ny topplista, och den är fortfarande öppen för små företag.</li>
+<li><strong>Köpare frågar AI först.</strong> ”Vilken elektriker i Uppsala har bra omdömen?” är en fråga folk redan ställer till ChatGPT.</li>
+</ul>
+<h2>Sex steg för att synas i AI-svar</h2>
+<ol>
+<li><strong>Säg vad ni gör i första meningen.</strong> ”Vi är en rörfirma i Västerås som gör badrumsrenoveringar” slår ”Välkommen till vår hemsida”. AI:n citerar det som är tydligt.</li>
+<li><strong>Svara på kundernas frågor på sajten.</strong> Vad kostar det, hur lång tid tar det, vilka områden täcker ni? En fråga och ett kort svar per rubrik är lätt för AI att återge.</li>
+<li><strong>Strukturerad data.</strong> JSON-LD med företagets namn, adress, tjänster och vanliga frågor gör att maskiner läser sajten rätt, inte bara gissar.</li>
+<li><strong>En llms.txt.</strong> En kort textfil i sajtens rot som sammanfattar företaget och länkar till de viktigaste sidorna. Den är ny och inte alla AI-tjänster läser den än, men den kostar nästan ingenting att lägga till.</li>
+<li><strong>Samma uppgifter överallt.</strong> Namn, adress och telefon ska stämma på sajten, i Google Företagsprofil och i kataloger. Motstridiga uppgifter gör AI:n osäker, och osäkra källor nämns inte.</li>
+<li><strong>Omnämnanden på andra sajter.</strong> AI-tjänster väger in vad andra skriver: recensioner, branschsidor, LinkedIn-artiklar och diskussioner. Be nöjda kunder om omdömen och svara hjälpsamt där kunderna redan frågar.</li>
+</ol>
+<h2>Det här fungerar inte</h2>
+<ul>
+<li><strong>Att fylla sidan med sökord.</strong> AI-modeller läser som människor och straffar text som inte säger något.</li>
+<li><strong>Att lova placeringar.</strong> Ingen kan garantera att ChatGPT nämner just dig. Det man kan göra är att bli den tydligaste och mest pålitliga källan.</li>
+<li><strong>Att dölja innehåll bakom skript.</strong> Text som bara laddas med JavaScript eller ligger i bilder kan missas helt.</li>
+</ul>
+<h2>Testa själv</h2>
+<p>Fråga ChatGPT och Googles AI-läge samma sak som dina kunder frågar, till exempel ”bästa [din tjänst] i [din stad]”. Kommer ni med? Vilka källor hänvisar svaret till? Det är de sidorna du ska lära dig av. Läs också <a href="/guider/seo-grund/">SEO-grunden varje företagssajt behöver</a> och <a href="/guider/vad-kostar-en-hemsida-2027/">Vad kostar en hemsida 2027?</a></p>
+${cta('Hur tydlig är din sajt för Google och AI?', 'Wimco Score kontrollerar titlar, rubriker, strukturerad data och hur snabbt budskapet går fram, gratis på en minut.')}`,
   },
   {
     slug: '/guider/seo-grund/', file: 'guider/seo-grund/index.html', badge: 'o', line: 'O',
