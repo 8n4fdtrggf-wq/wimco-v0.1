@@ -10,7 +10,7 @@ Inte att förväxla med WIMCO Villas (villauthyrning i Karibien), WIMCO Corporat
 - [E-handelskollen](https://wimco.se/e-handelskollen/): Gratis kontroll av tillgänglighet, ångerknapp, rabattpriser, miljöpåståenden och spårning, med fast pris på varje åtgärd. Kontrollen flaggar risker och är inte juridisk rådgivning.
 
 ## Erbjudande just nu
-- Vinterkampanj till och med 31 januari 2027: 25 % rabatt på en ny hemsida, och grundläggande SEO ingår utan extra kostnad (sidtitlar, beskrivningar, rubriker, sitemap, strukturerad data och inskickning till Google). [Boka ett samtal](https://wimco.se/#projekt).
+- Vinterkampanj till och med 31 januari 2027: ny hemsida där grundläggande SEO och AI-synlighet ingår utan extra kostnad (sidtitlar, beskrivningar, rubriker, sitemap, inskickning till Google, strukturerad data och llms.txt så att AI-tjänster som ChatGPT och Gemini kan hänvisa till sajten). [Boka ett samtal](https://wimco.se/#projekt).
 
 ## Referenser
 - [Referenser](https://wimco.se/#referenser): Sajter Wimco har byggt och egna koncept, som appen Runda.

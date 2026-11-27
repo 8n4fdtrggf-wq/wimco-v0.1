@@ -136,8 +136,8 @@ export const stations: Station[] = [
  */
 export const campaign: CampaignContent = {
   label: 'Vinterkampanj',
-  text: '25 % rabatt på ny hemsida, och grundläggande SEO på köpet. Gäller beställningar till och med 31 januari.',
-  short: '25 % rabatt på ny hemsida + SEO på köpet, till 31 jan',
+  text: 'Ny hemsida där grundläggande SEO och AI-synlighet ingår. Gäller beställningar till och med 31 januari.',
+  short: 'Ny hemsida, SEO och AI\u2011synlighet ingår, till 31 jan',
   link: { label: 'Boka ett samtal', href: '#projekt' },
   until: '2027-01-31',
 };
@@ -369,7 +369,7 @@ export const faq: FaqContent = {
     {
       question: 'Har ni något erbjudande just nu?',
       answer:
-        'Ja. Beställer du en ny hemsida senast 31 januari får du 25 % rabatt, och vi gör den grundläggande SEO:n på köpet: titlar, beskrivningar, rubriker, sitemap och att sajten kommer in i Google. Boka ett samtal så får du ett förslag med kampanjpriset.',
+        'Ja. Beställer du en ny hemsida senast 31 januari ingår grundläggande SEO och AI-synlighet utan extra kostnad: titlar, beskrivningar, rubriker, sitemap och att sajten kommer in i Google, plus strukturerad data och en llms.txt så att ChatGPT, Gemini och Googles AI-svar förstår vad ni gör och kan hänvisa till er. Boka ett samtal så får du ett förslag.',
     },
     {
       question: 'Hur lång tid tar ett projekt?',
