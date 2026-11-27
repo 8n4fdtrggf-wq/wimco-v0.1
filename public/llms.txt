@@ -21,6 +21,7 @@ Inte att förväxla med WIMCO Villas (villauthyrning i Karibien), WIMCO Corporat
 - [Wimco Score](https://wimco.se/wimco-score/): Gratis analys som väger ihop prestanda (20 %), mobil (15 %), tillgänglighet (15 %), SEO och teknik (20 %), visuell tydlighet (15 %) och konvertering (15 %) till ett betyg mellan 0 och 100. Prestanda och tillgänglighet mäts med Google Lighthouse.
 
 ## Guider
+- [AI-synlighet 2027: så syns ditt företag i ChatGPT och Googles AI-svar](https://wimco.se/guider/ai-synlighet-2027/)
 - [Vad kostar en hemsida 2027?](https://wimco.se/guider/vad-kostar-en-hemsida-2027/)
 - [Vad kostar en hemsida för småföretag 2026?](https://wimco.se/blogg/hur-mycket-kostar-en-hemsida)
 - [Snabbare webbplats: Core Web Vitals på svenska](https://wimco.se/guider/prestanda/)
