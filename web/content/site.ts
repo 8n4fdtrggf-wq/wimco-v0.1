@@ -1,5 +1,6 @@
 import type {
   BuildContent,
+  CampaignContent,
   ConsentContent,
   ContactContent,
   FaqContent,
@@ -128,6 +129,18 @@ export const stations: Station[] = [
     service: 'automation',
   },
 ];
+
+/**
+ * Vinterkampanjen. Ändra texten här och kör `npm run build:home`.
+ * Etiketten försvinner av sig själv efter `until`, men ta gärna bort den vid nästa bygge.
+ */
+export const campaign: CampaignContent = {
+  label: 'Vinterkampanj',
+  text: '25 % rabatt på ny hemsida, och grundläggande SEO på köpet. Gäller beställningar till och med 31 januari.',
+  short: '25 % rabatt på ny hemsida + SEO på köpet, till 31 jan',
+  link: { label: 'Boka ett samtal', href: '#projekt' },
+  until: '2027-01-31',
+};
 
 export const hero: HeroContent = {
   title: 'Se vad som håller din sajt tillbaka.',
@@ -351,7 +364,12 @@ export const faq: FaqContent = {
       question: 'Vad kostar ett projekt?',
       answer:
         'Det beror helt på dina behov. Vi utgår alltid från din budget och prioriterar det som ger mest effekt först. Boka ett samtal så får du en kostnadsfri uppskattning. Vår prisguide visar vad en hemsida brukar kosta och vad som styr priset.',
-      link: { label: 'Vad kostar en hemsida 2026?', href: '/blogg/hur-mycket-kostar-en-hemsida' },
+      link: { label: 'Vad kostar en hemsida 2027?', href: '/guider/vad-kostar-en-hemsida-2027/' },
+    },
+    {
+      question: 'Har ni något erbjudande just nu?',
+      answer:
+        'Ja. Beställer du en ny hemsida senast 31 januari får du 25 % rabatt, och vi gör den grundläggande SEO:n på köpet: titlar, beskrivningar, rubriker, sitemap och att sajten kommer in i Google. Boka ett samtal så får du ett förslag med kampanjpriset.',
     },
     {
       question: 'Hur lång tid tar ett projekt?',

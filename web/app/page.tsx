@@ -86,14 +86,14 @@ export default function Page() {
       </a>
       <SiteNav content={content.nav} />
       <main id="main">
-        <Hero content={content.hero} stations={stations} analyse={heroAnalyse} />
+        <Hero content={content.hero} stations={stations} analyse={heroAnalyse} campaign={content.campaign} />
         <Stations content={content.stationsSection} stations={stations} />
         <Build content={content.build} />
         <Work content={content.work} />
         <Kollen content={content.kollenTeaser} areas={AREAS} />
         <About company={contact.company} process={content.process} />
         <Faq content={content.faq} />
-        <Close content={contact} stations={stations} />
+        <Close content={contact} stations={stations} campaign={content.campaign} />
       </main>
       <Footer content={content.footer} />
       <ConsentBanner content={content.consent} />

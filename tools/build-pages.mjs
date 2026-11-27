@@ -169,6 +169,51 @@ const GUIDES = [
 ${cta('Hur snabb är din sajt?', 'Wimco Score mäter med Google Lighthouse och visar vad som bromsar mest – gratis och utan registrering.')}`,
   },
   {
+    // Skriven inför 2027 med flit: få har publicerat något om nästa år än, så sidan kan ta platsen i sökresultaten
+    // och i AI-svar innan konkurrenterna hinner dit. Uppdatera siffrorna i januari om prisnivåerna har ändrats.
+    slug: '/guider/vad-kostar-en-hemsida-2027/', file: 'guider/vad-kostar-en-hemsida-2027/index.html', badge: 'h', line: 'H',
+    updated: '2026-11-27',
+    title: 'Vad kostar en hemsida 2027? Priser för småföretag',
+    h1: 'Vad kostar en hemsida 2027?',
+    description: 'Vad en hemsida för ett litet företag kostar 2027: tre prisnivåer, vad som ingår, löpande kostnader och vad som blir dyrare 2027. Med frågor att ställa innan du väljer byrå.',
+    lead: 'Korta svaret: för de flesta småföretag kostar en seriös hemsida <strong>10 000–50 000 kr</strong> att bygga och <strong>1 000–3 000 kr per år</strong> att driva. Här är vad som styr priset 2027, vad som är nytt jämfört med i år och var du inte bör spara.',
+    asideText: 'Vinterkampanj: beställer du en ny hemsida senast 31 januari får du 25 % rabatt och grundläggande SEO på köpet.',
+    asideBtn: 'Boka ett samtal', asideHref: '/#projekt',
+    body: `<h2>Tre prisnivåer 2027</h2>
+<ul>
+<li><strong>Landningssida, en sida: 5 000–15 000 kr.</strong> För dig som behöver ett tydligt visitkort med kontaktformulär eller bokning.</li>
+<li><strong>Företagshemsida, 3–7 sidor: 15 000–50 000 kr.</strong> Start, tjänster, om oss och kontakt, med text, mobilanpassning och SEO-grund.</li>
+<li><strong>E-handel eller större sajt: från 40 000 kr.</strong> Produkter, betalning, integrationer och fler sidtyper att designa och testa.</li>
+</ul>
+<p>Priset styrs mest av hur många sidtyper som ska designas, vem som skriver texterna och hur mycket som ska kopplas ihop med andra system. Antalet sidor betyder mindre än man tror.</p>
+<h2>Det här är nytt 2027</h2>
+<ul>
+<li><strong>Tillgänglighet är ett krav för fler.</strong> Lagen om tillgänglighet till vissa produkter och tjänster gäller sedan juni 2025 för bland annat e-handel. En ny sajt bör byggas tillgänglig från början. Det är billigare än att rätta i efterhand.</li>
+<li><strong>AI-svar tar plats i sökresultaten.</strong> Google och ChatGPT svarar allt oftare direkt och hänvisar till några få källor. Sajter med tydliga svar, strukturerad data och snabba sidor har bättre chans att vara den källan.</li>
+<li><strong>Färdiga verktyg har blivit bättre.</strong> För en enkel sida kan en byggare för några hundra kronor i månaden räcka. Skillnaden mot en byrå ligger i text, struktur och att någon tar ansvar för att sajten faktiskt ger förfrågningar.</li>
+</ul>
+<h2>Löpande kostnader</h2>
+<ul>
+<li><strong>Domän:</strong> cirka 100–300 kr per år. Registrera den i företagets eget namn.</li>
+<li><strong>Drift:</strong> från 0 kr för en statisk sajt upp till några tusen kronor per år för webbhotell med databas.</li>
+<li><strong>Underhåll:</strong> uppdateringar och säkerhet, antingen löpande eller vid behov.</li>
+<li><strong>Innehåll och SEO:</strong> det som skapar trafiken över tid. Kan göras själv om sajten har ett enkelt redigeringsverktyg.</li>
+</ul>
+<h2>Vad grundläggande SEO bör innehålla</h2>
+<p>Fråga alltid om det ingår. Minst: unika sidtitlar och beskrivningar, en tydlig rubrik per sida, sitemap, strukturerad data om företaget, snabba sidor och att sajten skickas in till Google Search Console. Utan det kan en snygg sajt bli osynlig.</p>
+<h2>Fem frågor innan du väljer byrå</h2>
+<ol>
+<li>Vem äger domänen, koden och kontot hos webbhotellet?</li>
+<li>Ingår grundläggande SEO, och vad betyder det konkret?</li>
+<li>Kan jag ändra texter och bilder själv efter lansering?</li>
+<li>Vilka löpande kostnader tillkommer, och kan jag säga upp dem?</li>
+<li>Hur mäter vi om sajten ger fler kunder?</li>
+</ol>
+<h2>Sammanfattning</h2>
+<p>Räkna med 15 000–50 000 kr för en företagshemsida 2027 och några tusen kronor per år i drift. Det viktigaste är inte priset utan vad sajten ska ge: en sajt som ger två nya kunder har ofta betalat sig själv. Läs också <a href="/guider/seo-grund/">SEO-grunden varje företagssajt behöver</a>.</p>
+${cta('Vad behöver din nuvarande sajt?', 'Börja med en gratis analys. Den visar om det räcker att vässa det du har eller om det är dags för något nytt.')}`,
+  },
+  {
     slug: '/guider/seo-grund/', file: 'guider/seo-grund/index.html', badge: 'o', line: 'O',
     title: 'SEO-grunden varje företagssajt behöver',
     h1: 'SEO-grunden varje företagssajt behöver',
@@ -339,6 +384,7 @@ article({
 </ol>
 <h2>Sammanfattning</h2>
 <p>En hemsida är inte en kostnad – det är säljaren som jobbar dygnet runt. Budgetera för helheten: bygge + drift + löpande förbättring.</p>
+<p>Planerar du inför nästa år? Läs <a href="/guider/vad-kostar-en-hemsida-2027/">Vad kostar en hemsida 2027?</a></p>
 ${cta('Vad behöver din nuvarande sajt?', 'Börja med en gratis analys. Den visar om det räcker att vässa det du har – eller om det är dags för något nytt.')}`,
 });
 
@@ -604,7 +650,7 @@ const urls = [
 ];
 fs.writeFileSync(path.join(PUB, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(([u, p]) => `  <url><loc>${SITE}${u}</loc><lastmod>${CASES.find((c) => c.slug === u)?.updated ?? (u.includes('kostar') ? '2026-09-29' : u === '/tillganglighet/' ? '2026-10-23' : u === '/e-handelskollen/' ? '2026-10-24' : TODAY)}</lastmod><priority>${p}</priority></url>`).join('\n')}
+${urls.map(([u, p]) => `  <url><loc>${SITE}${u}</loc><lastmod>${(CASES.find((c) => c.slug === u) ?? GUIDES.find((g) => g.slug === u))?.updated ?? (u.includes('kostar') ? '2026-09-29' : u === '/tillganglighet/' ? '2026-10-23' : u === '/e-handelskollen/' ? '2026-10-24' : TODAY)}</lastmod><priority>${p}</priority></url>`).join('\n')}
 </urlset>
 `);
 console.log('Sidor genererade.');

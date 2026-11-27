@@ -55,6 +55,18 @@ export interface Station {
   service: ServiceKey;
 }
 
+/** A time-limited offer. Shown in the hero and by the project form until `until` has passed. */
+export interface CampaignContent {
+  /** Short label in the pill, e.g. "Vinterkampanj". */
+  label: string;
+  text: string;
+  /** One-line version for the hero. */
+  short: string;
+  link: LinkItem;
+  /** Last day of the offer (YYYY-MM-DD, Swedish time). The pill hides itself after this day. */
+  until: string;
+}
+
 export interface HeroContent {
   title: string;
   lede: string;
